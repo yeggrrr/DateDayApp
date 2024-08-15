@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		68CED3392C6C8EF40043266A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68CED3382C6C8EF40043266A /* AppDelegate.swift */; };
 		68CED33B2C6C8EF40043266A /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68CED33A2C6C8EF40043266A /* SceneDelegate.swift */; };
-		68CED33D2C6C8EF40043266A /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68CED33C2C6C8EF40043266A /* ViewController.swift */; };
+		68CED33D2C6C8EF40043266A /* ReviewListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68CED33C2C6C8EF40043266A /* ReviewListViewController.swift */; };
 		68CED3422C6C8EF50043266A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 68CED3412C6C8EF50043266A /* Assets.xcassets */; };
 		68CED3452C6C8EF50043266A /* Base in Resources */ = {isa = PBXBuildFile; fileRef = 68CED3442C6C8EF50043266A /* Base */; };
 		68CED34D2C6C8F390043266A /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 68CED34C2C6C8F390043266A /* .gitignore */; };
@@ -25,7 +25,7 @@
 		68CED3352C6C8EF40043266A /* DateDayApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DateDayApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		68CED3382C6C8EF40043266A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		68CED33A2C6C8EF40043266A /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		68CED33C2C6C8EF40043266A /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		68CED33C2C6C8EF40043266A /* ReviewListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewListViewController.swift; sourceTree = "<group>"; };
 		68CED3412C6C8EF50043266A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		68CED3442C6C8EF50043266A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		68CED3462C6C8EF50043266A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -71,13 +71,45 @@
 			children = (
 				68CED3382C6C8EF40043266A /* AppDelegate.swift */,
 				68CED33A2C6C8EF40043266A /* SceneDelegate.swift */,
-				68CED33C2C6C8EF40043266A /* ViewController.swift */,
-				68CED3412C6C8EF50043266A /* Assets.xcassets */,
-				68CED3432C6C8EF50043266A /* LaunchScreen.storyboard */,
+				68CED35E2C6E14590043266A /* Resources */,
+				68CED35F2C6E14730043266A /* Sources */,
 				68CED3462C6C8EF50043266A /* Info.plist */,
 				68CED34E2C6C8F540043266A /* APIKey.swift */,
 			);
 			path = DateDayApp;
+			sourceTree = "<group>";
+		};
+		68CED35E2C6E14590043266A /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				68CED3412C6C8EF50043266A /* Assets.xcassets */,
+				68CED3432C6C8EF50043266A /* LaunchScreen.storyboard */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		68CED35F2C6E14730043266A /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+				68CED3602C6E14840043266A /* Extension */,
+				68CED3612C6E148B0043266A /* Presentation */,
+			);
+			path = Sources;
+			sourceTree = "<group>";
+		};
+		68CED3602C6E14840043266A /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Extension;
+			sourceTree = "<group>";
+		};
+		68CED3612C6E148B0043266A /* Presentation */ = {
+			isa = PBXGroup;
+			children = (
+				68CED33C2C6C8EF40043266A /* ReviewListViewController.swift */,
+			);
+			path = Presentation;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -164,7 +196,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				68CED33D2C6C8EF40043266A /* ViewController.swift in Sources */,
+				68CED33D2C6C8EF40043266A /* ReviewListViewController.swift in Sources */,
 				68CED3392C6C8EF40043266A /* AppDelegate.swift in Sources */,
 				68CED34F2C6C8F540043266A /* APIKey.swift in Sources */,
 				68CED33B2C6C8EF40043266A /* SceneDelegate.swift in Sources */,
