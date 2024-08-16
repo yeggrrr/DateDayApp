@@ -6,11 +6,16 @@
 //
 
 import UIKit
+import RxSwift
+import RxCocoa
 
 final class LoginViewController: UIViewController {
+    // MARK: UI
+    private let loginView = LoginView()
     
     // MARK: Properties
-    let loginView = LoginView()
+    private let disposeBag = DisposeBag()
+    private let viewModel = LoginViewModel()
     
     // MARK: View Life Cycle
     override func loadView() {
@@ -20,5 +25,25 @@ final class LoginViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        bind()
+    }
+    
+    private func bind() {
+        let input = LoginViewModel.Input(loginButtonTap: loginView.loginButton.rx.tap,
+                                         signUpButtonTap: loginView.signUpButton.rx.tap)
+        let output = viewModel.transform(input: input)
+        
+        output.loginButtonTap
+            .bind(with: self) { owner, _ in
+                print("loginButton Clicked")
+            }
+            .disposed(by: disposeBag)
+        
+        output.signUpButtonTap
+            .bind(with: self) { owner, _ in
+                let vc = SignUpViewController()
+                owner.navigationController?.pushViewController(vc, animated: true)
+            }
+            .disposed(by: disposeBag)
     }
 }
