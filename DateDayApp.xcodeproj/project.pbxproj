@@ -19,6 +19,10 @@
 		68CED3582C6C915C0043266A /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 68CED3572C6C915C0043266A /* SnapKit */; };
 		68CED35B2C6C916C0043266A /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = 68CED35A2C6C916C0043266A /* RxCocoa */; };
 		68CED35D2C6C916C0043266A /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 68CED35C2C6C916C0043266A /* RxSwift */; };
+		68CED3642C6F1FF80043266A /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68CED3632C6F1FF80043266A /* LoginViewController.swift */; };
+		68CED3662C6F20240043266A /* View+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68CED3652C6F20240043266A /* View+.swift */; };
+		68CED3682C6F20DE0043266A /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68CED3672C6F20DE0043266A /* LoginView.swift */; };
+		68CED36B2C6F22160043266A /* ViewRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68CED36A2C6F22160043266A /* ViewRepresentable.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -31,6 +35,10 @@
 		68CED3462C6C8EF50043266A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		68CED34C2C6C8F390043266A /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		68CED34E2C6C8F540043266A /* APIKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIKey.swift; sourceTree = "<group>"; };
+		68CED3632C6F1FF80043266A /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		68CED3652C6F20240043266A /* View+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+.swift"; sourceTree = "<group>"; };
+		68CED3672C6F20DE0043266A /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
+		68CED36A2C6F22160043266A /* ViewRepresentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewRepresentable.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -91,6 +99,7 @@
 		68CED35F2C6E14730043266A /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				68CED3692C6F21EC0043266A /* Protocol */,
 				68CED3602C6E14840043266A /* Extension */,
 				68CED3612C6E148B0043266A /* Presentation */,
 			);
@@ -100,6 +109,7 @@
 		68CED3602C6E14840043266A /* Extension */ = {
 			isa = PBXGroup;
 			children = (
+				68CED3652C6F20240043266A /* View+.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -108,8 +118,26 @@
 			isa = PBXGroup;
 			children = (
 				68CED33C2C6C8EF40043266A /* ReviewListViewController.swift */,
+				68CED3622C6F1FE50043266A /* Login */,
 			);
 			path = Presentation;
+			sourceTree = "<group>";
+		};
+		68CED3622C6F1FE50043266A /* Login */ = {
+			isa = PBXGroup;
+			children = (
+				68CED3632C6F1FF80043266A /* LoginViewController.swift */,
+				68CED3672C6F20DE0043266A /* LoginView.swift */,
+			);
+			path = Login;
+			sourceTree = "<group>";
+		};
+		68CED3692C6F21EC0043266A /* Protocol */ = {
+			isa = PBXGroup;
+			children = (
+				68CED36A2C6F22160043266A /* ViewRepresentable.swift */,
+			);
+			path = Protocol;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -197,8 +225,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				68CED33D2C6C8EF40043266A /* ReviewListViewController.swift in Sources */,
+				68CED36B2C6F22160043266A /* ViewRepresentable.swift in Sources */,
+				68CED3682C6F20DE0043266A /* LoginView.swift in Sources */,
 				68CED3392C6C8EF40043266A /* AppDelegate.swift in Sources */,
 				68CED34F2C6C8F540043266A /* APIKey.swift in Sources */,
+				68CED3642C6F1FF80043266A /* LoginViewController.swift in Sources */,
+				68CED3662C6F20240043266A /* View+.swift in Sources */,
 				68CED33B2C6C8EF40043266A /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
