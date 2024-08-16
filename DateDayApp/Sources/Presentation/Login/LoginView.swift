@@ -9,14 +9,16 @@ import UIKit
 import SnapKit
 
 final class LoginView: UIView, ViewRepresentable {
-    let inputStackView = UIStackView()
-    let emailTextFieldView = UIView()
+    // MARK: UI
+    private let inputStackView = UIStackView()
+    private let emailTextFieldView = UIView()
+    private let passwordTextFieldView = UIView()
     let emailTextField = UITextField()
-    let passwordTextFieldView = UIView()
     let passwordTextField = UITextField()
     let loginButton = UIButton()
     let signUpButton = UIButton(type: .system)
     
+    // MARK: View Life Cycle
     override init(frame: CGRect) {
         super.init(frame: frame)
         
@@ -27,6 +29,7 @@ final class LoginView: UIView, ViewRepresentable {
     
     required init?(coder: NSCoder) { fatalError("init(coder:) has not been implemented") }
     
+    // MARK: Functions
     func addSubviews() {
         addSubviews([inputStackView, loginButton, signUpButton])
         inputStackView.addArrangedSubviews([emailTextFieldView, passwordTextFieldView])
@@ -93,4 +96,3 @@ final class LoginView: UIView, ViewRepresentable {
         signUpButton.setTitleColor(.systemBlue, for: .normal)
     }
 }
-
