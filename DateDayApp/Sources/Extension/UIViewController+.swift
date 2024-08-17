@@ -8,6 +8,15 @@
 import UIKit
 
 extension UIViewController {
+    // 화면 전환
+    func setRootViewController(_ viewController: UIViewController) {
+        if let scene = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate,
+        let window = scene.window {
+            window.rootViewController = viewController
+            UIView.transition(with: window, duration: 0.5, options: [.transitionFlipFromRight], animations: nil, completion: nil)
+        }
+    }
+    
     // Custom ToastAlert
     func showToast(message : String) {
         let toastLabel = UILabel(
