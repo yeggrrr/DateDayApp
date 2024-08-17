@@ -11,6 +11,7 @@ import Alamofire
 enum ValidationError: Error {
     case missingRequiredValue
     case unavailable
+    case accountVerificationRequired
 }
 
 final class NetworkManager {
@@ -45,6 +46,33 @@ final class NetworkManager {
                 .validate(statusCode: 200..<300)
                 .responseDecodable(of: ValidationEmailModel.self) { response in
                     
+                    switch response.result {
+                    case .success(let success):
+                        completion(.success(success))
+                    case .failure(let failure):
+                        let statusCode = response.response?.statusCode
+                        switch statusCode {
+                        case 400:
+                            completion(.failure(.missingRequiredValue))
+                        case 409:
+                            completion(.failure(.unavailable))
+                        default:
+                            break
+                        }
+                    }
+                }
+        } catch {
+            print("error 발생!! - error:", error)
+        }
+    }
+    
+    func createLogin(email: String, password: String, completion: @escaping (Result<LoginModel, ValidationError>) -> Void) {
+        do {
+            let query = LoginQuery(email: email, password: password)
+            let request = try Router.login(query: query).asURLRequest()
+            AF.request(request)
+                .validate(statusCode: 200..<300)
+                .responseDecodable(of: LoginModel.self) { response in
                 switch response.result {
                 case .success(let success):
                     completion(.success(success))
@@ -53,8 +81,8 @@ final class NetworkManager {
                     switch statusCode {
                     case 400:
                         completion(.failure(.missingRequiredValue))
-                    case 409:
-                        completion(.failure(.unavailable))
+                    case 401:
+                        completion(.failure(.accountVerificationRequired))
                     default:
                         break
                     }

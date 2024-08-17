@@ -11,7 +11,7 @@ import Alamofire
 enum Router {
     case signUp(query: SignUpQuery)
     case validation(query: validEmailQuery)
-    case login
+    case login(query: LoginQuery)
 }
 
 extension Router: TargetType {
@@ -76,8 +76,8 @@ extension Router: TargetType {
             return try? encoder.encode(query)
         case .validation(let query):
             return try? encoder.encode(query)
-        case .login:
-            return nil // 임시
+        case .login(let query):
+            return try? encoder.encode(query)
         }
     }
 }

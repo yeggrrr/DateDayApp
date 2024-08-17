@@ -16,3 +16,8 @@ struct SignUpQuery: Encodable {
 struct validEmailQuery: Encodable {
     let email: String
 }
+
+struct LoginQuery: Encodable {
+    let email: String
+    let password: String
+}
