@@ -28,6 +28,7 @@ final class LoginViewController: UIViewController {
         bind()
     }
     
+    // MARK: Functions
     private func bind() {
         let input = LoginViewModel.Input(loginButtonTap: loginView.loginButton.rx.tap,
                                          signUpButtonTap: loginView.signUpButton.rx.tap)
