@@ -38,6 +38,42 @@ final class SignUpViewController: UIViewController {
         
         let output = viewModel.transform(input: input)
         
+        output.nicknameValidation
+            .bind(with: self) { owner, value in
+                if value {
+                    owner.signUpView.nicknameValidImageView.tintColor = .systemGreen
+                    owner.signUpView.nicknameValidImageView.image = UIImage(systemName: "checkmark.circle.fill")
+                } else {
+                    owner.signUpView.nicknameValidImageView.tintColor = .systemRed
+                    owner.signUpView.nicknameValidImageView.image = UIImage(systemName: "xmark.circle.fill")
+                }
+            }
+            .disposed(by: disposeBag)
+        
+        output.emailValidation
+            .bind(with: self) { owner, value in
+                if value {
+                    owner.signUpView.emailValidImageView.tintColor = .systemGreen
+                    owner.signUpView.emailValidImageView.image = UIImage(systemName: "checkmark.circle.fill")
+                } else {
+                    owner.signUpView.emailValidImageView.tintColor = .systemRed
+                    owner.signUpView.emailValidImageView.image = UIImage(systemName: "xmark.circle.fill")
+                }
+            }
+            .disposed(by: disposeBag)
+        
+        output.passwordValidation
+            .bind(with: self) { owner, value in
+                if value {
+                    owner.signUpView.passwordValidImageView.tintColor = .systemGreen
+                    owner.signUpView.passwordValidImageView.image = UIImage(systemName: "checkmark.circle.fill")
+                } else {
+                    owner.signUpView.passwordValidImageView.tintColor = .systemRed
+                    owner.signUpView.passwordValidImageView.image = UIImage(systemName: "xmark.circle.fill")
+                }
+            }
+            .disposed(by: disposeBag)
+        
         Observable.combineLatest(
             output.nicknameValidation,
             output.emailValidation,

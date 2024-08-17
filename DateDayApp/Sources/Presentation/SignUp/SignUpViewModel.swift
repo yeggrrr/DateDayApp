@@ -41,7 +41,7 @@ final class SignUpViewModel: BaseViewModel {
     }
     
     func validateNickname(_ nickname: String) -> Bool {
-        let nicknameRegex = "[A-Za-z]{2,}"
+        let nicknameRegex = "[A-Za-z][A-Za-z0-9]{2,}"
         let nicknamePredicate = NSPredicate(format: "SELF MATCHES %@", nicknameRegex)
         return nicknamePredicate.evaluate(with: nickname)
     }

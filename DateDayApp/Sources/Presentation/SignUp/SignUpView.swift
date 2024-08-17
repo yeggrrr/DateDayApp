@@ -18,6 +18,9 @@ final class SignUpView: UIView, ViewRepresentable {
     let nicknameTextField = UITextField()
     let emailTextField = UITextField()
     let passwordTextField = UITextField()
+    let nicknameValidImageView = UIImageView()
+    let emailValidImageView = UIImageView()
+    let passwordValidImageView = UIImageView()
     let signUpButton = UIButton()
     
     override init(frame: CGRect) {
@@ -31,7 +34,7 @@ final class SignUpView: UIView, ViewRepresentable {
     required init?(coder: NSCoder) { fatalError("init(coder:) has not been implemented") }
     
     func addSubviews() {
-        addSubviews([inputStackView, signUpButton])
+        addSubviews([inputStackView, signUpButton, nicknameValidImageView, emailValidImageView, passwordValidImageView])
         inputStackView.addArrangedSubviews([nicknameTextFieldView, emailTextFieldView, passwordTextFieldView])
         nicknameTextFieldView.addSubview(nicknameTextField)
         emailTextFieldView.addSubview(emailTextField)
@@ -61,6 +64,24 @@ final class SignUpView: UIView, ViewRepresentable {
         passwordTextField.snp.makeConstraints {
             $0.verticalEdges.equalTo(passwordTextFieldView.snp.verticalEdges).inset(5)
             $0.horizontalEdges.equalTo(passwordTextFieldView.snp.horizontalEdges).inset(10)
+        }
+        
+        nicknameValidImageView.snp.makeConstraints {
+            $0.leading.equalTo(inputStackView.snp.trailing).offset(5)
+            $0.centerY.equalTo(nicknameTextField.snp.centerY)
+            $0.width.height.equalTo(20)
+        }
+        
+        emailValidImageView.snp.makeConstraints {
+            $0.leading.equalTo(inputStackView.snp.trailing).offset(5)
+            $0.centerY.equalTo(emailTextField.snp.centerY)
+            $0.width.height.equalTo(20)
+        }
+        
+        passwordValidImageView.snp.makeConstraints {
+            $0.leading.equalTo(inputStackView.snp.trailing).offset(5)
+            $0.centerY.equalTo(passwordTextField.snp.centerY)
+            $0.width.height.equalTo(20)
         }
         
         signUpButton.snp.makeConstraints {
@@ -98,5 +119,12 @@ final class SignUpView: UIView, ViewRepresentable {
         signUpButton.layer.cornerRadius = 20
         signUpButton.layer.borderColor = UIColor.black.cgColor
         signUpButton.layer.borderWidth = 1
+        
+        nicknameValidImageView.tintColor = .systemRed
+        emailValidImageView.tintColor = .systemRed
+        passwordValidImageView.tintColor = .systemRed
+        nicknameValidImageView.image = UIImage(systemName: "xmark.circle.fill")
+        emailValidImageView.image = UIImage(systemName: "xmark.circle.fill")
+        passwordValidImageView.image = UIImage(systemName: "xmark.circle.fill")
     }
 }
