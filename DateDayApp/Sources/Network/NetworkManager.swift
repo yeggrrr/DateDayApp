@@ -49,7 +49,7 @@ final class NetworkManager {
                     switch response.result {
                     case .success(let success):
                         completion(.success(success))
-                    case .failure(let failure):
+                    case .failure(_):
                         let statusCode = response.response?.statusCode
                         switch statusCode {
                         case 400:
@@ -76,7 +76,7 @@ final class NetworkManager {
                 switch response.result {
                 case .success(let success):
                     completion(.success(success))
-                case .failure(let failure):
+                case .failure(_):
                     let statusCode = response.response?.statusCode
                     switch statusCode {
                     case 400:

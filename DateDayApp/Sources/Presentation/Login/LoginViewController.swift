@@ -43,7 +43,6 @@ final class LoginViewController: UIViewController {
         
         output.loginButtonTap
             .bind(with: self) { owner, _ in
-                print("loginButton Clicked")
                 guard let email = owner.loginView.emailTextField.text,
                       let password = owner.loginView.passwordTextField.text else { return }
                 
@@ -52,14 +51,13 @@ final class LoginViewController: UIViewController {
                     password: password) { result in
                         switch result {
                         case .success(let success):
-                            print("로그인 성공!!: \(success)")
                             UserDefaultsManager.shared.refresh = success.refreshToken
                             UserDefaultsManager.shared.token = success.accessToken
                             self.setRootViewController(FeedViewController())
                         case .failure(let failure):
                             switch failure {
                             case .missingRequiredValue:
-                                self.showToast(message: "필수값을 채우주세요! :)")
+                                self.showToast(message: "필수값을 채워주세요! :)")
                             case .accountVerificationRequired:
                                 self.showToast(message: "계정을 확인해주세요! :)")
                             default:
