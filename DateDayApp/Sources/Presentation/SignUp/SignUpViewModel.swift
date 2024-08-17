@@ -53,7 +53,7 @@ final class SignUpViewModel: BaseViewModel {
     }
 
     func validatePassword(_ password: String) -> Bool {
-        let passwordRegex = "^([A-Z])[A-Za-z0-9]{8,}$"
+        let passwordRegex = "[A-Z][A-Za-z0-9]{8,}"
         let passwordPredicate = NSPredicate(format: "SELF MATCHES %@", passwordRegex)
         return passwordPredicate.evaluate(with: password)
     }

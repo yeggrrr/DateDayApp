@@ -62,7 +62,7 @@ final class SignUpViewController: UIViewController {
                         nickname: nickname,
                         email: email,
                         password: password)
-                    print("클릭됨")
+                    print("회원가입 버튼 클릭됨")
                 }
                 .disposed(by: disposeBag)
         }
