@@ -13,6 +13,8 @@ final class SignUpView: UIView, ViewRepresentable {
     private let nicknameTextFieldView = UIView()
     private let emailTextFieldView = UIView()
     private let passwordTextFieldView = UIView()
+    private let noticeView = UIView()
+    private let noticeLabel = UILabel()
     let nicknameTextField = UITextField()
     let emailTextField = UITextField()
     let passwordTextField = UITextField()
@@ -79,14 +81,17 @@ final class SignUpView: UIView, ViewRepresentable {
         nicknameTextFieldView.layer.borderWidth = 1
         nicknameTextFieldView.layer.borderColor = UIColor.black.cgColor
         nicknameTextField.placeholder = "닉네임을 입력해주세요"
+        nicknameTextField.keyboardType = .asciiCapable
         
         emailTextFieldView.layer.borderWidth = 1
         emailTextFieldView.layer.borderColor = UIColor.black.cgColor
         emailTextField.placeholder = "이메일을 입력해주세요"
+        emailTextField.keyboardType = .emailAddress
         
         passwordTextFieldView.layer.borderWidth = 1
         passwordTextFieldView.layer.borderColor = UIColor.black.cgColor
         passwordTextField.placeholder = "비밀번호를 입력해주세요"
+        passwordTextField.keyboardType = .asciiCapable
         
         signUpButton.setTitle("회원가입", for: .normal)
         signUpButton.setTitleColor(.black, for: .normal)

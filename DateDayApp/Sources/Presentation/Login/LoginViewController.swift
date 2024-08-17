@@ -25,10 +25,17 @@ final class LoginViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        configure()
         bind()
     }
     
     // MARK: Functions
+    private func configure() {
+        // navigationItem
+        navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: self, action: nil)
+        navigationItem.backBarButtonItem?.tintColor = .black
+    }
+    
     private func bind() {
         let input = LoginViewModel.Input(loginButtonTap: loginView.loginButton.rx.tap,
                                          signUpButtonTap: loginView.signUpButton.rx.tap)

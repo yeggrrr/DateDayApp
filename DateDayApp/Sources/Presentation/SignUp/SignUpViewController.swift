@@ -37,24 +37,6 @@ final class SignUpViewController: UIViewController {
             passwordText: signUpView.passwordTextField.rx.text)
         
         let output = viewModel.transform(input: input)
-
-        output.nicknameValidation
-            .bind(with: self) { owner, value in
-                print("nickname: \(value)")
-            }
-            .disposed(by: disposeBag)
-        
-        output.emailValidation
-            .bind(with: self) { owner, value in
-                print("email: \(value)")
-            }
-            .disposed(by: disposeBag)
-        
-        output.passwordValidation
-            .bind(with: self) { owner, value in
-                print("password: \(value)")
-            }
-            .disposed(by: disposeBag)
         
         Observable.combineLatest(
             output.nicknameValidation,
