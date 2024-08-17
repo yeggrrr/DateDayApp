@@ -52,9 +52,24 @@ final class SignUpViewController: UIViewController {
         
         output.emailValidation
             .bind(with: self) { owner, value in
+                guard let emailText = owner.signUpView.emailTextField.text else { return }
                 if value {
-                    owner.signUpView.emailValidImageView.tintColor = .systemGreen
-                    owner.signUpView.emailValidImageView.image = UIImage(systemName: "checkmark.circle.fill")
+                    NetworkManager.shared.validationEmail(email: emailText) { result in
+                        switch result {
+                        case .success(_):
+                            owner.signUpView.emailValidImageView.tintColor = .systemGreen
+                            owner.signUpView.emailValidImageView.image = UIImage(systemName: "checkmark.circle.fill")
+                        case .failure(let failure):
+                            owner.signUpView.emailValidImageView.tintColor = .systemRed
+                            owner.signUpView.emailValidImageView.image = UIImage(systemName: "xmark.circle.fill")
+                            switch failure {
+                            case .missingRequiredValue:
+                                self.showToast(message: "필수값을 입력해주세요.")
+                            case .unavailable:
+                                self.showToast(message: "사용이 불가능한 이메일입니다.")
+                            }
+                        }
+                    }
                 } else {
                     owner.signUpView.emailValidImageView.tintColor = .systemRed
                     owner.signUpView.emailValidImageView.image = UIImage(systemName: "xmark.circle.fill")

@@ -10,7 +10,6 @@ import RxSwift
 import RxCocoa
 
 final class SignUpViewModel: BaseViewModel {
-    var nicknameText = BehaviorSubject(value: "")
     
     struct Input {
         let signUpButtonTap: ControlEvent<Void>
@@ -30,6 +29,8 @@ final class SignUpViewModel: BaseViewModel {
         let nicknameValidation = input.nicknameText.orEmpty
             .map { self.validateNickname($0) }
         let emailValidation = input.emailText.orEmpty
+            .debounce(.seconds(1), scheduler: MainScheduler.instance)
+            .distinctUntilChanged()
             .map { self.validateEmail($0) }
         let passwordValidation = input.passwordText.orEmpty
             .map { self.validatePassword($0) }

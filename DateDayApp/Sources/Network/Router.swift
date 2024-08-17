@@ -10,7 +10,7 @@ import Alamofire
 
 enum Router {
     case signUp(query: SignUpQuery)
-    case validation
+    case validation(query: validEmailQuery)
     case login
 }
 
@@ -70,12 +70,12 @@ extension Router: TargetType {
     }
     
     var body: Data? {
+        let encoder = JSONEncoder()
         switch self {
         case .signUp(let query):
-            let encoder = JSONEncoder()
             return try? encoder.encode(query)
-        case .validation:
-            return nil // 임시
+        case .validation(let query):
+            return try? encoder.encode(query)
         case .login:
             return nil // 임시
         }
