@@ -13,6 +13,7 @@ final class LoginView: UIView, ViewRepresentable {
     private let inputStackView = UIStackView()
     private let emailTextFieldView = UIView()
     private let passwordTextFieldView = UIView()
+    private let signUpLabel = UILabel()
     let emailTextField = UITextField()
     let passwordTextField = UITextField()
     let loginButton = UIButton()
@@ -31,7 +32,7 @@ final class LoginView: UIView, ViewRepresentable {
     
     // MARK: Functions
     func addSubviews() {
-        addSubviews([inputStackView, loginButton, signUpButton])
+        addSubviews([inputStackView, loginButton, signUpButton, signUpLabel])
         inputStackView.addArrangedSubviews([emailTextFieldView, passwordTextFieldView])
         emailTextFieldView.addSubview(emailTextField)
         passwordTextFieldView.addSubview(passwordTextField)
@@ -63,6 +64,11 @@ final class LoginView: UIView, ViewRepresentable {
             $0.height.equalTo(44)
         }
         
+        signUpLabel.snp.makeConstraints {
+            $0.trailing.equalTo(signUpButton.snp.leading).offset(-10)
+            $0.centerY.equalTo(signUpButton.snp.centerY)
+        }
+        
         signUpButton.snp.makeConstraints {
             $0.top.equalTo(loginButton.snp.bottom).offset(20)
             $0.trailing.equalTo(loginButton.snp.trailing).offset(-5)
@@ -91,6 +97,9 @@ final class LoginView: UIView, ViewRepresentable {
         loginButton.layer.cornerRadius = 20
         loginButton.layer.borderColor = UIColor.black.cgColor
         loginButton.layer.borderWidth = 1
+        
+        signUpLabel.text = "처음 방문하셨다면?"
+        signUpLabel.font = .systemFont(ofSize: 17, weight: .semibold)
         
         signUpButton.setTitle("회원가입", for: .normal)
         signUpButton.setTitleColor(.systemBlue, for: .normal)

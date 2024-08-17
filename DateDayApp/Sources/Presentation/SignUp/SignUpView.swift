@@ -15,6 +15,10 @@ final class SignUpView: UIView, ViewRepresentable {
     private let passwordTextFieldView = UIView()
     private let noticeView = UIView()
     private let noticeLabel = UILabel()
+    private let regulationsInfoScrollView = UIScrollView()
+    private let regulationsInfoContentView = UIView()
+    private let regulationsInfoLabel = UILabel()
+    private let regulationsLabel = UILabel()
     let nicknameTextField = UITextField()
     let emailTextField = UITextField()
     let passwordTextField = UITextField()
@@ -34,7 +38,9 @@ final class SignUpView: UIView, ViewRepresentable {
     required init?(coder: NSCoder) { fatalError("init(coder:) has not been implemented") }
     
     func addSubviews() {
-        addSubviews([inputStackView, signUpButton, nicknameValidImageView, emailValidImageView, passwordValidImageView])
+        addSubviews([inputStackView, signUpButton, nicknameValidImageView, emailValidImageView, passwordValidImageView, regulationsInfoScrollView])
+        regulationsInfoScrollView.addSubview(regulationsInfoContentView)
+        regulationsInfoContentView.addSubviews([regulationsInfoLabel, regulationsLabel])
         inputStackView.addArrangedSubviews([nicknameTextFieldView, emailTextFieldView, passwordTextFieldView])
         nicknameTextFieldView.addSubview(nicknameTextField)
         emailTextFieldView.addSubview(emailTextField)
@@ -43,6 +49,8 @@ final class SignUpView: UIView, ViewRepresentable {
     
     func setConstraints() {
         let safeArea = safeAreaLayoutGuide
+        let scrollViewFrame = regulationsInfoScrollView.frameLayoutGuide // horizontalEdges
+        let scrollViewContent = regulationsInfoScrollView.contentLayoutGuide // verticalEdges
         
         inputStackView.snp.makeConstraints {
             $0.centerX.equalTo(safeArea.snp.centerX)
@@ -89,6 +97,28 @@ final class SignUpView: UIView, ViewRepresentable {
             $0.horizontalEdges.equalTo(safeArea).inset(44)
             $0.height.equalTo(44)
         }
+        
+        regulationsInfoScrollView.snp.makeConstraints {
+            $0.top.equalTo(signUpButton.snp.bottom).offset(20)
+            $0.horizontalEdges.equalTo(safeArea.snp.horizontalEdges).inset(20)
+            $0.height.equalTo(150)
+        }
+        
+        regulationsInfoContentView.snp.makeConstraints {
+            $0.verticalEdges.equalTo(scrollViewContent.snp.verticalEdges)
+            $0.horizontalEdges.equalTo(scrollViewFrame.snp.horizontalEdges)
+        }
+        
+        regulationsInfoLabel.snp.makeConstraints {
+            $0.top.equalTo(regulationsInfoContentView.snp.top).offset(5)
+            $0.centerX.equalTo(regulationsInfoContentView.snp.centerX)
+        }
+        
+        regulationsLabel.snp.makeConstraints {
+            $0.top.equalTo(regulationsInfoLabel.snp.bottom).offset(5)
+            $0.horizontalEdges.equalTo(regulationsInfoContentView.snp.horizontalEdges).inset(10)
+            $0.bottom.equalTo(regulationsInfoContentView.snp.bottom).offset(-10)
+        }
     }
     
     func configureUI() {
@@ -126,5 +156,17 @@ final class SignUpView: UIView, ViewRepresentable {
         nicknameValidImageView.image = UIImage(systemName: "xmark.circle.fill")
         emailValidImageView.image = UIImage(systemName: "xmark.circle.fill")
         passwordValidImageView.image = UIImage(systemName: "xmark.circle.fill")
+        
+        regulationsInfoScrollView.backgroundColor = .systemGray6
+        regulationsInfoScrollView.layer.borderWidth = 1
+        regulationsInfoScrollView.layer.borderColor = UIColor.darkGray.cgColor
+        regulationsInfoScrollView.showsVerticalScrollIndicator = false
+        
+        regulationsInfoLabel.text = "<주의사항>"
+        
+        regulationsLabel.text = "> 닉네임은 2글자 이상으로 설정해주세요!\n> 닉네임은 영문과 숫자 조합만 가능합니다!\n> 이메일은 '계정@도메인.최상위도메인' 형식으로 입력해주세요!\n> 비밀번호 첫 글자는 대문자로 설정해주세요! \n> 비밀번호에 숫자와 특수문자(!, ?, #, *) 사용을 허용합니다!"
+        regulationsLabel.numberOfLines = 0
+        regulationsLabel.font = .systemFont(ofSize: 15, weight: .thin)
+        regulationsLabel.setLineSpacing(5)
     }
 }
