@@ -67,6 +67,8 @@ final class SignUpViewController: UIViewController {
                                 self.showToast(message: "필수값을 입력해주세요.")
                             case .unavailable:
                                 self.showToast(message: "사용이 불가능한 이메일입니다.")
+                            default:
+                                break
                             }
                         }
                     }
@@ -104,18 +106,17 @@ final class SignUpViewController: UIViewController {
         }
         .disposed(by: disposeBag)
         
-        if let nickname = signUpView.nicknameTextField.text,
-           let email = signUpView.emailTextField.text,
-           let password = signUpView.passwordTextField.text {
-            output.signUpButtonTap
-                .bind(with: self) { owner, _ in
-                    NetworkManager.shared.createSignUp(
-                        nickname: nickname,
-                        email: email,
-                        password: password)
-                    print("회원가입 버튼 클릭됨")
-                }
-                .disposed(by: disposeBag)
-        }
+        output.signUpButtonTap
+            .bind(with: self) { owner, _ in
+                guard let nickname = owner.signUpView.nicknameTextField.text,
+                      let email = owner.signUpView.emailTextField.text,
+                      let password = owner.signUpView.passwordTextField.text else { return }
+                
+                NetworkManager.shared.createSignUp(
+                    nickname: nickname,
+                    email: email,
+                    password: password)
+            }
+            .disposed(by: disposeBag)
     }
 }
