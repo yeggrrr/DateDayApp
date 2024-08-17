@@ -1,5 +1,5 @@
 //
-//  SignUpQuery.swift
+//  APIQuery.swift
 //  DateDayApp
 //
 //  Created by YJ on 8/16/24.
@@ -11,4 +11,8 @@ struct SignUpQuery: Encodable {
     let nick: String
     let email: String
     let password: String
+}
+
+struct validEmailQuery: Encodable {
+    let email: String
 }
