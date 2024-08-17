@@ -36,6 +36,9 @@
 		68CED3862C6F50390043266A /* SignUpViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68CED3852C6F50390043266A /* SignUpViewModel.swift */; };
 		68CED3882C70A6160043266A /* ValidationEmailModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68CED3872C70A6160043266A /* ValidationEmailModel.swift */; };
 		68CED38A2C70AD210043266A /* UIViewController+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68CED3892C70AD210043266A /* UIViewController+.swift */; };
+		68CED38C2C70B6B90043266A /* LoginModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68CED38B2C70B6B90043266A /* LoginModel.swift */; };
+		68CED38E2C70B9510043266A /* UserDefaultsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68CED38D2C70B9510043266A /* UserDefaultsManager.swift */; };
+		68CED3942C70BC4C0043266A /* FeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68CED3932C70BC4C0043266A /* FeedViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -65,6 +68,9 @@
 		68CED3852C6F50390043266A /* SignUpViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewModel.swift; sourceTree = "<group>"; };
 		68CED3872C70A6160043266A /* ValidationEmailModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValidationEmailModel.swift; sourceTree = "<group>"; };
 		68CED3892C70AD210043266A /* UIViewController+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+.swift"; sourceTree = "<group>"; };
+		68CED38B2C70B6B90043266A /* LoginModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginModel.swift; sourceTree = "<group>"; };
+		68CED38D2C70B9510043266A /* UserDefaultsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsManager.swift; sourceTree = "<group>"; };
+		68CED3932C70BC4C0043266A /* FeedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -125,6 +131,7 @@
 		68CED35F2C6E14730043266A /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				68CED38F2C70B9570043266A /* DataStorage */,
 				68CED3822C6F4F380043266A /* Model */,
 				68CED37F2C6F4DB20043266A /* RequestModel */,
 				68CED3702C6F2F800043266A /* Network */,
@@ -150,6 +157,7 @@
 				68CED33C2C6C8EF40043266A /* ReviewListViewController.swift */,
 				68CED3622C6F1FE50043266A /* Login */,
 				68CED3732C6F2FD60043266A /* SignUp */,
+				68CED3922C70BC3A0043266A /* Feed */,
 			);
 			path = Presentation;
 			sourceTree = "<group>";
@@ -207,8 +215,25 @@
 			children = (
 				68CED3832C6F4F410043266A /* SignUpModel.swift */,
 				68CED3872C70A6160043266A /* ValidationEmailModel.swift */,
+				68CED38B2C70B6B90043266A /* LoginModel.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		68CED38F2C70B9570043266A /* DataStorage */ = {
+			isa = PBXGroup;
+			children = (
+				68CED38D2C70B9510043266A /* UserDefaultsManager.swift */,
+			);
+			path = DataStorage;
+			sourceTree = "<group>";
+		};
+		68CED3922C70BC3A0043266A /* Feed */ = {
+			isa = PBXGroup;
+			children = (
+				68CED3932C70BC4C0043266A /* FeedViewController.swift */,
+			);
+			path = Feed;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -298,9 +323,11 @@
 				68CED37E2C6F4BCA0043266A /* Header.swift in Sources */,
 				68CED37C2C6F357C0043266A /* TargetType.swift in Sources */,
 				68CED33D2C6C8EF40043266A /* ReviewListViewController.swift in Sources */,
+				68CED38C2C70B6B90043266A /* LoginModel.swift in Sources */,
 				68CED3842C6F4F410043266A /* SignUpModel.swift in Sources */,
 				68CED36F2C6F2BD70043266A /* BaseViewModel.swift in Sources */,
 				68CED3882C70A6160043266A /* ValidationEmailModel.swift in Sources */,
+				68CED38E2C70B9510043266A /* UserDefaultsManager.swift in Sources */,
 				68CED3862C6F50390043266A /* SignUpViewModel.swift in Sources */,
 				68CED36B2C6F22160043266A /* ViewRepresentable.swift in Sources */,
 				68CED3682C6F20DE0043266A /* LoginView.swift in Sources */,
@@ -315,6 +342,7 @@
 				68CED3662C6F20240043266A /* View+.swift in Sources */,
 				68CED33B2C6C8EF40043266A /* SceneDelegate.swift in Sources */,
 				68CED3812C6F4DC30043266A /* APIQuery.swift in Sources */,
+				68CED3942C70BC4C0043266A /* FeedViewController.swift in Sources */,
 				68CED36D2C6F2AA20043266A /* LoginViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
