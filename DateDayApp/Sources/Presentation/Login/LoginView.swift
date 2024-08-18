@@ -8,8 +8,7 @@
 import UIKit
 import SnapKit
 
-// TODO: UI Extension으로 빼기
-final class LoginView: UIView, ViewRepresentable {
+final class LoginView: BaseView {
     // MARK: UI
     private let inputStackView = UIStackView()
     private let emailTextFieldView = UIView()
@@ -20,26 +19,15 @@ final class LoginView: UIView, ViewRepresentable {
     let loginButton = UIButton()
     let signUpButton = UIButton(type: .system)
     
-    // MARK: View Life Cycle
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        
-        addSubviews()
-        setConstraints()
-        configureUI()
-    }
-    
-    required init?(coder: NSCoder) { fatalError("init(coder:) has not been implemented") }
-    
     // MARK: Functions
-    func addSubviews() {
+    override func addSubviews() {
         addSubviews([inputStackView, loginButton, signUpButton, signUpLabel])
         inputStackView.addArrangedSubviews([emailTextFieldView, passwordTextFieldView])
         emailTextFieldView.addSubview(emailTextField)
         passwordTextFieldView.addSubview(passwordTextField)
     }
     
-    func setConstraints() {
+    override func setConstraints() {
         let safeArea = safeAreaLayoutGuide
         
         inputStackView.snp.makeConstraints {
@@ -77,32 +65,27 @@ final class LoginView: UIView, ViewRepresentable {
         }
     }
     
-    func configureUI() {
-        backgroundColor = .white
+    override func configureUI() {
+        super.configureUI()
         
-        inputStackView.axis = .vertical
-        inputStackView.distribution = .fillEqually
-        inputStackView.alignment = .fill
-        inputStackView.spacing = 5
+        inputStackView.setUI(
+            axis: .vertical,
+            distribution: .fillEqually,
+            alignment: .fill,
+            spacing: 5)
         
-        emailTextFieldView.layer.borderWidth = 1
-        emailTextFieldView.layer.borderColor = UIColor.black.cgColor
+        emailTextFieldView.loginUI()
+        passwordTextFieldView.loginUI()
         emailTextField.placeholder = "이메일을 입력해주세요"
-        
-        passwordTextFieldView.layer.borderWidth = 1
-        passwordTextFieldView.layer.borderColor = UIColor.black.cgColor
         passwordTextField.placeholder = "비밀번호를 입력해주세요"
         
-        loginButton.setTitle("로그인", for: .normal)
-        loginButton.setTitleColor(.black, for: .normal)
-        loginButton.layer.cornerRadius = 20
-        loginButton.layer.borderColor = UIColor.black.cgColor
-        loginButton.layer.borderWidth = 1
+        signUpLabel.setUI(
+            txt: "처음 방문하시나요?",
+            txtAlignment: .center,
+            font: .systemFont(ofSize: 17, weight: .semibold),
+            txtColor: .black)
         
-        signUpLabel.text = "처음 방문하시나요?"
-        signUpLabel.font = .systemFont(ofSize: 17, weight: .semibold)
-        
-        signUpButton.setTitle("회원가입", for: .normal)
-        signUpButton.setTitleColor(.systemBlue, for: .normal)
+        loginButton.roundUI(title: "로그인")
+        signUpButton.basicUI(title: "회원가입", color: .systemBlue)
     }
 }

@@ -27,4 +27,12 @@ extension UILabel {
 
         self.attributedText = attributedString
     }
+    
+    func setUI(txt: String, txtAlignment: NSTextAlignment = .left, font: UIFont, numOfLines: Int = 0, txtColor: UIColor) {
+        text = txt
+        textAlignment = textAlignment
+        self.font = font
+        numberOfLines = numOfLines
+        textColor = txtColor
+    }
 }
