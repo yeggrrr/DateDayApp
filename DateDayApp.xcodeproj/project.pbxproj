@@ -40,6 +40,8 @@
 		68CED38E2C70B9510043266A /* UserDefaultsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68CED38D2C70B9510043266A /* UserDefaultsManager.swift */; };
 		68CED3942C70BC4C0043266A /* FeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68CED3932C70BC4C0043266A /* FeedViewController.swift */; };
 		68CED3962C70D7C60043266A /* UILabel+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68CED3952C70D7C60043266A /* UILabel+.swift */; };
+		68CED3982C71D8D70043266A /* FeedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68CED3972C71D8D70043266A /* FeedView.swift */; };
+		68CED39A2C71D9A60043266A /* FeedViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68CED3992C71D9A60043266A /* FeedViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -73,6 +75,8 @@
 		68CED38D2C70B9510043266A /* UserDefaultsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsManager.swift; sourceTree = "<group>"; };
 		68CED3932C70BC4C0043266A /* FeedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedViewController.swift; sourceTree = "<group>"; };
 		68CED3952C70D7C60043266A /* UILabel+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+.swift"; sourceTree = "<group>"; };
+		68CED3972C71D8D70043266A /* FeedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedView.swift; sourceTree = "<group>"; };
+		68CED3992C71D9A60043266A /* FeedViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -235,6 +239,8 @@
 			isa = PBXGroup;
 			children = (
 				68CED3932C70BC4C0043266A /* FeedViewController.swift */,
+				68CED3972C71D8D70043266A /* FeedView.swift */,
+				68CED3992C71D9A60043266A /* FeedViewModel.swift */,
 			);
 			path = Feed;
 			sourceTree = "<group>";
@@ -333,12 +339,14 @@
 				68CED38E2C70B9510043266A /* UserDefaultsManager.swift in Sources */,
 				68CED3862C6F50390043266A /* SignUpViewModel.swift in Sources */,
 				68CED36B2C6F22160043266A /* ViewRepresentable.swift in Sources */,
+				68CED3982C71D8D70043266A /* FeedView.swift in Sources */,
 				68CED3682C6F20DE0043266A /* LoginView.swift in Sources */,
 				68CED3722C6F2F8C0043266A /* NetworkManager.swift in Sources */,
 				68CED3392C6C8EF40043266A /* AppDelegate.swift in Sources */,
 				68CED3752C6F2FEC0043266A /* SignUpViewController.swift in Sources */,
 				68CED34F2C6C8F540043266A /* APIKey.swift in Sources */,
 				68CED3772C6F300A0043266A /* SignUpView.swift in Sources */,
+				68CED39A2C71D9A60043266A /* FeedViewModel.swift in Sources */,
 				68CED38A2C70AD210043266A /* UIViewController+.swift in Sources */,
 				68CED3962C70D7C60043266A /* UILabel+.swift in Sources */,
 				68CED3642C6F1FF80043266A /* LoginViewController.swift in Sources */,
