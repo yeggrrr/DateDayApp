@@ -8,29 +8,17 @@
 import UIKit
 import SnapKit
 
-final class FeedView: UIView, ViewRepresentable {
+final class FeedView: BaseView {
     
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        
-        addSubviews()
-        setConstraints()
-        configureUI()
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    func addSubviews() {
+    override func addSubviews() {
         print("")
     }
     
-    func setConstraints() {
+    override func setConstraints() {
         print("")
     }
     
-    func configureUI() {
-        backgroundColor = .white
+    override func configureUI() {
+        super.configureUI()
     }
 }

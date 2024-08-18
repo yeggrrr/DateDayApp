@@ -87,5 +87,8 @@ final class LoginView: BaseView {
         
         loginButton.roundUI(title: "로그인")
         signUpButton.basicUI(title: "회원가입", color: .systemBlue)
+        
+        emailTextField.text = "yegr@yegr.com" // 임시
+        passwordTextField.text = "yegr123123" // 임시
     }
 }

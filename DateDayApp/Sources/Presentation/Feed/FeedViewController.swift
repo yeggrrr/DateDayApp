@@ -20,10 +20,11 @@ final class FeedViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        configure()
     }
     
-    func configure() {
-        self.showToast(message: "로그인 성공! :)")
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        showToast(message: "로그인 성공! :)")
     }
 }
