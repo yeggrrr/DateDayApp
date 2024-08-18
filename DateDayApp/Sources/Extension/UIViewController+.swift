@@ -20,8 +20,8 @@ extension UIViewController {
     // Custom ToastAlert
     func showToast(message : String) {
         let toastLabel = UILabel(
-            frame: CGRect(x: self.view.frame.size.width / 2 - 160,
-                          y: self.view.frame.size.height - 100,
+            frame: CGRect(x: view.frame.size.width / 2 - 160,
+                          y: view.frame.size.height - 100,
                           width: 320,
                           height: 40))
         
@@ -33,7 +33,7 @@ extension UIViewController {
         toastLabel.alpha = 1.0
         toastLabel.layer.cornerRadius = 10
         toastLabel.clipsToBounds  =  true
-        self.view.addSubview(toastLabel)
+        view.addSubview(toastLabel)
         UIView.animate(withDuration: 3.0, delay: 0.5, options: .curveLinear, animations: {
             toastLabel.alpha = 0.0
         }, completion: { isCompleted in

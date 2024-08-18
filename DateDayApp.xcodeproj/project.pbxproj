@@ -49,6 +49,11 @@
 		68CED3A72C71E4C40043266A /* UITextField+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68CED3A62C71E4C40043266A /* UITextField+.swift */; };
 		68CED3A92C71E5A10043266A /* UIImageView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68CED3A82C71E5A10043266A /* UIImageView+.swift */; };
 		68CED3AB2C71E64C0043266A /* UIScrollView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68CED3AA2C71E64C0043266A /* UIScrollView+.swift */; };
+		68CED3AD2C720AFA0043266A /* FeedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68CED3AC2C720AFA0043266A /* FeedCell.swift */; };
+		68CED3AF2C720B5B0043266A /* ReusableProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68CED3AE2C720B5B0043266A /* ReusableProtocol.swift */; };
+		68CED3B22C720DC70043266A /* DateDayTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68CED3B12C720DC70043266A /* DateDayTabBarController.swift */; };
+		68CED3B62C720EE00043266A /* PickedListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68CED3B52C720EE00043266A /* PickedListViewController.swift */; };
+		68CED3B82C720F010043266A /* MyPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68CED3B72C720F000043266A /* MyPageViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -91,6 +96,11 @@
 		68CED3A62C71E4C40043266A /* UITextField+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextField+.swift"; sourceTree = "<group>"; };
 		68CED3A82C71E5A10043266A /* UIImageView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+.swift"; sourceTree = "<group>"; };
 		68CED3AA2C71E64C0043266A /* UIScrollView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIScrollView+.swift"; sourceTree = "<group>"; };
+		68CED3AC2C720AFA0043266A /* FeedCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedCell.swift; sourceTree = "<group>"; };
+		68CED3AE2C720B5B0043266A /* ReusableProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReusableProtocol.swift; sourceTree = "<group>"; };
+		68CED3B12C720DC70043266A /* DateDayTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateDayTabBarController.swift; sourceTree = "<group>"; };
+		68CED3B52C720EE00043266A /* PickedListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickedListViewController.swift; sourceTree = "<group>"; };
+		68CED3B72C720F000043266A /* MyPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -186,6 +196,9 @@
 				68CED3622C6F1FE50043266A /* Login */,
 				68CED3732C6F2FD60043266A /* SignUp */,
 				68CED3922C70BC3A0043266A /* Feed */,
+				68CED3B32C720EB50043266A /* PickedList */,
+				68CED3B42C720ECC0043266A /* MyPage */,
+				68CED3B02C720D8A0043266A /* TabBar */,
 			);
 			path = Presentation;
 			sourceTree = "<group>";
@@ -205,6 +218,7 @@
 			children = (
 				68CED36A2C6F22160043266A /* ViewRepresentable.swift */,
 				68CED36E2C6F2BD70043266A /* BaseViewModel.swift */,
+				68CED3AE2C720B5B0043266A /* ReusableProtocol.swift */,
 			);
 			path = Protocol;
 			sourceTree = "<group>";
@@ -260,6 +274,7 @@
 			isa = PBXGroup;
 			children = (
 				68CED3932C70BC4C0043266A /* FeedViewController.swift */,
+				68CED3AC2C720AFA0043266A /* FeedCell.swift */,
 				68CED3972C71D8D70043266A /* FeedView.swift */,
 				68CED3992C71D9A60043266A /* FeedViewModel.swift */,
 			);
@@ -272,6 +287,30 @@
 				68CED3A42C71E1D60043266A /* BaseView.swift */,
 			);
 			path = Base;
+			sourceTree = "<group>";
+		};
+		68CED3B02C720D8A0043266A /* TabBar */ = {
+			isa = PBXGroup;
+			children = (
+				68CED3B12C720DC70043266A /* DateDayTabBarController.swift */,
+			);
+			path = TabBar;
+			sourceTree = "<group>";
+		};
+		68CED3B32C720EB50043266A /* PickedList */ = {
+			isa = PBXGroup;
+			children = (
+				68CED3B52C720EE00043266A /* PickedListViewController.swift */,
+			);
+			path = PickedList;
+			sourceTree = "<group>";
+		};
+		68CED3B42C720ECC0043266A /* MyPage */ = {
+			isa = PBXGroup;
+			children = (
+				68CED3B72C720F000043266A /* MyPageViewController.swift */,
+			);
+			path = MyPage;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -365,7 +404,9 @@
 				68CED3842C6F4F410043266A /* SignUpModel.swift in Sources */,
 				68CED36F2C6F2BD70043266A /* BaseViewModel.swift in Sources */,
 				68CED3882C70A6160043266A /* ValidationEmailModel.swift in Sources */,
+				68CED3B82C720F010043266A /* MyPageViewController.swift in Sources */,
 				68CED39C2C71DBDD0043266A /* UIStackView+.swift in Sources */,
+				68CED3B62C720EE00043266A /* PickedListViewController.swift in Sources */,
 				68CED38E2C70B9510043266A /* UserDefaultsManager.swift in Sources */,
 				68CED3862C6F50390043266A /* SignUpViewModel.swift in Sources */,
 				68CED36B2C6F22160043266A /* ViewRepresentable.swift in Sources */,
@@ -374,15 +415,18 @@
 				68CED3682C6F20DE0043266A /* LoginView.swift in Sources */,
 				68CED3722C6F2F8C0043266A /* NetworkManager.swift in Sources */,
 				68CED3392C6C8EF40043266A /* AppDelegate.swift in Sources */,
+				68CED3B22C720DC70043266A /* DateDayTabBarController.swift in Sources */,
 				68CED3752C6F2FEC0043266A /* SignUpViewController.swift in Sources */,
 				68CED34F2C6C8F540043266A /* APIKey.swift in Sources */,
 				68CED3772C6F300A0043266A /* SignUpView.swift in Sources */,
 				68CED39A2C71D9A60043266A /* FeedViewModel.swift in Sources */,
 				68CED3A22C71DE950043266A /* UIButton+.swift in Sources */,
+				68CED3AD2C720AFA0043266A /* FeedCell.swift in Sources */,
 				68CED3A52C71E1D60043266A /* BaseView.swift in Sources */,
 				68CED38A2C70AD210043266A /* UIViewController+.swift in Sources */,
 				68CED3962C70D7C60043266A /* UILabel+.swift in Sources */,
 				68CED3642C6F1FF80043266A /* LoginViewController.swift in Sources */,
+				68CED3AF2C720B5B0043266A /* ReusableProtocol.swift in Sources */,
 				68CED37A2C6F35320043266A /* Router.swift in Sources */,
 				68CED3A02C71DDED0043266A /* UIView+.swift in Sources */,
 				68CED3AB2C71E64C0043266A /* UIScrollView+.swift in Sources */,

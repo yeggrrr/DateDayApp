@@ -53,7 +53,7 @@ final class LoginViewController: UIViewController {
                         case .success(let success):
                             UserDefaultsManager.shared.refresh = success.refreshToken
                             UserDefaultsManager.shared.token = success.accessToken
-                            self.setRootViewController(FeedViewController())
+                            self.setRootViewController(DateDayTabBarController())
                         case .failure(let failure):
                             switch failure {
                             case .missingRequiredValue:
