@@ -105,7 +105,7 @@ final class SignUpView: BaseView {
         }
         
         regulationsLabel.snp.makeConstraints {
-            $0.top.equalTo(regulationsInfoLabel.snp.bottom).offset(5)
+            $0.top.equalTo(regulationsInfoLabel.snp.bottom).offset(10)
             $0.horizontalEdges.equalTo(regulationsInfoContentView.snp.horizontalEdges).inset(10)
             $0.bottom.equalTo(regulationsInfoContentView.snp.bottom).offset(-10)
         }
@@ -142,10 +142,10 @@ final class SignUpView: BaseView {
             font: .systemFont(ofSize: 17, weight: .semibold),
             txtColor: .black)
         
-        regulationsLabel.setLineSpacing(8)
         regulationsLabel.setUI(
             txt: "[닉네임]\n2글자 이상, 영문 숫자 조합만 가능\n[비밀번호]\n첫 글자는 대문자, 숫자와 특수문자(!, ?, #, *) 조합 가능",
             font: .systemFont(ofSize: 15, weight: .thin),
             txtColor: .black)
+        regulationsLabel.setLineSpacing(8)
     }
 }
