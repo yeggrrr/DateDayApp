@@ -99,7 +99,7 @@ final class LoginView: UIView, ViewRepresentable {
         loginButton.layer.borderColor = UIColor.black.cgColor
         loginButton.layer.borderWidth = 1
         
-        signUpLabel.text = "처음 방문하셨다면?"
+        signUpLabel.text = "처음 방문하시나요?"
         signUpLabel.font = .systemFont(ofSize: 17, weight: .semibold)
         
         signUpButton.setTitle("회원가입", for: .normal)
