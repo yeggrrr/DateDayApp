@@ -163,10 +163,11 @@ final class SignUpView: UIView, ViewRepresentable {
         regulationsInfoScrollView.showsVerticalScrollIndicator = false
         
         regulationsInfoLabel.text = "<주의사항>"
+        regulationsInfoLabel.font = .systemFont(ofSize: 17, weight: .semibold)
         
-        regulationsLabel.text = "> 닉네임은 2글자 이상으로 설정해주세요!\n> 닉네임은 영문과 숫자 조합만 가능합니다!\n> 이메일은 '계정@도메인.최상위도메인' 형식으로 입력해주세요!\n> 비밀번호 첫 글자는 대문자로 설정해주세요! \n> 비밀번호에 숫자와 특수문자(!, ?, #, *) 사용을 허용합니다!"
+        regulationsLabel.text = "[닉네임]\n2글자 이상, 영문 숫자 조합만 가능\n[비밀번호]\n첫 글자는 대문자, 숫자와 특수문자(!, ?, #, *) 조합 가능"
         regulationsLabel.numberOfLines = 0
         regulationsLabel.font = .systemFont(ofSize: 15, weight: .thin)
-        regulationsLabel.setLineSpacing(5)
+        regulationsLabel.setLineSpacing(8)
     }
 }

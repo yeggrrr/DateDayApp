@@ -12,6 +12,7 @@ enum ValidationError: Error {
     case missingRequiredValue
     case unavailable
     case accountVerificationRequired
+    case alreadySignedUp
 }
 
 final class NetworkManager {
@@ -19,19 +20,29 @@ final class NetworkManager {
     
     private init() { }
     
-    func createSignUp(nickname: String, email: String, password: String) {
+    func createSignUp(nickname: String, email: String, password: String, completion: @escaping (Result<SignUpModel, ValidationError>) -> Void) {
         do {
             let query = SignUpQuery(nick: nickname, email: email, password: password)
             let request = try Router.signUp(query: query).asURLRequest()
             
-            AF.request(request).responseDecodable(of: SignUpModel.self) { response in
-                switch response.result {
-                case .success(let value):
-                    print("success!!: \(value)")
-                case .failure(let error):
-                    print("error: \(error)")
+            AF.request(request)
+                .validate(statusCode: 200..<300)
+                .responseDecodable(of: SignUpModel.self) { response in
+                    switch response.result {
+                    case .success(let success):
+                        completion(.success(success))
+                    case .failure(_):
+                        let statusCode = response.response?.statusCode
+                        switch statusCode {
+                        case 400:
+                            completion(.failure(.missingRequiredValue))
+                        case 409:
+                            completion(.failure(.alreadySignedUp))
+                        default:
+                            break
+                        }
+                    }
                 }
-            }
         } catch {
             print("error 발생!! - error:", error)
         }

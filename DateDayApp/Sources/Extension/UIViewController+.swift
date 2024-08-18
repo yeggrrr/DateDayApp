@@ -34,10 +34,17 @@ extension UIViewController {
         toastLabel.layer.cornerRadius = 10
         toastLabel.clipsToBounds  =  true
         self.view.addSubview(toastLabel)
-        UIView.animate(withDuration: 3.0, delay: 0.2, options: .curveLinear, animations: {
+        UIView.animate(withDuration: 3.0, delay: 0.5, options: .curveLinear, animations: {
             toastLabel.alpha = 0.0
         }, completion: { isCompleted in
             toastLabel.removeFromSuperview()
         })
+    }
+    
+    func okShowAlert(title: String, message: String, completion: @escaping (UIAlertAction) -> Void) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        let okButton = UIAlertAction(title: "확인", style: .default, handler: completion)
+        alert.addAction(okButton)
+        present(alert, animated: true)
     }
 }

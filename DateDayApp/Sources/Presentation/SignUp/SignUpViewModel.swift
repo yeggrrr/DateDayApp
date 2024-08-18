@@ -29,7 +29,7 @@ final class SignUpViewModel: BaseViewModel {
         let nicknameValidation = input.nicknameText.orEmpty
             .map { self.validateNickname($0) }
         let emailValidation = input.emailText.orEmpty
-            .debounce(.seconds(1), scheduler: MainScheduler.instance)
+            .debounce(.milliseconds(500), scheduler: MainScheduler.instance)
             .distinctUntilChanged()
             .map { self.validateEmail($0) }
         let passwordValidation = input.passwordText.orEmpty

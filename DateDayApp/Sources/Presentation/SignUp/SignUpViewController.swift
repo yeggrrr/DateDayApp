@@ -116,7 +116,23 @@ final class SignUpViewController: UIViewController {
                 NetworkManager.shared.createSignUp(
                     nickname: nickname,
                     email: email,
-                    password: password)
+                    password: password) { result in
+                        switch result {
+                        case .success(let success):
+                            self.okShowAlert(title: "회원가입이 완료되었습니다.", message: "") { _ in
+                                self.setRootViewController(LoginViewController())
+                            }
+                        case .failure(let failure):
+                            switch failure {
+                            case .missingRequiredValue:
+                                self.showToast(message: "필수값을 채워주세요! :)")
+                            case .alreadySignedUp:
+                                self.showToast(message: "이미 가입한 유저입니다. :)")
+                            default:
+                                break
+                            }
+                        }
+                }
             }
             .disposed(by: disposeBag)
     }

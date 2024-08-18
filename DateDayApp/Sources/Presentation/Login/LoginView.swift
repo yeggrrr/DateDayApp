@@ -8,6 +8,7 @@
 import UIKit
 import SnapKit
 
+// TODO: UI Extension으로 빼기
 final class LoginView: UIView, ViewRepresentable {
     // MARK: UI
     private let inputStackView = UIStackView()
