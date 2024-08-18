@@ -41,13 +41,7 @@ final class SignUpViewController: UIViewController {
         
         output.nicknameValidation
             .bind(with: self) { owner, value in
-                if value {
-                    owner.signUpView.nicknameValidImageView.tintColor = .systemGreen
-                    owner.signUpView.nicknameValidImageView.image = UIImage(systemName: "checkmark.circle.fill")
-                } else {
-                    owner.signUpView.nicknameValidImageView.tintColor = .systemRed
-                    owner.signUpView.nicknameValidImageView.image = UIImage(systemName: "xmark.circle.fill")
-                }
+                owner.updateCheckIcon(isValid: value, imageView: owner.signUpView.nicknameValidImageView)
             }
             .disposed(by: disposeBag)
         
@@ -58,11 +52,9 @@ final class SignUpViewController: UIViewController {
                     NetworkManager.shared.validationEmail(email: emailText) { result in
                         switch result {
                         case .success(_):
-                            owner.signUpView.emailValidImageView.tintColor = .systemGreen
-                            owner.signUpView.emailValidImageView.image = UIImage(systemName: "checkmark.circle.fill")
+                            owner.updateCheckIcon(isValid: true, imageView: owner.signUpView.emailValidImageView)
                         case .failure(let failure):
-                            owner.signUpView.emailValidImageView.tintColor = .systemRed
-                            owner.signUpView.emailValidImageView.image = UIImage(systemName: "xmark.circle.fill")
+                            owner.updateCheckIcon(isValid: false, imageView: owner.signUpView.emailValidImageView)
                             switch failure {
                             case .missingRequiredValue:
                                 self.showToast(message: "필수값을 입력해주세요.")
@@ -82,13 +74,7 @@ final class SignUpViewController: UIViewController {
         
         output.passwordValidation
             .bind(with: self) { owner, value in
-                if value {
-                    owner.signUpView.passwordValidImageView.tintColor = .systemGreen
-                    owner.signUpView.passwordValidImageView.image = UIImage(systemName: "checkmark.circle.fill")
-                } else {
-                    owner.signUpView.passwordValidImageView.tintColor = .systemRed
-                    owner.signUpView.passwordValidImageView.image = UIImage(systemName: "xmark.circle.fill")
-                }
+                owner.updateCheckIcon(isValid: value, imageView: owner.signUpView.passwordValidImageView)
             }
             .disposed(by: disposeBag)
         
@@ -135,5 +121,15 @@ final class SignUpViewController: UIViewController {
                 }
             }
             .disposed(by: disposeBag)
+    }
+    
+    func updateCheckIcon(isValid: Bool, imageView: UIImageView) {
+        if isValid {
+            imageView.tintColor = .systemGreen
+            imageView.image = UIImage(systemName: "checkmark.circle.fill")
+        } else {
+            imageView.tintColor = .systemRed
+            imageView.image = UIImage(systemName: "xmark.circle.fill")
+        }
     }
 }
