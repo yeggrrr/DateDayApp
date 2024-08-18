@@ -46,6 +46,9 @@
 		68CED3A02C71DDED0043266A /* UIView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68CED39F2C71DDED0043266A /* UIView+.swift */; };
 		68CED3A22C71DE950043266A /* UIButton+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68CED3A12C71DE950043266A /* UIButton+.swift */; };
 		68CED3A52C71E1D60043266A /* BaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68CED3A42C71E1D60043266A /* BaseView.swift */; };
+		68CED3A72C71E4C40043266A /* UITextField+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68CED3A62C71E4C40043266A /* UITextField+.swift */; };
+		68CED3A92C71E5A10043266A /* UIImageView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68CED3A82C71E5A10043266A /* UIImageView+.swift */; };
+		68CED3AB2C71E64C0043266A /* UIScrollView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68CED3AA2C71E64C0043266A /* UIScrollView+.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -85,6 +88,9 @@
 		68CED39F2C71DDED0043266A /* UIView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+.swift"; sourceTree = "<group>"; };
 		68CED3A12C71DE950043266A /* UIButton+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+.swift"; sourceTree = "<group>"; };
 		68CED3A42C71E1D60043266A /* BaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseView.swift; sourceTree = "<group>"; };
+		68CED3A62C71E4C40043266A /* UITextField+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextField+.swift"; sourceTree = "<group>"; };
+		68CED3A82C71E5A10043266A /* UIImageView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+.swift"; sourceTree = "<group>"; };
+		68CED3AA2C71E64C0043266A /* UIScrollView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIScrollView+.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -166,6 +172,9 @@
 				68CED39B2C71DBDD0043266A /* UIStackView+.swift */,
 				68CED39F2C71DDED0043266A /* UIView+.swift */,
 				68CED3A12C71DE950043266A /* UIButton+.swift */,
+				68CED3A62C71E4C40043266A /* UITextField+.swift */,
+				68CED3A82C71E5A10043266A /* UIImageView+.swift */,
+				68CED3AA2C71E64C0043266A /* UIScrollView+.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -361,6 +370,7 @@
 				68CED3862C6F50390043266A /* SignUpViewModel.swift in Sources */,
 				68CED36B2C6F22160043266A /* ViewRepresentable.swift in Sources */,
 				68CED3982C71D8D70043266A /* FeedView.swift in Sources */,
+				68CED3A92C71E5A10043266A /* UIImageView+.swift in Sources */,
 				68CED3682C6F20DE0043266A /* LoginView.swift in Sources */,
 				68CED3722C6F2F8C0043266A /* NetworkManager.swift in Sources */,
 				68CED3392C6C8EF40043266A /* AppDelegate.swift in Sources */,
@@ -375,11 +385,13 @@
 				68CED3642C6F1FF80043266A /* LoginViewController.swift in Sources */,
 				68CED37A2C6F35320043266A /* Router.swift in Sources */,
 				68CED3A02C71DDED0043266A /* UIView+.swift in Sources */,
+				68CED3AB2C71E64C0043266A /* UIScrollView+.swift in Sources */,
 				68CED3662C6F20240043266A /* addSubviews+.swift in Sources */,
 				68CED33B2C6C8EF40043266A /* SceneDelegate.swift in Sources */,
 				68CED3812C6F4DC30043266A /* APIQuery.swift in Sources */,
 				68CED3942C70BC4C0043266A /* FeedViewController.swift in Sources */,
 				68CED36D2C6F2AA20043266A /* LoginViewModel.swift in Sources */,
+				68CED3A72C71E4C40043266A /* UITextField+.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

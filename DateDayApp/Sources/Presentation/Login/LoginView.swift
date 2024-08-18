@@ -74,8 +74,8 @@ final class LoginView: BaseView {
             alignment: .fill,
             spacing: 5)
         
-        emailTextFieldView.loginUI()
-        passwordTextFieldView.loginUI()
+        emailTextFieldView.basicUI()
+        passwordTextFieldView.basicUI()
         emailTextField.placeholder = "이메일을 입력해주세요"
         passwordTextField.placeholder = "비밀번호를 입력해주세요"
         

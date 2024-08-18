@@ -8,7 +8,7 @@
 import UIKit
 
 extension UIView {
-    func loginUI() {
+    func basicUI() {
         layer.borderWidth = 1
         layer.borderColor = UIColor.black.cgColor
     }

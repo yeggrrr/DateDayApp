@@ -8,7 +8,7 @@
 import UIKit
 import SnapKit
 
-final class SignUpView: UIView, ViewRepresentable {
+final class SignUpView: BaseView {
     private let inputStackView = UIStackView()
     private let nicknameTextFieldView = UIView()
     private let emailTextFieldView = UIView()
@@ -27,17 +27,7 @@ final class SignUpView: UIView, ViewRepresentable {
     let passwordValidImageView = UIImageView()
     let signUpButton = UIButton()
     
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        
-        addSubviews()
-        setConstraints()
-        configureUI()
-    }
-    
-    required init?(coder: NSCoder) { fatalError("init(coder:) has not been implemented") }
-    
-    func addSubviews() {
+    override func addSubviews() {
         addSubviews([inputStackView, signUpButton, nicknameValidImageView, emailValidImageView, passwordValidImageView, regulationsInfoScrollView])
         regulationsInfoScrollView.addSubview(regulationsInfoContentView)
         regulationsInfoContentView.addSubviews([regulationsInfoLabel, regulationsLabel])
@@ -47,7 +37,7 @@ final class SignUpView: UIView, ViewRepresentable {
         passwordTextFieldView.addSubview(passwordTextField)
     }
     
-    func setConstraints() {
+    override func setConstraints() {
         let safeArea = safeAreaLayoutGuide
         let scrollViewFrame = regulationsInfoScrollView.frameLayoutGuide // horizontalEdges
         let scrollViewContent = regulationsInfoScrollView.contentLayoutGuide // verticalEdges
@@ -121,53 +111,41 @@ final class SignUpView: UIView, ViewRepresentable {
         }
     }
     
-    func configureUI() {
-        backgroundColor = .white
+    override func configureUI() {
+        super.configureUI()
+ 
+        inputStackView.setUI(
+            axis: .vertical,
+            distribution: .fillEqually,
+            alignment: .fill,
+            spacing: 5)
         
-        inputStackView.axis = .vertical
-        inputStackView.distribution = .fillEqually
-        inputStackView.alignment = .fill
-        inputStackView.spacing = 5
+        nicknameTextFieldView.basicUI()
+        emailTextFieldView.basicUI()
+        passwordTextFieldView.basicUI()
         
-        nicknameTextFieldView.layer.borderWidth = 1
-        nicknameTextFieldView.layer.borderColor = UIColor.black.cgColor
-        nicknameTextField.placeholder = "닉네임을 입력해주세요"
-        nicknameTextField.keyboardType = .asciiCapable
+        nicknameTextField.setUI(placeholder: "닉네임을 입력해주세요", keyboardType: .asciiCapable)
+        emailTextField.setUI(placeholder: "이메일을 입력해주세요", keyboardType: .emailAddress)
+        passwordTextField.setUI(placeholder: "비밀번호를 입력해주세요", keyboardType: .asciiCapable)
         
-        emailTextFieldView.layer.borderWidth = 1
-        emailTextFieldView.layer.borderColor = UIColor.black.cgColor
-        emailTextField.placeholder = "이메일을 입력해주세요"
-        emailTextField.keyboardType = .emailAddress
+        signUpButton.roundUI(title: "회원가입")
         
-        passwordTextFieldView.layer.borderWidth = 1
-        passwordTextFieldView.layer.borderColor = UIColor.black.cgColor
-        passwordTextField.placeholder = "비밀번호를 입력해주세요"
-        passwordTextField.keyboardType = .asciiCapable
+        nicknameValidImageView.initialIconUI()
+        emailValidImageView.initialIconUI()
+        passwordValidImageView.initialIconUI()
         
-        signUpButton.setTitle("회원가입", for: .normal)
-        signUpButton.setTitleColor(.black, for: .normal)
-        signUpButton.layer.cornerRadius = 20
-        signUpButton.layer.borderColor = UIColor.black.cgColor
-        signUpButton.layer.borderWidth = 1
+        regulationsInfoScrollView.signUpUI()
         
-        nicknameValidImageView.tintColor = .systemRed
-        emailValidImageView.tintColor = .systemRed
-        passwordValidImageView.tintColor = .systemRed
-        nicknameValidImageView.image = UIImage(systemName: "xmark.circle.fill")
-        emailValidImageView.image = UIImage(systemName: "xmark.circle.fill")
-        passwordValidImageView.image = UIImage(systemName: "xmark.circle.fill")
+        regulationsInfoLabel.setUI(
+            txt: "<주의사항>",
+            txtAlignment: .center,
+            font: .systemFont(ofSize: 17, weight: .semibold),
+            txtColor: .black)
         
-        regulationsInfoScrollView.backgroundColor = .systemGray6
-        regulationsInfoScrollView.layer.borderWidth = 1
-        regulationsInfoScrollView.layer.borderColor = UIColor.darkGray.cgColor
-        regulationsInfoScrollView.showsVerticalScrollIndicator = false
-        
-        regulationsInfoLabel.text = "<주의사항>"
-        regulationsInfoLabel.font = .systemFont(ofSize: 17, weight: .semibold)
-        
-        regulationsLabel.text = "[닉네임]\n2글자 이상, 영문 숫자 조합만 가능\n[비밀번호]\n첫 글자는 대문자, 숫자와 특수문자(!, ?, #, *) 조합 가능"
-        regulationsLabel.numberOfLines = 0
-        regulationsLabel.font = .systemFont(ofSize: 15, weight: .thin)
         regulationsLabel.setLineSpacing(8)
+        regulationsLabel.setUI(
+            txt: "[닉네임]\n2글자 이상, 영문 숫자 조합만 가능\n[비밀번호]\n첫 글자는 대문자, 숫자와 특수문자(!, ?, #, *) 조합 가능",
+            font: .systemFont(ofSize: 15, weight: .thin),
+            txtColor: .black)
     }
 }
