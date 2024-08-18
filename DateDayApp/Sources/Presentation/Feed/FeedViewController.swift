@@ -7,14 +7,15 @@
 
 import UIKit
 
-// TODO: 로그인 경로로 들어온 경우에만 toast 나오도록 수정
 final class FeedViewController: UIViewController {
     // MARK: UI
     let feedView = FeedView()
     let cellSpacing: CGFloat = 5
     
     // MARK: Properties
+    var isAfterLoggedIn = false
     
+    // MARK: View Life Cycle
     override func loadView() {
         view = feedView
     }
@@ -22,9 +23,20 @@ final class FeedViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        isAfterLoggedIn = true
         configureCollectionView()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        if isAfterLoggedIn  {
+            showToast(message: "로그인 성공! :)", heightY: 500, delayTime: 0.5)
+            isAfterLoggedIn = false
+        }
+    }
+    
+    // MARK: Functions
     private func configureCollectionView() {
         feedView.collectionView.delegate = self
         feedView.collectionView.dataSource = self
