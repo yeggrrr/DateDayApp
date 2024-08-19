@@ -6,6 +6,8 @@
 //
 
 import UIKit
+import RxSwift
+import RxCocoa
 
 final class FeedViewController: UIViewController {
     // MARK: UI
@@ -14,6 +16,7 @@ final class FeedViewController: UIViewController {
     
     // MARK: Properties
     var isAfterLoggedIn = false
+    private let disposeBag = DisposeBag()
     
     // MARK: View Life Cycle
     override func loadView() {
@@ -25,6 +28,7 @@ final class FeedViewController: UIViewController {
         
         isAfterLoggedIn = true
         configureCollectionView()
+        configure()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -42,6 +46,28 @@ final class FeedViewController: UIViewController {
         feedView.collectionView.dataSource = self
         feedView.collectionView.register(FeedCell.self, forCellWithReuseIdentifier: FeedCell.id)
         feedView.collectionView.showsVerticalScrollIndicator = false
+    }
+    
+    private func configure() {
+        // navigation
+        navigationItem.rightBarButtonItem = rightBarButtonItem()
+        navigationItem.title = "DATE DAY"
+        navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: self, action: nil)
+        navigationItem.backBarButtonItem?.tintColor = .black
+    }
+    
+    private func rightBarButtonItem() -> UIBarButtonItem {
+        let button = UIButton()
+        button.setImage(UIImage(systemName: "magnifyingglass"), for: .normal)
+        button.tintColor = .black
+        
+        button.rx.tap
+            .bind(with: self) { owner, _ in
+                let vc = SearchViewController()
+                owner.navigationController?.pushViewController(vc, animated: true)
+            }
+            .disposed(by: disposeBag)
+        return UIBarButtonItem(customView: button)
     }
 }
 
