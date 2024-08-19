@@ -59,6 +59,10 @@
 		68CED3C72C73298F0043266A /* UISearchBar+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68CED3C62C73298E0043266A /* UISearchBar+.swift */; };
 		68CED3CA2C732DF40043266A /* WriteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68CED3C92C732DF40043266A /* WriteViewController.swift */; };
 		68CED3CC2C732E180043266A /* WriteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68CED3CB2C732E180043266A /* WriteView.swift */; };
+		68CED3CF2C7338710043266A /* Cosmos in Frameworks */ = {isa = PBXBuildFile; productRef = 68CED3CE2C7338710043266A /* Cosmos */; };
+		68CED3D12C733E980043266A /* StarViewControllerEX.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68CED3D02C733E980043266A /* StarViewControllerEX.swift */; };
+		68CED3D52C7340B50043266A /* SelectPhotoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68CED3D42C7340B50043266A /* SelectPhotoViewController.swift */; };
+		68CED3D72C7340CF0043266A /* SelectPhotoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68CED3D62C7340CF0043266A /* SelectPhotoView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -111,6 +115,9 @@
 		68CED3C62C73298E0043266A /* UISearchBar+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UISearchBar+.swift"; sourceTree = "<group>"; };
 		68CED3C92C732DF40043266A /* WriteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WriteViewController.swift; sourceTree = "<group>"; };
 		68CED3CB2C732E180043266A /* WriteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WriteView.swift; sourceTree = "<group>"; };
+		68CED3D02C733E980043266A /* StarViewControllerEX.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StarViewControllerEX.swift; sourceTree = "<group>"; };
+		68CED3D42C7340B50043266A /* SelectPhotoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectPhotoViewController.swift; sourceTree = "<group>"; };
+		68CED3D62C7340CF0043266A /* SelectPhotoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectPhotoView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -118,6 +125,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				68CED3CF2C7338710043266A /* Cosmos in Frameworks */,
 				68CED3582C6C915C0043266A /* SnapKit in Frameworks */,
 				68CED3552C6C91500043266A /* Kingfisher in Frameworks */,
 				68CED35D2C6C916C0043266A /* RxSwift in Frameworks */,
@@ -208,7 +216,7 @@
 				68CED3732C6F2FD60043266A /* SignUp */,
 				68CED3922C70BC3A0043266A /* Feed */,
 				68CED3C12C73183B0043266A /* Search */,
-				68CED3C82C732DD80043266A /* Write */,
+				68CED3C82C732DD80043266A /* WriteReview */,
 				68CED3B32C720EB50043266A /* PickedList */,
 				68CED3B42C720ECC0043266A /* MyPage */,
 				68CED3B02C720D8A0043266A /* TabBar */,
@@ -335,7 +343,26 @@
 			path = Search;
 			sourceTree = "<group>";
 		};
-		68CED3C82C732DD80043266A /* Write */ = {
+		68CED3C82C732DD80043266A /* WriteReview */ = {
+			isa = PBXGroup;
+			children = (
+				68CED3D02C733E980043266A /* StarViewControllerEX.swift */,
+				68CED3D22C73406B0043266A /* SelectPhoto */,
+				68CED3D32C7340850043266A /* Write */,
+			);
+			path = WriteReview;
+			sourceTree = "<group>";
+		};
+		68CED3D22C73406B0043266A /* SelectPhoto */ = {
+			isa = PBXGroup;
+			children = (
+				68CED3D42C7340B50043266A /* SelectPhotoViewController.swift */,
+				68CED3D62C7340CF0043266A /* SelectPhotoView.swift */,
+			);
+			path = SelectPhoto;
+			sourceTree = "<group>";
+		};
+		68CED3D32C7340850043266A /* Write */ = {
 			isa = PBXGroup;
 			children = (
 				68CED3C92C732DF40043266A /* WriteViewController.swift */,
@@ -366,6 +393,7 @@
 				68CED3572C6C915C0043266A /* SnapKit */,
 				68CED35A2C6C916C0043266A /* RxCocoa */,
 				68CED35C2C6C916C0043266A /* RxSwift */,
+				68CED3CE2C7338710043266A /* Cosmos */,
 			);
 			productName = DateDayApp;
 			productReference = 68CED3352C6C8EF40043266A /* DateDayApp.app */;
@@ -400,6 +428,7 @@
 				68CED3532C6C91500043266A /* XCRemoteSwiftPackageReference "Kingfisher" */,
 				68CED3562C6C915C0043266A /* XCRemoteSwiftPackageReference "SnapKit" */,
 				68CED3592C6C916C0043266A /* XCRemoteSwiftPackageReference "RxSwift" */,
+				68CED3CD2C7338710043266A /* XCRemoteSwiftPackageReference "Cosmos" */,
 			);
 			productRefGroup = 68CED3362C6C8EF40043266A /* Products */;
 			projectDirPath = "";
@@ -431,6 +460,7 @@
 				68CED37E2C6F4BCA0043266A /* Header.swift in Sources */,
 				68CED37C2C6F357C0043266A /* TargetType.swift in Sources */,
 				68CED3CA2C732DF40043266A /* WriteViewController.swift in Sources */,
+				68CED3D12C733E980043266A /* StarViewControllerEX.swift in Sources */,
 				68CED33D2C6C8EF40043266A /* ReviewListViewController.swift in Sources */,
 				68CED38C2C70B6B90043266A /* LoginModel.swift in Sources */,
 				68CED3842C6F4F410043266A /* SignUpModel.swift in Sources */,
@@ -452,12 +482,14 @@
 				68CED3C72C73298F0043266A /* UISearchBar+.swift in Sources */,
 				68CED3392C6C8EF40043266A /* AppDelegate.swift in Sources */,
 				68CED3B22C720DC70043266A /* DateDayTabBarController.swift in Sources */,
+				68CED3D72C7340CF0043266A /* SelectPhotoView.swift in Sources */,
 				68CED3752C6F2FEC0043266A /* SignUpViewController.swift in Sources */,
 				68CED34F2C6C8F540043266A /* APIKey.swift in Sources */,
 				68CED3772C6F300A0043266A /* SignUpView.swift in Sources */,
 				68CED39A2C71D9A60043266A /* FeedViewModel.swift in Sources */,
 				68CED3A22C71DE950043266A /* UIButton+.swift in Sources */,
 				68CED3AD2C720AFA0043266A /* FeedCell.swift in Sources */,
+				68CED3D52C7340B50043266A /* SelectPhotoViewController.swift in Sources */,
 				68CED3A52C71E1D60043266A /* BaseView.swift in Sources */,
 				68CED38A2C70AD210043266A /* UIViewController+.swift in Sources */,
 				68CED3962C70D7C60043266A /* UILabel+.swift in Sources */,
@@ -726,6 +758,14 @@
 				minimumVersion = 6.7.1;
 			};
 		};
+		68CED3CD2C7338710043266A /* XCRemoteSwiftPackageReference "Cosmos" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/evgenyneu/Cosmos.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 25.0.1;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -753,6 +793,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 68CED3592C6C916C0043266A /* XCRemoteSwiftPackageReference "RxSwift" */;
 			productName = RxSwift;
+		};
+		68CED3CE2C7338710043266A /* Cosmos */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 68CED3CD2C7338710043266A /* XCRemoteSwiftPackageReference "Cosmos" */;
+			productName = Cosmos;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

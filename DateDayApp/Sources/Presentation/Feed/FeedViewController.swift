@@ -64,12 +64,10 @@ final class FeedViewController: UIViewController {
         
         output.writeButtonTap
             .bind(with: self) { owner, _ in
-                let vc = WriteViewController()
+                let vc = SelectPhotoViewController()
                 owner.navigationController?.pushViewController(vc, animated: true)
             }
             .disposed(by: disposeBag)
-        
-        
     }
     
     private func rightBarButtonItem() -> UIBarButtonItem {
@@ -83,6 +81,7 @@ final class FeedViewController: UIViewController {
                 owner.navigationController?.pushViewController(vc, animated: true)
             }
             .disposed(by: disposeBag)
+        
         return UIBarButtonItem(customView: button)
     }
 }
