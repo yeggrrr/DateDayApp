@@ -85,7 +85,12 @@ final class LoginView: BaseView {
             font: .systemFont(ofSize: 17, weight: .semibold),
             txtColor: .black)
         
-        loginButton.roundUI(title: "로그인")
+        loginButton.roundUI(
+            title: "로그인",
+            bgColor: .primaryTappable,
+            borderColor: UIColor.primaryTappableBorder.cgColor,
+            borderWidth: 3)
+        
         signUpButton.basicUI(title: "회원가입", color: .systemBlue)
         
         emailTextField.text = "yegr@yegr.com" // 임시

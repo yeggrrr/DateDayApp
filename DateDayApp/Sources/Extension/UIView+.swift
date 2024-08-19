@@ -11,5 +11,6 @@ extension UIView {
     func basicUI() {
         layer.borderWidth = 1
         layer.borderColor = UIColor.black.cgColor
+        backgroundColor = .white
     }
 }

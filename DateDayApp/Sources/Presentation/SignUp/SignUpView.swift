@@ -128,7 +128,7 @@ final class SignUpView: BaseView {
         emailTextField.setUI(placeholder: "이메일을 입력해주세요", keyboardType: .emailAddress)
         passwordTextField.setUI(placeholder: "비밀번호를 입력해주세요", keyboardType: .asciiCapable)
         
-        signUpButton.roundUI(title: "회원가입")
+        signUpButton.roundUI(title: "회원가입", bgColor: .white, borderColor: UIColor.black.cgColor)
         
         nicknameValidImageView.initialIconUI()
         emailValidImageView.initialIconUI()

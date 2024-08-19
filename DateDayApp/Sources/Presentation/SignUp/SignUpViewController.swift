@@ -85,7 +85,11 @@ final class SignUpViewController: UIViewController {
         .bind(with: self) { owner, value in
             if value.0 && value.1 && value.2 {
                 owner.signUpView.signUpButton.isEnabled = true
-                owner.signUpView.signUpButton.backgroundColor = .primaryCustom
+                owner.signUpView.signUpButton.roundUI(
+                    title: "회원가입",
+                    bgColor: .primaryTappable,
+                    borderColor: UIColor.primaryTappableBorder.cgColor,
+                    borderWidth: 3)
             } else {
                 owner.signUpView.signUpButton.isEnabled = false
                 owner.signUpView.signUpButton.backgroundColor = .white
