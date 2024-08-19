@@ -16,6 +16,7 @@ final class FeedViewController: UIViewController {
     
     // MARK: Properties
     var isAfterLoggedIn = false
+    private let viewModel = FeedViewModel()
     private let disposeBag = DisposeBag()
     
     // MARK: View Life Cycle
@@ -29,6 +30,7 @@ final class FeedViewController: UIViewController {
         isAfterLoggedIn = true
         configureCollectionView()
         configure()
+        bind()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -54,6 +56,20 @@ final class FeedViewController: UIViewController {
         navigationItem.title = "DATE DAY"
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: self, action: nil)
         navigationItem.backBarButtonItem?.tintColor = .black
+    }
+    
+    private func bind() {
+        let input = FeedViewModel.Input(writeButtonTap: feedView.writeButton.rx.tap)
+        let output = viewModel.transform(input: input)
+        
+        output.writeButtonTap
+            .bind(with: self) { owner, _ in
+                let vc = WriteViewController()
+                owner.navigationController?.pushViewController(vc, animated: true)
+            }
+            .disposed(by: disposeBag)
+        
+        
     }
     
     private func rightBarButtonItem() -> UIBarButtonItem {

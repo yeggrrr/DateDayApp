@@ -12,14 +12,14 @@ import RxCocoa
 final class FeedViewModel: BaseViewModel {
     
     struct Input {
-        
+        let writeButtonTap: ControlEvent<Void>
     }
     
     struct Output {
-        
+        let writeButtonTap: ControlEvent<Void>
     }
     
     func transform(input: Input) -> Output {
-        return Output()
+        return Output(writeButtonTap: input.writeButtonTap)
     }
 }

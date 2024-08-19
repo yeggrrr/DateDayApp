@@ -57,6 +57,8 @@
 		68CED3C32C73184B0043266A /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68CED3C22C73184B0043266A /* SearchViewController.swift */; };
 		68CED3C52C73186B0043266A /* SearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68CED3C42C73186B0043266A /* SearchView.swift */; };
 		68CED3C72C73298F0043266A /* UISearchBar+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68CED3C62C73298E0043266A /* UISearchBar+.swift */; };
+		68CED3CA2C732DF40043266A /* WriteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68CED3C92C732DF40043266A /* WriteViewController.swift */; };
+		68CED3CC2C732E180043266A /* WriteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68CED3CB2C732E180043266A /* WriteView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -107,6 +109,8 @@
 		68CED3C22C73184B0043266A /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		68CED3C42C73186B0043266A /* SearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchView.swift; sourceTree = "<group>"; };
 		68CED3C62C73298E0043266A /* UISearchBar+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UISearchBar+.swift"; sourceTree = "<group>"; };
+		68CED3C92C732DF40043266A /* WriteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WriteViewController.swift; sourceTree = "<group>"; };
+		68CED3CB2C732E180043266A /* WriteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WriteView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -204,6 +208,7 @@
 				68CED3732C6F2FD60043266A /* SignUp */,
 				68CED3922C70BC3A0043266A /* Feed */,
 				68CED3C12C73183B0043266A /* Search */,
+				68CED3C82C732DD80043266A /* Write */,
 				68CED3B32C720EB50043266A /* PickedList */,
 				68CED3B42C720ECC0043266A /* MyPage */,
 				68CED3B02C720D8A0043266A /* TabBar */,
@@ -330,6 +335,15 @@
 			path = Search;
 			sourceTree = "<group>";
 		};
+		68CED3C82C732DD80043266A /* Write */ = {
+			isa = PBXGroup;
+			children = (
+				68CED3C92C732DF40043266A /* WriteViewController.swift */,
+				68CED3CB2C732E180043266A /* WriteView.swift */,
+			);
+			path = Write;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -416,6 +430,7 @@
 			files = (
 				68CED37E2C6F4BCA0043266A /* Header.swift in Sources */,
 				68CED37C2C6F357C0043266A /* TargetType.swift in Sources */,
+				68CED3CA2C732DF40043266A /* WriteViewController.swift in Sources */,
 				68CED33D2C6C8EF40043266A /* ReviewListViewController.swift in Sources */,
 				68CED38C2C70B6B90043266A /* LoginModel.swift in Sources */,
 				68CED3842C6F4F410043266A /* SignUpModel.swift in Sources */,
@@ -429,6 +444,7 @@
 				68CED38E2C70B9510043266A /* UserDefaultsManager.swift in Sources */,
 				68CED3862C6F50390043266A /* SignUpViewModel.swift in Sources */,
 				68CED36B2C6F22160043266A /* ViewRepresentable.swift in Sources */,
+				68CED3CC2C732E180043266A /* WriteView.swift in Sources */,
 				68CED3982C71D8D70043266A /* FeedView.swift in Sources */,
 				68CED3A92C71E5A10043266A /* UIImageView+.swift in Sources */,
 				68CED3682C6F20DE0043266A /* LoginView.swift in Sources */,
