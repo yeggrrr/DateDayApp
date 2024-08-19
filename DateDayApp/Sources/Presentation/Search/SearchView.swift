@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SnapKit
 
 final class SearchView: BaseView {
     let searchBar = UISearchBar()
@@ -31,6 +32,6 @@ final class SearchView: BaseView {
     override func configureUI() {
         super.configureUI()
         
-        collectionView.backgroundColor = .systemGray
+        searchBar.setUI(placeholder: "검색")
     }
 }

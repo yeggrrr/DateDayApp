@@ -25,7 +25,5 @@ final class FeedView: BaseView {
     
     override func configureUI() {
         super.configureUI()
-        
-        collectionView.backgroundColor = .systemGray
     }
 }

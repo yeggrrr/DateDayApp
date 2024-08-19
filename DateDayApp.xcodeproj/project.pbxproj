@@ -56,6 +56,7 @@
 		68CED3B82C720F010043266A /* MyPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68CED3B72C720F000043266A /* MyPageViewController.swift */; };
 		68CED3C32C73184B0043266A /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68CED3C22C73184B0043266A /* SearchViewController.swift */; };
 		68CED3C52C73186B0043266A /* SearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68CED3C42C73186B0043266A /* SearchView.swift */; };
+		68CED3C72C73298F0043266A /* UISearchBar+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68CED3C62C73298E0043266A /* UISearchBar+.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -105,6 +106,7 @@
 		68CED3B72C720F000043266A /* MyPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageViewController.swift; sourceTree = "<group>"; };
 		68CED3C22C73184B0043266A /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		68CED3C42C73186B0043266A /* SearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchView.swift; sourceTree = "<group>"; };
+		68CED3C62C73298E0043266A /* UISearchBar+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UISearchBar+.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -189,6 +191,7 @@
 				68CED3A62C71E4C40043266A /* UITextField+.swift */,
 				68CED3A82C71E5A10043266A /* UIImageView+.swift */,
 				68CED3AA2C71E64C0043266A /* UIScrollView+.swift */,
+				68CED3C62C73298E0043266A /* UISearchBar+.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -430,6 +433,7 @@
 				68CED3A92C71E5A10043266A /* UIImageView+.swift in Sources */,
 				68CED3682C6F20DE0043266A /* LoginView.swift in Sources */,
 				68CED3722C6F2F8C0043266A /* NetworkManager.swift in Sources */,
+				68CED3C72C73298F0043266A /* UISearchBar+.swift in Sources */,
 				68CED3392C6C8EF40043266A /* AppDelegate.swift in Sources */,
 				68CED3B22C720DC70043266A /* DateDayTabBarController.swift in Sources */,
 				68CED3752C6F2FEC0043266A /* SignUpViewController.swift in Sources */,
