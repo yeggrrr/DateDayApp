@@ -87,8 +87,8 @@ final class LoginView: BaseView {
         
         loginButton.roundUI(
             title: "로그인",
-            bgColor: .primaryTappable,
-            borderColor: UIColor.primaryTappableBorder.cgColor,
+            bgColor: .primaryButtonBg,
+            borderColor: UIColor.primaryBorder.cgColor,
             borderWidth: 3)
         
         signUpButton.basicUI(title: "회원가입", color: .systemBlue)

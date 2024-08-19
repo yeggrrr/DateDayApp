@@ -121,7 +121,7 @@ final class FeedCell: UICollectionViewCell, ViewRepresentable {
     }
     
     func configureUI() {
-        contentView.backgroundColor = .white
+        backgroundColor = .white
         titleLabel.font = .systemFont(ofSize: 17, weight: .bold)
         categoryLabel.font = .systemFont(ofSize: 15, weight: .medium)
         reviewLabel.numberOfLines = 0
@@ -136,16 +136,14 @@ final class FeedCell: UICollectionViewCell, ViewRepresentable {
         likeLabel.font = .systemFont(ofSize: 13, weight: .regular)
         markLabel.font = .systemFont(ofSize: 13, weight: .regular)
         starRatingInfoLabel.font = .systemFont(ofSize: 13, weight: .regular)
+        contentView.layer.borderWidth = 1
+        contentView.layer.borderColor = UIColor.primaryBorder.cgColor
+        mainImageView.backgroundColor = .systemBrown
         
         // 임시
-        mainImageView.backgroundColor = .systemBrown
-        detailView.backgroundColor = .systemGray
         titleLabel.text = "공방 이름"
         categoryLabel.text = "문화,예술 > 미술,공예 > 화방"
-        categoryLabel.textColor = .darkGray
-        reviewBackgroundView.backgroundColor = .systemGray3
         reviewLabel.text = "제가 가본 새얀뜨개 공방은 우선 층고가 꽤 높은 신축 상가 건물 1층이었어요. 위치도 환경도 깔끔했습니다. 층고가 높은 덕에 폭이 좁았지만 답답한 느낌이 전혀 없었고, 상가 주차장 잘 되어있고 입점 가게가 부담하는 주차비용도 저렴한 편이라고 하셨어요. 아직 상가 입점이 모두 완료 된 것이 아니라 비어있는 자리도 있었지만 꽤 많은 가게들이 활발하게 영업을 하고 있었습니다. 전체적으로 깔끔하고 짙은 갈색의 원목 가구들로 통일감을 줘서 분위기 있는 공방이었어요."
-        etcInfoView.backgroundColor = .systemGray5
         likeLabel.text = "3"
         markLabel.text = "12"
         starRatingInfoLabel.text = "5.0"

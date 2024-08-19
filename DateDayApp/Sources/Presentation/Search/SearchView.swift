@@ -9,9 +9,11 @@ import UIKit
 import SnapKit
 
 final class SearchView: BaseView {
+    // MARK: UI
     let searchBar = UISearchBar()
     let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout.init())
     
+    // MARK: Functions
     override func addSubviews() {
         addSubviews([searchBar, collectionView])
     }
@@ -32,6 +34,7 @@ final class SearchView: BaseView {
     override func configureUI() {
         super.configureUI()
         
+        collectionView.backgroundColor = .primaryCustomLight
         searchBar.setUI(placeholder: "검색")
     }
 }
