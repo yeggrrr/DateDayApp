@@ -12,6 +12,7 @@ enum Router {
     case signUp(query: SignUpQuery)
     case validation(query: validEmailQuery)
     case login(query: LoginQuery)
+    case tokenRenewal
 }
 
 extension Router: TargetType {
@@ -27,6 +28,8 @@ extension Router: TargetType {
             return .post
         case .login:
             return .post
+        case .tokenRenewal:
+            return .get
         }
     }
     
@@ -38,6 +41,8 @@ extension Router: TargetType {
             return "/validation/email"
         case .login:
             return "/users/login"
+        case .tokenRenewal:
+            return "/auth/refresh"
         }
     }
     
@@ -56,6 +61,12 @@ extension Router: TargetType {
         case .login:
             return [
                 Header.contentType.rawValue: Header.json.rawValue,
+                Header.sesac.rawValue: APIKey.secretkey
+            ]
+        case .tokenRenewal:
+            return [
+                Header.authorization.rawValue: UserDefaultsManager.shared.token,
+                Header.refresh.rawValue: UserDefaultsManager.shared.refresh,
                 Header.sesac.rawValue: APIKey.secretkey
             ]
         }
@@ -78,6 +89,8 @@ extension Router: TargetType {
             return try? encoder.encode(query)
         case .login(let query):
             return try? encoder.encode(query)
+        case .tokenRenewal:
+            return nil
         }
     }
 }

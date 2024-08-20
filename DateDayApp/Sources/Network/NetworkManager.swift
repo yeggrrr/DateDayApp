@@ -10,24 +10,18 @@ import Alamofire
 import RxSwift
 import RxCocoa
 
-enum ValidationError: Error {
-    case missingRequiredValue
-    case unavailable
-    case accountVerificationRequired
-    case alreadySignedUp
-    case nicknamesContainingSpaces
-}
-
 final class NetworkManager {
     static let shared = NetworkManager()
     
     private init() { }
     
-    func createSignUp(nickname: String, email: String, password: String) -> Single<Result<SignUpModel, ValidationError>> {
+    // MARK: 회원가입
+    func createSignUp(nickname: String, email: String, password: String) -> Single<Result<SignUpModel, HTTPStatusCodes>> {
         return Single.create { observer -> Disposable in
             do {
                 let query = SignUpQuery(nick: nickname, email: email, password: password)
                 let request = try Router.signUp(query: query).asURLRequest()
+                
                 AF.request(request)
                     .validate(statusCode: 200..<300)
                     .responseDecodable(of: SignUpModel.self) { response in
@@ -40,7 +34,7 @@ final class NetworkManager {
                             case 400:
                                 observer(.success(.failure(.missingRequiredValue)))
                             case 402:
-                                observer(.success(.failure(.nicknamesContainingSpaces)))
+                                observer(.success(.failure(.noSpacesAllowed)))
                             case 409:
                                 observer(.success(.failure(.alreadySignedUp)))
                             default:
@@ -58,7 +52,8 @@ final class NetworkManager {
         
     }
     
-    func validationEmail(email: String) -> Single<Result<ValidationEmailModel, ValidationError>> {
+    // MARK: 이메일 중복 확인
+    func validationEmail(email: String) -> Single<Result<ValidationEmailModel, HTTPStatusCodes>> {
         return Single.create { observer -> Disposable in
             do {
                 let query = validEmailQuery(email: email)
@@ -76,7 +71,7 @@ final class NetworkManager {
                             case 400:
                                 observer(.success(.failure(.missingRequiredValue)))
                             case 409:
-                                observer(.success(.failure(.unavailable)))
+                                observer(.success(.failure(.alreadySignedUp)))
                             default:
                                 break
                             }
@@ -92,11 +87,13 @@ final class NetworkManager {
         .debug("validationEmail 네트워크 통신")
     }
     
-    func createLogin(email: String, password: String) -> Single<Result<LoginModel, ValidationError>> {
+    // MARK: 로그인
+    func createLogin(email: String, password: String) -> Single<Result<LoginModel, HTTPStatusCodes>> {
         return Single.create { observer -> Disposable in
             do {
                 let query = LoginQuery(email: email, password: password)
                 let request = try Router.login(query: query).asURLRequest()
+                
                 AF.request(request)
                     .validate(statusCode: 200..<300)
                     .responseDecodable(of: LoginModel.self) { response in
@@ -109,7 +106,7 @@ final class NetworkManager {
                             case 400:
                                 observer(.success(.failure(.missingRequiredValue)))
                             case 401:
-                                observer(.success(.failure(.accountVerificationRequired)))
+                                observer(.success(.failure(.mismatchOrInvalid)))
                             default:
                                 break
                             }
@@ -118,8 +115,35 @@ final class NetworkManager {
             } catch {
                 print("error 발생!! - error:", error)
             }
+            
             return Disposables.create()
         }
         .debug("createLogin 네트워크 통신")
+    }
+    
+    // MARK: Token 갱신
+    func tokenUpdate(completion: @escaping (Result<TokenUpdateModel, HTTPStatusCodes>) -> Void) {
+        do {
+            let request = try Router.tokenRenewal.asURLRequest()
+            
+            AF.request(request)
+                .validate(statusCode: 200..<300)
+                .responseDecodable(of: TokenUpdateModel.self) { response in
+                    switch response.result {
+                    case .success(let success):
+                        completion(.success(success))
+                    case .failure(_):
+                        let statusCode = response.response?.statusCode
+                        switch statusCode {
+                        case 401:
+                            completion(.failure(.mismatchOrInvalid))
+                        default:
+                            break
+                        }
+                    }
+                }
+        } catch {
+            print("error 발생!! - error:", error)
+        }
     }
 }

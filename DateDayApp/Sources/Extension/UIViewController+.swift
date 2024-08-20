@@ -47,4 +47,20 @@ extension UIViewController {
         alert.addAction(okButton)
         present(alert, animated: true)
     }
+    
+    func updateToken() {
+        NetworkManager.shared.tokenUpdate { result in
+            switch result {
+            case .success(let success):
+                UserDefaultsManager.shared.token = success.accessToken
+            case .failure(let failure):
+                switch failure {
+                case .refreshTokenExpiration:
+                    self.setRootViewController(LoginViewController())
+                default:
+                    break
+                }
+            }
+        }
+    }
 }
