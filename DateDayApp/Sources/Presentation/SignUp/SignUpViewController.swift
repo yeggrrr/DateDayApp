@@ -59,7 +59,7 @@ final class SignUpViewController: UIViewController {
                                 switch failure {
                                 case .missingRequiredValue:
                                     self.showToast(message: "필수값을 입력해주세요.")
-                                case .unavailable:
+                                case .alreadySignedUp:
                                     self.showToast(message: "사용이 불가능한 이메일입니다.")
                                 default:
                                     break
@@ -119,7 +119,7 @@ final class SignUpViewController: UIViewController {
                             switch failure {
                             case .missingRequiredValue:
                                 self.showToast(message: "필수값을 채워주세요! :)")
-                            case .nicknamesContainingSpaces:
+                            case .noSpacesAllowed:
                                 self.showToast(message: "닉네임에 공백이 포함되어 있습니다! :)")
                             case .alreadySignedUp:
                                 self.showToast(message: "이미 가입한 유저입니다. :)")

@@ -57,7 +57,7 @@ final class LoginViewController: UIViewController {
                             switch failure {
                             case .missingRequiredValue:
                                 self.showToast(message: "필수값을 채워주세요! :)")
-                            case .accountVerificationRequired:
+                            case .alreadySignedUp:
                                 self.showToast(message: "계정을 확인해주세요! :)")
                             default:
                                 break
