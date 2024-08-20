@@ -79,4 +79,8 @@ final class LoginViewController: UIViewController {
             }
             .disposed(by: disposeBag)
     }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        view.endEditing(true)
+    }
 }

@@ -147,4 +147,8 @@ final class SignUpViewController: UIViewController {
             imageView.image = UIImage(systemName: "xmark.circle.fill")
         }
     }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        view.endEditing(true)
+    }
 }
