@@ -46,9 +46,8 @@ final class LoginViewController: UIViewController {
                 guard let email = owner.loginView.emailTextField.text,
                       let password = owner.loginView.passwordTextField.text else { return }
                 
-                NetworkManager.shared.createLogin(
-                    email: email,
-                    password: password) { result in
+                NetworkManager.shared.createLogin(email: email, password: password)
+                    .subscribe(with: self) { owner, result in
                         switch result {
                         case .success(let success):
                             UserDefaultsManager.shared.refresh = success.refreshToken
@@ -64,7 +63,12 @@ final class LoginViewController: UIViewController {
                                 break
                             }
                         }
+                    } onFailure: { owner, error in
+                        print("error: \(error)")
+                    } onDisposed: { owner in
+                        print("Disposed")
                     }
+                    .disposed(by: owner.disposeBag)
             }
             .disposed(by: disposeBag)
         

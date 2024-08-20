@@ -9,7 +9,7 @@ import UIKit
 import RxSwift
 import RxCocoa
 
-// TODO: KeyboardDismiss
+// TODO: KeyboardDismiss / Nickname 중복 UI 변경 / 반복 코드 처리
 final class SignUpViewController: UIViewController {
     // MARK: UI
     private let signUpView = SignUpView()
@@ -49,22 +49,28 @@ final class SignUpViewController: UIViewController {
             .bind(with: self) { owner, value in
                 guard let emailText = owner.signUpView.emailTextField.text else { return }
                 if value {
-                    NetworkManager.shared.validationEmail(email: emailText) { result in
-                        switch result {
-                        case .success(_):
-                            owner.updateCheckIcon(isValid: true, imageView: owner.signUpView.emailValidImageView)
-                        case .failure(let failure):
-                            owner.updateCheckIcon(isValid: false, imageView: owner.signUpView.emailValidImageView)
-                            switch failure {
-                            case .missingRequiredValue:
-                                self.showToast(message: "필수값을 입력해주세요.")
-                            case .unavailable:
-                                self.showToast(message: "사용이 불가능한 이메일입니다.")
-                            default:
-                                break
+                    NetworkManager.shared.validationEmail(email: emailText)
+                        .subscribe(with: self) { owner, result in
+                            switch result {
+                            case .success(_):
+                                owner.updateCheckIcon(isValid: true, imageView: owner.signUpView.emailValidImageView)
+                            case .failure(let failure):
+                                owner.updateCheckIcon(isValid: false, imageView: owner.signUpView.emailValidImageView)
+                                switch failure {
+                                case .missingRequiredValue:
+                                    self.showToast(message: "필수값을 입력해주세요.")
+                                case .unavailable:
+                                    self.showToast(message: "사용이 불가능한 이메일입니다.")
+                                default:
+                                    break
+                                }
                             }
+                        } onFailure: { owner, error in
+                            print("Failed:: \(error)")
+                        } onDisposed: { owner in
+                            print("Disposed")
                         }
-                    }
+                        .disposed(by: owner.disposeBag)
                 } else {
                     owner.signUpView.emailValidImageView.tintColor = .systemRed
                     owner.signUpView.emailValidImageView.image = UIImage(systemName: "xmark.circle.fill")
@@ -102,13 +108,10 @@ final class SignUpViewController: UIViewController {
                 guard let nickname = owner.signUpView.nicknameTextField.text,
                       let email = owner.signUpView.emailTextField.text,
                       let password = owner.signUpView.passwordTextField.text else { return }
-                
-                NetworkManager.shared.createSignUp(
-                    nickname: nickname,
-                    email: email,
-                    password: password) { result in
+                NetworkManager.shared.createSignUp(nickname: nickname, email: email, password: password)
+                    .subscribe(with: self) { owner, result in
                         switch result {
-                        case .success(let success):
+                        case .success(_):
                             self.okShowAlert(title: "회원가입이 완료되었습니다.", message: "") { _ in
                                 self.setRootViewController(LoginViewController())
                             }
@@ -116,13 +119,21 @@ final class SignUpViewController: UIViewController {
                             switch failure {
                             case .missingRequiredValue:
                                 self.showToast(message: "필수값을 채워주세요! :)")
+                            case .nicknamesContainingSpaces:
+                                self.showToast(message: "닉네임에 공백이 포함되어 있습니다! :)")
                             case .alreadySignedUp:
                                 self.showToast(message: "이미 가입한 유저입니다. :)")
                             default:
                                 break
                             }
                         }
-                }
+                    } onFailure: { owner, error in
+                        print("Failed:: \(error)")
+                    } onDisposed: { owner in
+                        print("Disposed")
+                    }
+                    .disposed(by: owner.disposeBag)
+
             }
             .disposed(by: disposeBag)
     }
