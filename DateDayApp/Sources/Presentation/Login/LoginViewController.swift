@@ -52,6 +52,7 @@ final class LoginViewController: UIViewController {
                         case .success(let success):
                             UserDefaultsManager.shared.refresh = success.refreshToken
                             UserDefaultsManager.shared.token = success.accessToken
+                            UserDefaultsManager.shared.saveTime = DateFormatter.dateToStringFormatter.string(from: Date())
                             self.setRootViewController(DateDayTabBarController())
                         case .failure(let failure):
                             switch failure {

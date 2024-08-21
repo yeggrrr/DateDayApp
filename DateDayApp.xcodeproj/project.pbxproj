@@ -10,6 +10,7 @@
 		683477CE2C74F98300D0931B /* HTTPStatusCodes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683477CD2C74F98300D0931B /* HTTPStatusCodes.swift */; };
 		683477D02C74FDCD00D0931B /* TokenUpdateModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683477CF2C74FDCD00D0931B /* TokenUpdateModel.swift */; };
 		683477D22C75099300D0931B /* MembershipVerification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683477D12C75099300D0931B /* MembershipVerification.swift */; };
+		683477F02C75B6C800D0931B /* DateFormatter+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683477EF2C75B6C800D0931B /* DateFormatter+.swift */; };
 		68CED3392C6C8EF40043266A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68CED3382C6C8EF40043266A /* AppDelegate.swift */; };
 		68CED33B2C6C8EF40043266A /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68CED33A2C6C8EF40043266A /* SceneDelegate.swift */; };
 		68CED33D2C6C8EF40043266A /* ReviewListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68CED33C2C6C8EF40043266A /* ReviewListViewController.swift */; };
@@ -69,6 +70,7 @@
 		683477CD2C74F98300D0931B /* HTTPStatusCodes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPStatusCodes.swift; sourceTree = "<group>"; };
 		683477CF2C74FDCD00D0931B /* TokenUpdateModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenUpdateModel.swift; sourceTree = "<group>"; };
 		683477D12C75099300D0931B /* MembershipVerification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MembershipVerification.swift; sourceTree = "<group>"; };
+		683477EF2C75B6C800D0931B /* DateFormatter+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DateFormatter+.swift"; sourceTree = "<group>"; };
 		68CED3352C6C8EF40043266A /* DateDayApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DateDayApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		68CED3382C6C8EF40043266A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		68CED33A2C6C8EF40043266A /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -204,6 +206,7 @@
 				68CED3A82C71E5A10043266A /* UIImageView+.swift */,
 				68CED3AA2C71E64C0043266A /* UIScrollView+.swift */,
 				68CED3C62C73298E0043266A /* UISearchBar+.swift */,
+				683477EF2C75B6C800D0931B /* DateFormatter+.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -469,6 +472,7 @@
 				68CED3C52C73186B0043266A /* SearchView.swift in Sources */,
 				68CED3C32C73184B0043266A /* SearchViewController.swift in Sources */,
 				68CED38E2C70B9510043266A /* UserDefaultsManager.swift in Sources */,
+				683477F02C75B6C800D0931B /* DateFormatter+.swift in Sources */,
 				68CED3862C6F50390043266A /* SignUpViewModel.swift in Sources */,
 				68CED36B2C6F22160043266A /* ViewRepresentable.swift in Sources */,
 				68CED3CC2C732E180043266A /* WriteView.swift in Sources */,

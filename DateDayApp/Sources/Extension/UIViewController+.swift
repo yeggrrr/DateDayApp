@@ -49,18 +49,30 @@ extension UIViewController {
     }
     
     func updateToken() {
-        NetworkManager.shared.tokenUpdate { result in
-            switch result {
-            case .success(let success):
-                UserDefaultsManager.shared.token = success.accessToken
-            case .failure(let failure):
-                switch failure {
-                case .refreshTokenExpiration:
-                    self.setRootViewController(LoginViewController())
-                default:
-                    break
+        // 로그인 시, 저장한 시간
+        let stringSaveTime = UserDefaultsManager.shared.saveTime
+        // 저장한 시간 Date로 변환
+        guard let dateSaveTime = DateFormatter.stringToDateFormatter.date(from: stringSaveTime) else { return }
+        // 저장 시간 9분 45초 후, Date 정보
+        let justBeforeTokenExpiration = Date(timeInterval: 585, since: dateSaveTime)
+        // 만약, 9분 45초가 지났다면?
+        if justBeforeTokenExpiration < Date() {
+            print("곧 만료됨! 갱신 준비!")
+            NetworkManager.shared.tokenUpdate { result in
+                switch result {
+                case .success(let success):
+                    UserDefaultsManager.shared.token = success.accessToken
+                case .failure(let failure):
+                    switch failure {
+                    case .refreshTokenExpiration:
+                        self.setRootViewController(LoginViewController())
+                    default:
+                        break
+                    }
                 }
             }
+        } else {
+            print("아직 만료 안됨! 굳이 갱신 X")
         }
     }
 }
