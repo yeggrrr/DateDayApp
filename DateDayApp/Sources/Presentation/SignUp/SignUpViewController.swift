@@ -122,6 +122,9 @@ final class SignUpViewController: UIViewController {
                             case .noSpacesAllowed:
                                 self.showToast(message: "닉네임에 공백이 포함되어 있습니다! :)")
                             case .alreadySignedUp:
+                                self.okShowAlert(title: "해당 닉네임을 사용할 수 없습니다.", message: "다른 분이 이미 사용중이에요! :)") { _ in
+                                    owner.signUpView.nicknameTextField.text = ""
+                                }
                                 self.showToast(message: "이미 가입한 유저입니다. :)")
                             default:
                                 break
