@@ -10,16 +10,18 @@ import RxSwift
 import RxCocoa
 
 final class FeedViewModel: BaseViewModel {
-    
     struct Input {
         let writeButtonTap: ControlEvent<Void>
+        let viewPostNetwork: Single<Result<ViewPost, HTTPStatusCodes>>
     }
     
     struct Output {
         let writeButtonTap: ControlEvent<Void>
+        let viewPostNetwork: Single<Result<ViewPost, HTTPStatusCodes>>
     }
     
     func transform(input: Input) -> Output {
-        return Output(writeButtonTap: input.writeButtonTap)
+        return Output(writeButtonTap: input.writeButtonTap,
+                      viewPostNetwork: input.viewPostNetwork)
     }
 }

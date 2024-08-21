@@ -14,6 +14,7 @@ enum Router {
     case login(query: LoginQuery)
     case tokenRenewal
     case viewPost
+    case viewPostImage(filePath: String)
 }
 
 extension Router: TargetType {
@@ -33,6 +34,8 @@ extension Router: TargetType {
             return .get
         case .viewPost:
             return .get
+        case .viewPostImage:
+            return .get
         }
     }
     
@@ -48,6 +51,8 @@ extension Router: TargetType {
             return "/auth/refresh"
         case .viewPost:
             return "/posts"
+        case let .viewPostImage(filePath):
+            return filePath
         }
     }
     
@@ -80,6 +85,11 @@ extension Router: TargetType {
                 Header.sesac.rawValue: APIKey.secretkey
             ]
             
+        case .viewPostImage:
+            return [
+                Header.sesac.rawValue: APIKey.secretkey,
+                Header.authorization.rawValue: UserDefaultsManager.shared.token
+            ]
         }
     }
     

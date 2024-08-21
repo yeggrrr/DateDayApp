@@ -142,6 +142,20 @@ final class NetworkManager {
         }
     }
     
+    // MARK: 게시글 이미지 조회
+    func image(filePath: String, completion: @escaping (Data) -> Void) {
+        do {
+            let request = try Router.viewPostImage(filePath: filePath).asURLRequest()
+            AF.request(request).responseString { response in
+                if let imageData = response.data {
+                    completion(imageData)
+                }
+            }
+        } catch {
+            print("error!!: \(error)")
+        }
+    }
+    
     // MARK: 게시글 조회
     func viewPost() -> Single<Result<ViewPost, HTTPStatusCodes>> {
         return Single.create { observer -> Disposable in

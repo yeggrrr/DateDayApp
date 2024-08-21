@@ -9,12 +9,22 @@ import UIKit
 import RxSwift
 import RxCocoa
 
+// TODO: didSet 코드 Rx로 변경하기
 final class FeedViewController: UIViewController {
     // MARK: UI
     let feedView = FeedView()
     let cellSpacing: CGFloat = 5
     
     // MARK: Properties
+    var postData: [ViewPost.PostData] = []
+    var imageFiles: [Data] = [] {
+        didSet {
+            if imageFiles.count == postData.count {
+                feedView.collectionView.reloadData()
+            }
+        }
+    }
+    
     var isAfterLoggedIn = false
     private let viewModel = FeedViewModel()
     private let disposeBag = DisposeBag()
@@ -29,9 +39,8 @@ final class FeedViewController: UIViewController {
         
         isAfterLoggedIn = true
         configureCollectionView()
-        configure()
+        configureNavigation()
         bind()
-        setData()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -51,8 +60,7 @@ final class FeedViewController: UIViewController {
         feedView.collectionView.showsVerticalScrollIndicator = false
     }
     
-    private func configure() {
-        // navigation
+    private func configureNavigation() {
         navigationItem.rightBarButtonItem = rightBarButtonItem()
         navigationItem.title = "DATE DAY"
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: self, action: nil)
@@ -60,7 +68,8 @@ final class FeedViewController: UIViewController {
     }
     
     private func bind() {
-        let input = FeedViewModel.Input(writeButtonTap: feedView.writeButton.rx.tap)
+        let input = FeedViewModel.Input(writeButtonTap: feedView.writeButton.rx.tap,
+                                        viewPostNetwork: NetworkManager.shared.viewPost())
         let output = viewModel.transform(input: input)
         
         output.writeButtonTap
@@ -69,14 +78,20 @@ final class FeedViewController: UIViewController {
                 owner.navigationController?.pushViewController(vc, animated: true)
             }
             .disposed(by: disposeBag)
-    }
-    
-    private func setData() {
-        NetworkManager.shared.viewPost()
+        
+        output.viewPostNetwork
             .subscribe(with: self) { owner, result in
                 switch result {
                 case .success(let success):
-                    print("success!!: \(success.data)")
+                    owner.postData = success.data
+                    owner.imageFiles = []
+                    owner.postData.forEach { postData in
+                        if let image = postData.images.first {
+                            NetworkManager.shared.image(filePath: image) { data in
+                                self.imageFiles.append(data)
+                            }
+                        }
+                    }
                 case .failure(let failure):
                     switch failure {
                     case .missingRequiredValue:
@@ -118,11 +133,12 @@ final class FeedViewController: UIViewController {
 // MARK: UICollectionViewDataSource
 extension FeedViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 10
+        return postData.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: FeedCell.id, for: indexPath) as? FeedCell else { return UICollectionViewCell() }
+        cell.configureCell(item: postData[indexPath.item], image: imageFiles[indexPath.item])
         return cell
     }
 }
