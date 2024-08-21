@@ -31,6 +31,7 @@ final class FeedViewController: UIViewController {
         configureCollectionView()
         configure()
         bind()
+        setData()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -66,6 +67,34 @@ final class FeedViewController: UIViewController {
             .bind(with: self) { owner, _ in
                 let vc = SelectPhotoViewController()
                 owner.navigationController?.pushViewController(vc, animated: true)
+            }
+            .disposed(by: disposeBag)
+    }
+    
+    private func setData() {
+        NetworkManager.shared.viewPost()
+            .subscribe(with: self) { owner, result in
+                switch result {
+                case .success(let success):
+                    print("success!!: \(success.data)")
+                case .failure(let failure):
+                    switch failure {
+                    case .missingRequiredValue:
+                        owner.showToast(message: "잘못된 요청입니다.")
+                    case .mismatchOrInvalid:
+                        owner.showToast(message: "유효하지 않은 토큰입니다.")
+                    case .forbidden:
+                        owner.showToast(message: "접근 권한이 없습니다.")
+                    case .accessTokenExpiration:
+                        owner.updateToken()
+                    default:
+                        break
+                    }
+                }
+            } onFailure: { owner, error in
+                print("error: \(error)")
+            } onDisposed: { owner in
+                print("Disposed")
             }
             .disposed(by: disposeBag)
     }

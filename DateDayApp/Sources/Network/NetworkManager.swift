@@ -48,8 +48,6 @@ final class NetworkManager {
             
             return Disposables.create()
         }
-        .debug("signUp 네트워크 통신")
-        
     }
     
     // MARK: 이메일 중복 확인
@@ -77,14 +75,12 @@ final class NetworkManager {
                             }
                         }
                     }
-                
             } catch {
                 print("error 발생!! - error:", error)
             }
             
             return Disposables.create()
         }
-        .debug("validationEmail 네트워크 통신")
     }
     
     // MARK: 로그인
@@ -118,7 +114,6 @@ final class NetworkManager {
             
             return Disposables.create()
         }
-        .debug("createLogin 네트워크 통신")
     }
     
     // MARK: Token 갱신
@@ -145,5 +140,42 @@ final class NetworkManager {
         } catch {
             print("error 발생!! - error:", error)
         }
+    }
+    
+    // MARK: 게시글 조회
+    func viewPost() -> Single<Result<ViewPost, HTTPStatusCodes>> {
+        return Single.create { observer -> Disposable in
+            do {
+                let request = try Router.viewPost.asURLRequest()
+                
+                AF.request(request)
+                    .validate(statusCode: 200..<300)
+                    .responseDecodable(of: ViewPost.self) { response in
+                        switch response.result {
+                        case .success(let success):
+                            observer(.success(.success(success)))
+                        case .failure(_):
+                            let statusCode = response.response?.statusCode
+                            switch statusCode {
+                            case 400:
+                                observer(.success(.failure(.missingRequiredValue)))
+                            case 401:
+                                observer(.success(.failure(.mismatchOrInvalid)))
+                            case 403:
+                                observer(.success(.failure(.forbidden)))
+                            case 419:
+                                observer(.success(.failure(.accessTokenExpiration)))
+                            default:
+                                break
+                            }
+                        }
+                    }
+            } catch {
+                print("error 발생!! - error:", error)
+            }
+            
+            return Disposables.create()
+        }
+        .debug("viewPost 네트워크 통신")
     }
 }

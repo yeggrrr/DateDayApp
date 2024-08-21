@@ -13,6 +13,7 @@ enum Router {
     case validation(query: validEmailQuery)
     case login(query: LoginQuery)
     case tokenRenewal
+    case viewPost
 }
 
 extension Router: TargetType {
@@ -30,6 +31,8 @@ extension Router: TargetType {
             return .post
         case .tokenRenewal:
             return .get
+        case .viewPost:
+            return .get
         }
     }
     
@@ -43,6 +46,8 @@ extension Router: TargetType {
             return "/users/login"
         case .tokenRenewal:
             return "/auth/refresh"
+        case .viewPost:
+            return "/posts"
         }
     }
     
@@ -69,15 +74,36 @@ extension Router: TargetType {
                 Header.refresh.rawValue: UserDefaultsManager.shared.refresh,
                 Header.sesac.rawValue: APIKey.secretkey
             ]
+        case .viewPost:
+            return [
+                Header.authorization.rawValue: UserDefaultsManager.shared.token,
+                Header.sesac.rawValue: APIKey.secretkey
+            ]
+            
         }
     }
     
-    var parameters: String? {
-        return nil
+    var parameters: [String : String]? {
+        switch self {
+        case .viewPost:
+            return [
+                "limit" : "10",
+                "product_id" : "yegrDateDay"
+            ]
+        default:
+            return nil
+        }
     }
     
     var queryItems: [URLQueryItem]? {
-        return nil
+        switch self {
+        case .viewPost:
+            return parameters?.map {
+                URLQueryItem(name: $0.key, value: $0.value)
+            }
+        default:
+            return nil
+        }
     }
     
     var body: Data? {
@@ -89,7 +115,7 @@ extension Router: TargetType {
             return try? encoder.encode(query)
         case .login(let query):
             return try? encoder.encode(query)
-        case .tokenRenewal:
+        default:
             return nil
         }
     }
