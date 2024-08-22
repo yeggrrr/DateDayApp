@@ -17,7 +17,7 @@ final class DateDayTabBarController: UITabBarController {
     private func configureTabBar() {
         tabBar.backgroundColor = .primaryCustomLight
         tabBar.isTranslucent = false
-        tabBar.tintColor = .systemCyan
+        tabBar.tintColor = .primaryDark
         tabBar.unselectedItemTintColor = .darkGray
         
         let feedVC = FeedViewController()

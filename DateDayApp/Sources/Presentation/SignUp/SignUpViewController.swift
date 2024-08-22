@@ -72,7 +72,7 @@ final class SignUpViewController: UIViewController {
                         }
                         .disposed(by: owner.disposeBag)
                 } else {
-                    owner.signUpView.emailValidImageView.tintColor = .systemRed
+                    owner.signUpView.emailValidImageView.tintColor = .primaryLightPink
                     owner.signUpView.emailValidImageView.image = UIImage(systemName: "xmark.circle.fill")
                 }
             }
@@ -95,10 +95,10 @@ final class SignUpViewController: UIViewController {
                     title: "회원가입",
                     bgColor: .primaryButtonBg,
                     borderColor: UIColor.primaryBorder.cgColor,
-                    borderWidth: 3)
+                    borderWidth: 2)
             } else {
                 owner.signUpView.signUpButton.isEnabled = false
-                owner.signUpView.signUpButton.backgroundColor = .white
+                owner.signUpView.signUpButton.backgroundColor = .primaryCustomLight
             }
         }
         .disposed(by: disposeBag)
@@ -143,10 +143,10 @@ final class SignUpViewController: UIViewController {
     
     func updateCheckIcon(isValid: Bool, imageView: UIImageView) {
         if isValid {
-            imageView.tintColor = .systemGreen
+            imageView.tintColor = .primaryCustomLight
             imageView.image = UIImage(systemName: "checkmark.circle.fill")
         } else {
-            imageView.tintColor = .systemRed
+            imageView.tintColor = .primaryLightPink
             imageView.image = UIImage(systemName: "xmark.circle.fill")
         }
     }

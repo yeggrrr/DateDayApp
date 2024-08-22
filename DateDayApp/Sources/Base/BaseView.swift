@@ -24,6 +24,6 @@ class BaseView: UIView, ViewRepresentable {
     func setConstraints() { }
     
     func configureUI() {
-        backgroundColor = .primaryCustomLight
+        backgroundColor = .white
     }
 }

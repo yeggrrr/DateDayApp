@@ -14,7 +14,7 @@ extension UIButton {
         backgroundColor = bgColor
         layer.cornerRadius = 20
         layer.borderColor = borderColor
-        layer.borderWidth = 1
+        layer.borderWidth = borderWidth
     }
     
     func basicUI(title: String, color: UIColor) {

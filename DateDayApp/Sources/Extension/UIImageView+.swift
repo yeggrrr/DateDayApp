@@ -9,7 +9,7 @@ import UIKit
 
 extension UIImageView {
     func initialIconUI() {
-        tintColor = .systemRed
+        tintColor = .primaryLightPink
         image = UIImage(systemName: "xmark.circle.fill")
     }
 }

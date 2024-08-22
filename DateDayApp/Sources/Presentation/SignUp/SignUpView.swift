@@ -9,6 +9,7 @@ import UIKit
 import SnapKit
 
 final class SignUpView: BaseView {
+    private let logoImageView = UIImageView()
     private let inputStackView = UIStackView()
     private let nicknameTextFieldView = UIView()
     private let emailTextFieldView = UIView()
@@ -28,7 +29,7 @@ final class SignUpView: BaseView {
     let signUpButton = UIButton()
     
     override func addSubviews() {
-        addSubviews([inputStackView, signUpButton, nicknameValidImageView, emailValidImageView, passwordValidImageView, regulationsInfoScrollView])
+        addSubviews([logoImageView, inputStackView, signUpButton, nicknameValidImageView, emailValidImageView, passwordValidImageView, regulationsInfoScrollView])
         regulationsInfoScrollView.addSubview(regulationsInfoContentView)
         regulationsInfoContentView.addSubviews([regulationsInfoLabel, regulationsLabel])
         inputStackView.addArrangedSubviews([nicknameTextFieldView, emailTextFieldView, passwordTextFieldView])
@@ -39,8 +40,14 @@ final class SignUpView: BaseView {
     
     override func setConstraints() {
         let safeArea = safeAreaLayoutGuide
-        let scrollViewFrame = regulationsInfoScrollView.frameLayoutGuide // horizontalEdges
-        let scrollViewContent = regulationsInfoScrollView.contentLayoutGuide // verticalEdges
+        let scrollViewFrame = regulationsInfoScrollView.frameLayoutGuide
+        let scrollViewContent = regulationsInfoScrollView.contentLayoutGuide
+        
+        logoImageView.snp.makeConstraints {
+            $0.top.equalTo(safeArea).offset(50)
+            $0.horizontalEdges.equalTo(safeArea.snp.horizontalEdges).inset(75)
+            $0.bottom.lessThanOrEqualTo(inputStackView.snp.top).offset(-45)
+        }
         
         inputStackView.snp.makeConstraints {
             $0.centerX.equalTo(safeArea.snp.centerX)
@@ -113,6 +120,8 @@ final class SignUpView: BaseView {
     
     override func configureUI() {
         super.configureUI()
+        
+        logoImageView.image = UIImage(named: "DateDayLogo")
  
         inputStackView.setUI(
             axis: .vertical,
@@ -128,7 +137,7 @@ final class SignUpView: BaseView {
         emailTextField.setUI(placeholder: "이메일을 입력해주세요", keyboardType: .emailAddress)
         passwordTextField.setUI(placeholder: "비밀번호를 입력해주세요", keyboardType: .asciiCapable)
         
-        signUpButton.roundUI(title: "회원가입", bgColor: .white, borderColor: UIColor.black.cgColor)
+        signUpButton.roundUI(title: "회원가입", bgColor: .primaryCustomLight, borderColor: UIColor.black.cgColor)
         
         nicknameValidImageView.initialIconUI()
         emailValidImageView.initialIconUI()

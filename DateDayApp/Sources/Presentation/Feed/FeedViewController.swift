@@ -48,8 +48,16 @@ final class FeedViewController: UIViewController {
     }
     
     private func configureNavigation() {
+        let logoImage = UIImage(named: "DateDayBlackText")
+        let imageView = UIImageView()
+        let logoWidth = imageView.widthAnchor.constraint(equalToConstant: 140)
+        let logoHeight = imageView.heightAnchor.constraint(equalToConstant: 70)
+        imageView.contentMode = .scaleAspectFit
+        imageView.image = logoImage
+        logoWidth.isActive = true
+        logoHeight.isActive = true
+        navigationItem.titleView = imageView
         navigationItem.rightBarButtonItem = rightBarButtonItem()
-        navigationItem.title = "DATE DAY"
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: self, action: nil)
         navigationItem.backBarButtonItem?.tintColor = .black
     }
