@@ -121,25 +121,25 @@ final class FeedCell: UICollectionViewCell, ViewRepresentable {
     }
     
     func configureUI() {
-        backgroundColor = .white
-        titleLabel.font = .systemFont(ofSize: 17, weight: .bold)
-        categoryLabel.font = .systemFont(ofSize: 13, weight: .medium)
+        backgroundColor = .clear
+        contentView.layer.borderWidth = 2
+        contentView.layer.borderColor = UIColor.primaryBorder.cgColor
+        mainImageView.contentMode = .scaleAspectFill
+        mainImageView.clipsToBounds = true
+        titleLabel.font = .systemFont(ofSize: 17, weight: .black)
+        categoryLabel.font = .systemFont(ofSize: 13, weight: .semibold)
+        reviewLabel.font = .systemFont(ofSize: 13, weight: .medium)
         reviewLabel.numberOfLines = 0
-        reviewLabel.font = .systemFont(ofSize: 13, weight: .thin)
         reviewLabel.textColor = .darkGray
         likeImageView.image = UIImage(systemName: "heart.fill")
-        likeImageView.tintColor = .systemPink
         markImageView.image = UIImage(systemName: "bookmark.fill")
-        markImageView.tintColor = .systemCyan
         starRatingImageView.image = UIImage(systemName: "star.fill")
+        likeImageView.tintColor = .systemPink
+        markImageView.tintColor = .systemCyan
         starRatingImageView.tintColor = .systemOrange
         likeLabel.font = .systemFont(ofSize: 13, weight: .regular)
         markLabel.font = .systemFont(ofSize: 13, weight: .regular)
         starRatingInfoLabel.font = .systemFont(ofSize: 13, weight: .regular)
-        contentView.layer.borderWidth = 1
-        contentView.layer.borderColor = UIColor.primaryBorder.cgColor
-        mainImageView.contentMode = .scaleAspectFill
-        mainImageView.clipsToBounds = true
         likeLabel.text = "0"
         markLabel.text = "0"
     }

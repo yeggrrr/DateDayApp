@@ -10,6 +10,7 @@ import SnapKit
 
 final class LoginView: BaseView {
     // MARK: UI
+    private let logoImageView = UIImageView()
     private let inputStackView = UIStackView()
     private let emailTextFieldView = UIView()
     private let passwordTextFieldView = UIView()
@@ -21,7 +22,7 @@ final class LoginView: BaseView {
     
     // MARK: Functions
     override func addSubviews() {
-        addSubviews([inputStackView, loginButton, signUpButton, signUpLabel])
+        addSubviews([logoImageView, inputStackView, loginButton, signUpButton, signUpLabel])
         inputStackView.addArrangedSubviews([emailTextFieldView, passwordTextFieldView])
         emailTextFieldView.addSubview(emailTextField)
         passwordTextFieldView.addSubview(passwordTextField)
@@ -29,6 +30,12 @@ final class LoginView: BaseView {
     
     override func setConstraints() {
         let safeArea = safeAreaLayoutGuide
+        
+        logoImageView.snp.makeConstraints {
+            $0.top.equalTo(safeArea).offset(55)
+            $0.horizontalEdges.equalTo(safeArea.snp.horizontalEdges).inset(75)
+            $0.bottom.lessThanOrEqualTo(inputStackView.snp.top).offset(-55)
+        }
         
         inputStackView.snp.makeConstraints {
             $0.centerX.equalTo(safeArea.snp.centerX)
@@ -68,6 +75,8 @@ final class LoginView: BaseView {
     override func configureUI() {
         super.configureUI()
         
+        logoImageView.image = UIImage(named: "DateDayLogo")
+        
         inputStackView.setUI(
             axis: .vertical,
             distribution: .fillEqually,
@@ -87,13 +96,13 @@ final class LoginView: BaseView {
         
         loginButton.roundUI(
             title: "로그인",
-            bgColor: .primaryButtonBg,
+            bgColor: .primaryCustomLight,
             borderColor: UIColor.primaryBorder.cgColor,
-            borderWidth: 3)
+            borderWidth: 2)
         
-        signUpButton.basicUI(title: "회원가입", color: .systemBlue)
+        signUpButton.basicUI(title: "회원가입", color: .primaryDark)
         
-        emailTextField.text = "yegr@yegr.com" // 임시
-        passwordTextField.text = "yegr123123" // 임시
+        emailTextField.text = "yeggrrr@yegr.com" // 임시
+        passwordTextField.text = "Yeggrrr123" // 임시
     }
 }

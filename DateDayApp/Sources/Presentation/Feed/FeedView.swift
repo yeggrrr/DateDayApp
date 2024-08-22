@@ -10,6 +10,7 @@ import SnapKit
 
 final class FeedView: BaseView {
     // MARK: UI
+    private let backgroundImageView = UIImageView()
     let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout())
     private let writeView = UIView()
     let writeButton = UIButton(type: .system)
@@ -22,12 +23,16 @@ final class FeedView: BaseView {
     }
     
     override func addSubviews() {
-        addSubviews([collectionView, writeView])
+        addSubviews([backgroundImageView, collectionView, writeView])
         writeView.addSubview(writeButton)
     }
     
     override func setConstraints() {
         let safeArea = safeAreaLayoutGuide
+        
+        backgroundImageView.snp.makeConstraints {
+            $0.edges.equalToSuperview()
+        }
         
         collectionView.snp.makeConstraints {
             $0.edges.equalTo(safeArea)
@@ -46,10 +51,12 @@ final class FeedView: BaseView {
     override func configureUI() {
         super.configureUI()
         
-        collectionView.backgroundColor = .primaryCustomLight
-        writeView.backgroundColor = .primaryCustom
+        backgroundImageView.image = UIImage(named: "seaBackground")
+        backgroundImageView.layer.opacity = 0.8
+        collectionView.backgroundColor = .clear
+        writeView.backgroundColor = .primaryButtonBg
         writeButton.setImage(UIImage(systemName: "square.and.pencil"), for: .normal)
-        writeButton.tintColor = .black
+        writeButton.tintColor = .white
     }
     
     static func layout() -> UICollectionViewFlowLayout {
