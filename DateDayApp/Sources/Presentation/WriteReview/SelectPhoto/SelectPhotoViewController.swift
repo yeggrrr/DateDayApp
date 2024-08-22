@@ -14,6 +14,7 @@ final class SelectPhotoViewController: UIViewController {
     let selectPhotoView = SelectPhotoView()
     
     // MARK: Properties
+    let viewModel = SelectPhotoViewModel()
     let disposeBag = DisposeBag()
     
     // MARK: View Life Cycle
@@ -25,6 +26,7 @@ final class SelectPhotoViewController: UIViewController {
         super.viewDidLoad()
         
         configure()
+        bind()
     }
     
     private func configure() {
@@ -32,6 +34,17 @@ final class SelectPhotoViewController: UIViewController {
         navigationItem.title = "사진 선택"
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: self, action: nil)
         navigationItem.backBarButtonItem?.tintColor = .black
+    }
+    
+    private func bind() {
+        let input = SelectPhotoViewModel.Input(addImageButtonTap: selectPhotoView.AddImageButton.rx.tap)
+        let output = viewModel.transform(input: input)
+        
+        output.addImageButtonTap
+            .bind(with: self) { owner, _ in
+                print("addImageButtonClicked")
+            }
+            .disposed(by: disposeBag)
     }
     
     private func rightBarButtonItem() -> UIBarButtonItem {

@@ -45,8 +45,8 @@ final class SignUpView: BaseView {
         
         logoImageView.snp.makeConstraints {
             $0.top.equalTo(safeArea).offset(50)
-            $0.horizontalEdges.equalTo(safeArea.snp.horizontalEdges).inset(75)
-            $0.bottom.lessThanOrEqualTo(inputStackView.snp.top).offset(-45)
+            $0.horizontalEdges.equalTo(safeArea.snp.horizontalEdges).inset(60)
+            $0.bottom.lessThanOrEqualTo(inputStackView.snp.top).offset(-40)
         }
         
         inputStackView.snp.makeConstraints {
@@ -98,7 +98,7 @@ final class SignUpView: BaseView {
         regulationsInfoScrollView.snp.makeConstraints {
             $0.top.equalTo(signUpButton.snp.bottom).offset(20)
             $0.horizontalEdges.equalTo(safeArea.snp.horizontalEdges).inset(20)
-            $0.height.equalTo(150)
+            $0.height.equalTo(170)
         }
         
         regulationsInfoContentView.snp.makeConstraints {
@@ -121,7 +121,7 @@ final class SignUpView: BaseView {
     override func configureUI() {
         super.configureUI()
         
-        logoImageView.image = UIImage(named: "DateDayLogo")
+        logoImageView.image = UIImage(named: "DDLogo")
  
         inputStackView.setUI(
             axis: .vertical,
@@ -152,7 +152,7 @@ final class SignUpView: BaseView {
             txtColor: .black)
         
         regulationsLabel.setUI(
-            txt: "[닉네임]\n2글자 이상, 영문 숫자 조합만 가능\n공백 포함 불가능\n[비밀번호]\n첫 글자는 대문자, 숫자와 특수문자(!, ?, #, *) 조합 가능",
+            txt: "[닉네임]\n2글자 이상, 영문 숫자 조합만 가능\n공백 포함 불가능\n[비밀번호]\n8자 이상, 첫 글자는 대문자\n숫자와 특수문자(!, ?, #, *) 조합 가능",
             font: .systemFont(ofSize: 15, weight: .thin),
             txtColor: .black)
         regulationsLabel.setLineSpacing(8)

@@ -32,9 +32,9 @@ final class LoginView: BaseView {
         let safeArea = safeAreaLayoutGuide
         
         logoImageView.snp.makeConstraints {
-            $0.top.equalTo(safeArea).offset(55)
-            $0.horizontalEdges.equalTo(safeArea.snp.horizontalEdges).inset(75)
-            $0.bottom.lessThanOrEqualTo(inputStackView.snp.top).offset(-55)
+            $0.top.equalTo(safeArea).offset(50)
+            $0.horizontalEdges.equalTo(safeArea.snp.horizontalEdges).inset(60)
+            $0.bottom.lessThanOrEqualTo(inputStackView.snp.top).offset(-50)
         }
         
         inputStackView.snp.makeConstraints {
@@ -75,7 +75,7 @@ final class LoginView: BaseView {
     override func configureUI() {
         super.configureUI()
         
-        logoImageView.image = UIImage(named: "DateDayLogo")
+        logoImageView.image = UIImage(named: "DDLogo")
         
         inputStackView.setUI(
             axis: .vertical,
