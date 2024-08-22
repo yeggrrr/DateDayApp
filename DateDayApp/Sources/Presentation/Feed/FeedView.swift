@@ -9,7 +9,8 @@ import UIKit
 import SnapKit
 
 final class FeedView: BaseView {
-    let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout.init())
+    // MARK: UI
+    let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout())
     private let writeView = UIView()
     let writeButton = UIButton(type: .system)
     
@@ -49,5 +50,15 @@ final class FeedView: BaseView {
         writeView.backgroundColor = .primaryCustom
         writeButton.setImage(UIImage(systemName: "square.and.pencil"), for: .normal)
         writeButton.tintColor = .black
+    }
+    
+    static func layout() -> UICollectionViewFlowLayout {
+        let layout = UICollectionViewFlowLayout()
+        let width = UIScreen.main.bounds.width - 5
+        layout.itemSize = CGSize(width: width / 2, height: 320)
+        layout.scrollDirection = .vertical
+        layout.minimumLineSpacing = 5
+        layout.minimumInteritemSpacing = 5
+        return layout
     }
 }

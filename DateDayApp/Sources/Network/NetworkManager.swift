@@ -143,7 +143,7 @@ final class NetworkManager {
     }
     
     // MARK: 게시글 이미지 조회
-    func image(filePath: String, completion: @escaping (Data) -> Void) {
+    func viewPostImage(filePath: String, completion: @escaping (Data) -> Void) {
         do {
             let request = try Router.viewPostImage(filePath: filePath).asURLRequest()
             AF.request(request).responseString { response in
