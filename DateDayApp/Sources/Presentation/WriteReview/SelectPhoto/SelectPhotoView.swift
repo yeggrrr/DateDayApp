@@ -10,7 +10,7 @@ import SnapKit
 
 final class SelectPhotoView: BaseView {
     // MARK: UI
-    let descriptionLabel = UILabel()
+    private let descriptionLabel = UILabel()
     let AddImageButton = UIButton(type: .custom)
     let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout())
 
@@ -58,15 +58,20 @@ final class SelectPhotoView: BaseView {
         AddImageButton.tintColor = .white
         AddImageButton.layer.cornerRadius = 27
         AddImageButton.backgroundColor = .primaryBorder
-        
         collectionView.backgroundColor = .primaryCustomLight
+        collectionView.layer.cornerRadius = 20
+        collectionView.layer.masksToBounds = true
     }
     
-    static func layout() -> UICollectionViewFlowLayout {
-        let layout = UICollectionViewFlowLayout()
-        let width = UIScreen.main.bounds.width - 20
-        layout.itemSize = CGSize(width: width, height: 500)
+    private static func layout() -> UICollectionViewLayout {
+        let layout  = UICollectionViewFlowLayout()
+        let sectionSpacing: CGFloat = 25
+        let cellSpacing: CGFloat = 25
+        let width = UIScreen.main.bounds.width - (sectionSpacing * 2) - (cellSpacing * 2)
+        layout.itemSize = CGSize(width: width, height: width * 2)
         layout.scrollDirection = .horizontal
+        layout.minimumLineSpacing = .zero
+        layout.minimumInteritemSpacing = .zero
         return layout
     }
 }
