@@ -1,5 +1,5 @@
 //
-//  TokenUpdateModel.swift
+//  TokenUpdate.swift
 //  DateDayApp
 //
 //  Created by YJ on 8/21/24.

@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		683477CE2C74F98300D0931B /* HTTPStatusCodes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683477CD2C74F98300D0931B /* HTTPStatusCodes.swift */; };
-		683477D02C74FDCD00D0931B /* TokenUpdateModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683477CF2C74FDCD00D0931B /* TokenUpdateModel.swift */; };
+		683477D02C74FDCD00D0931B /* TokenUpdate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683477CF2C74FDCD00D0931B /* TokenUpdate.swift */; };
 		683477D22C75099300D0931B /* MembershipVerification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683477D12C75099300D0931B /* MembershipVerification.swift */; };
 		683477F02C75B6C800D0931B /* DateFormatter+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683477EF2C75B6C800D0931B /* DateFormatter+.swift */; };
 		683477F22C75ED1600D0931B /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683477F12C75ED1600D0931B /* Post.swift */; };
@@ -20,6 +20,7 @@
 		686DBD402C79B6280023960B /* HashTagModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 686DBD3F2C79B6280023960B /* HashTagModel.swift */; };
 		686DBD422C79D0F90023960B /* SearchLocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 686DBD412C79D0F90023960B /* SearchLocationViewController.swift */; };
 		686DBD442C79D1BC0023960B /* SearchLocationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 686DBD432C79D1BC0023960B /* SearchLocationView.swift */; };
+		686DBD462C79D56C0023960B /* SearchLocationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 686DBD452C79D56C0023960B /* SearchLocationViewModel.swift */; };
 		68CED3392C6C8EF40043266A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68CED3382C6C8EF40043266A /* AppDelegate.swift */; };
 		68CED33B2C6C8EF40043266A /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68CED33A2C6C8EF40043266A /* SceneDelegate.swift */; };
 		68CED33D2C6C8EF40043266A /* ReviewListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68CED33C2C6C8EF40043266A /* ReviewListViewController.swift */; };
@@ -76,7 +77,7 @@
 
 /* Begin PBXFileReference section */
 		683477CD2C74F98300D0931B /* HTTPStatusCodes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPStatusCodes.swift; sourceTree = "<group>"; };
-		683477CF2C74FDCD00D0931B /* TokenUpdateModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenUpdateModel.swift; sourceTree = "<group>"; };
+		683477CF2C74FDCD00D0931B /* TokenUpdate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenUpdate.swift; sourceTree = "<group>"; };
 		683477D12C75099300D0931B /* MembershipVerification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MembershipVerification.swift; sourceTree = "<group>"; };
 		683477EF2C75B6C800D0931B /* DateFormatter+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DateFormatter+.swift"; sourceTree = "<group>"; };
 		683477F12C75ED1600D0931B /* Post.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
@@ -88,6 +89,7 @@
 		686DBD3F2C79B6280023960B /* HashTagModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HashTagModel.swift; sourceTree = "<group>"; };
 		686DBD412C79D0F90023960B /* SearchLocationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchLocationViewController.swift; sourceTree = "<group>"; };
 		686DBD432C79D1BC0023960B /* SearchLocationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchLocationView.swift; sourceTree = "<group>"; };
+		686DBD452C79D56C0023960B /* SearchLocationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchLocationViewModel.swift; sourceTree = "<group>"; };
 		68CED3352C6C8EF40043266A /* DateDayApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DateDayApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		68CED3382C6C8EF40043266A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		68CED33A2C6C8EF40043266A /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -160,6 +162,7 @@
 			children = (
 				686DBD412C79D0F90023960B /* SearchLocationViewController.swift */,
 				686DBD432C79D1BC0023960B /* SearchLocationView.swift */,
+				686DBD452C79D56C0023960B /* SearchLocationViewModel.swift */,
 			);
 			path = SearchLocation;
 			sourceTree = "<group>";
@@ -316,7 +319,7 @@
 			children = (
 				683477D12C75099300D0931B /* MembershipVerification.swift */,
 				683477F12C75ED1600D0931B /* Post.swift */,
-				683477CF2C74FDCD00D0931B /* TokenUpdateModel.swift */,
+				683477CF2C74FDCD00D0931B /* TokenUpdate.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -532,7 +535,7 @@
 				68CED39A2C71D9A60043266A /* FeedViewModel.swift in Sources */,
 				68CED3A22C71DE950043266A /* UIButton+.swift in Sources */,
 				68CED3AD2C720AFA0043266A /* FeedCell.swift in Sources */,
-				683477D02C74FDCD00D0931B /* TokenUpdateModel.swift in Sources */,
+				683477D02C74FDCD00D0931B /* TokenUpdate.swift in Sources */,
 				68CED3D52C7340B50043266A /* SelectPhotoViewController.swift in Sources */,
 				68CED3A52C71E1D60043266A /* BaseView.swift in Sources */,
 				683477CE2C74F98300D0931B /* HTTPStatusCodes.swift in Sources */,
@@ -551,6 +554,7 @@
 				68CED3812C6F4DC30043266A /* APIQuery.swift in Sources */,
 				686DBD392C79A1B30023960B /* UITextView+.swift in Sources */,
 				686DBD322C7796500023960B /* SelectPhotoViewModel.swift in Sources */,
+				686DBD462C79D56C0023960B /* SearchLocationViewModel.swift in Sources */,
 				686DBD342C779DBA0023960B /* SelectPhotoCell.swift in Sources */,
 				683477D22C75099300D0931B /* MembershipVerification.swift in Sources */,
 				68CED3942C70BC4C0043266A /* FeedViewController.swift in Sources */,
