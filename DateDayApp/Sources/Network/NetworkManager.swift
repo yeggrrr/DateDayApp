@@ -192,4 +192,33 @@ final class NetworkManager {
         }
         .debug("viewPost 네트워크 통신")
     }
+    
+    // MARK: 위치 검색
+    func searchLocation(query: String) -> Single<SearchLocationModel> {
+        let url = APIKey.kakaoURL
+        
+        let header: HTTPHeaders = [
+            "Authorization" : APIKey.kakaoKey
+        ]
+        
+        let param: Parameters = [
+            "query": query
+        ]
+        
+        return Single.create { observer in
+            AF.request(url, method: .get, parameters: param, headers: header)
+                .validate(statusCode: 200..<300)
+                .responseDecodable(of: SearchLocationModel.self) { response in
+                    switch response.result {
+                    case .success(let success):
+                        observer(.success(success))
+                    case .failure(let failure):
+                        observer(.failure(failure))
+                    }
+                }
+            
+            return Disposables.create()
+        }
+        .debug("searchLocation 네트워크 통신")
+    }
 }

@@ -21,6 +21,8 @@
 		686DBD422C79D0F90023960B /* SearchLocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 686DBD412C79D0F90023960B /* SearchLocationViewController.swift */; };
 		686DBD442C79D1BC0023960B /* SearchLocationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 686DBD432C79D1BC0023960B /* SearchLocationView.swift */; };
 		686DBD462C79D56C0023960B /* SearchLocationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 686DBD452C79D56C0023960B /* SearchLocationViewModel.swift */; };
+		686DBD482C79D70E0023960B /* SearchLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 686DBD472C79D70E0023960B /* SearchLocation.swift */; };
+		686DBD4A2C79FAE10023960B /* SearchLocationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 686DBD492C79FAE10023960B /* SearchLocationCell.swift */; };
 		68CED3392C6C8EF40043266A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68CED3382C6C8EF40043266A /* AppDelegate.swift */; };
 		68CED33B2C6C8EF40043266A /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68CED33A2C6C8EF40043266A /* SceneDelegate.swift */; };
 		68CED33D2C6C8EF40043266A /* ReviewListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68CED33C2C6C8EF40043266A /* ReviewListViewController.swift */; };
@@ -90,6 +92,8 @@
 		686DBD412C79D0F90023960B /* SearchLocationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchLocationViewController.swift; sourceTree = "<group>"; };
 		686DBD432C79D1BC0023960B /* SearchLocationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchLocationView.swift; sourceTree = "<group>"; };
 		686DBD452C79D56C0023960B /* SearchLocationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchLocationViewModel.swift; sourceTree = "<group>"; };
+		686DBD472C79D70E0023960B /* SearchLocation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchLocation.swift; sourceTree = "<group>"; };
+		686DBD492C79FAE10023960B /* SearchLocationCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchLocationCell.swift; sourceTree = "<group>"; };
 		68CED3352C6C8EF40043266A /* DateDayApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DateDayApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		68CED3382C6C8EF40043266A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		68CED33A2C6C8EF40043266A /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -163,16 +167,9 @@
 				686DBD412C79D0F90023960B /* SearchLocationViewController.swift */,
 				686DBD432C79D1BC0023960B /* SearchLocationView.swift */,
 				686DBD452C79D56C0023960B /* SearchLocationViewModel.swift */,
+				686DBD492C79FAE10023960B /* SearchLocationCell.swift */,
 			);
 			path = SearchLocation;
-			sourceTree = "<group>";
-		};
-		686DBD3C2C79B5FE0023960B /* HashTagModel */ = {
-			isa = PBXGroup;
-			children = (
-				686DBD3F2C79B6280023960B /* HashTagModel.swift */,
-			);
-			path = HashTagModel;
 			sourceTree = "<group>";
 		};
 		68CED32C2C6C8EF40043266A = {
@@ -320,6 +317,8 @@
 				683477D12C75099300D0931B /* MembershipVerification.swift */,
 				683477F12C75ED1600D0931B /* Post.swift */,
 				683477CF2C74FDCD00D0931B /* TokenUpdate.swift */,
+				686DBD472C79D70E0023960B /* SearchLocation.swift */,
+				686DBD3F2C79B6280023960B /* HashTagModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -408,7 +407,6 @@
 		68CED3D32C7340850043266A /* Write */ = {
 			isa = PBXGroup;
 			children = (
-				686DBD3C2C79B5FE0023960B /* HashTagModel */,
 				68CED3C92C732DF40043266A /* WriteViewController.swift */,
 				68CED3CB2C732E180043266A /* WriteView.swift */,
 				686DBD362C7999FB0023960B /* writeViewModel.swift */,
@@ -518,6 +516,7 @@
 				68CED38E2C70B9510043266A /* UserDefaultsManager.swift in Sources */,
 				683477F02C75B6C800D0931B /* DateFormatter+.swift in Sources */,
 				68CED3862C6F50390043266A /* SignUpViewModel.swift in Sources */,
+				686DBD4A2C79FAE10023960B /* SearchLocationCell.swift in Sources */,
 				68CED36B2C6F22160043266A /* ViewRepresentable.swift in Sources */,
 				68CED3CC2C732E180043266A /* WriteView.swift in Sources */,
 				68CED3982C71D8D70043266A /* FeedView.swift in Sources */,
@@ -535,6 +534,7 @@
 				68CED39A2C71D9A60043266A /* FeedViewModel.swift in Sources */,
 				68CED3A22C71DE950043266A /* UIButton+.swift in Sources */,
 				68CED3AD2C720AFA0043266A /* FeedCell.swift in Sources */,
+				686DBD482C79D70E0023960B /* SearchLocation.swift in Sources */,
 				683477D02C74FDCD00D0931B /* TokenUpdate.swift in Sources */,
 				68CED3D52C7340B50043266A /* SelectPhotoViewController.swift in Sources */,
 				68CED3A52C71E1D60043266A /* BaseView.swift in Sources */,

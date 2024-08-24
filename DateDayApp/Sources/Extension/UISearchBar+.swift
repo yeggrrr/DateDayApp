@@ -16,7 +16,7 @@ extension UISearchBar {
         searchTextField.attributedPlaceholder = NSAttributedString(string: placeholder, attributes: [NSAttributedString.Key.foregroundColor : UIColor.darkGray])
         searchTextField.leftView?.tintColor = .black
         searchTextField.textColor = .black
-        keyboardType = .asciiCapable
+        keyboardType = .default
         keyboardAppearance = .light
     }
 }
