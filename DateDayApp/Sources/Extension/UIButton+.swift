@@ -21,4 +21,13 @@ extension UIButton {
         setTitle(title, for: .normal)
         setTitleColor(color, for: .normal)
     }
+    
+    func squareUI(bgColor: UIColor, title: String, titleColor: UIColor, cornerRadius: CGFloat, borderColor: CGColor, borderWidth: CGFloat) {
+        backgroundColor = bgColor
+        setTitle(title, for: .normal)
+        setTitleColor(titleColor, for: .normal)
+        layer.cornerRadius = cornerRadius
+        layer.borderColor = borderColor
+        layer.borderWidth = borderWidth
+    }
 }

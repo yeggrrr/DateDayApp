@@ -14,6 +14,9 @@
 		683477F22C75ED1600D0931B /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683477F12C75ED1600D0931B /* Post.swift */; };
 		686DBD322C7796500023960B /* SelectPhotoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 686DBD312C7796500023960B /* SelectPhotoViewModel.swift */; };
 		686DBD342C779DBA0023960B /* SelectPhotoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 686DBD332C779DBA0023960B /* SelectPhotoCell.swift */; };
+		686DBD372C7999FB0023960B /* writeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 686DBD362C7999FB0023960B /* writeViewModel.swift */; };
+		686DBD392C79A1B30023960B /* UITextView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 686DBD382C79A1B30023960B /* UITextView+.swift */; };
+		686DBD3B2C79B0A10023960B /* WriteCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 686DBD3A2C79B0A10023960B /* WriteCell.swift */; };
 		68CED3392C6C8EF40043266A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68CED3382C6C8EF40043266A /* AppDelegate.swift */; };
 		68CED33B2C6C8EF40043266A /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68CED33A2C6C8EF40043266A /* SceneDelegate.swift */; };
 		68CED33D2C6C8EF40043266A /* ReviewListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68CED33C2C6C8EF40043266A /* ReviewListViewController.swift */; };
@@ -77,6 +80,9 @@
 		683477F12C75ED1600D0931B /* Post.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
 		686DBD312C7796500023960B /* SelectPhotoViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectPhotoViewModel.swift; sourceTree = "<group>"; };
 		686DBD332C779DBA0023960B /* SelectPhotoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectPhotoCell.swift; sourceTree = "<group>"; };
+		686DBD362C7999FB0023960B /* writeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = writeViewModel.swift; sourceTree = "<group>"; };
+		686DBD382C79A1B30023960B /* UITextView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextView+.swift"; sourceTree = "<group>"; };
+		686DBD3A2C79B0A10023960B /* WriteCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WriteCell.swift; sourceTree = "<group>"; };
 		68CED3352C6C8EF40043266A /* DateDayApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DateDayApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		68CED3382C6C8EF40043266A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		68CED33A2C6C8EF40043266A /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -145,6 +151,13 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		686DBD352C7994A60023960B /* SearchLocation */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = SearchLocation;
+			sourceTree = "<group>";
+		};
 		68CED32C2C6C8EF40043266A = {
 			isa = PBXGroup;
 			children = (
@@ -213,6 +226,7 @@
 				68CED3AA2C71E64C0043266A /* UIScrollView+.swift */,
 				68CED3C62C73298E0043266A /* UISearchBar+.swift */,
 				683477EF2C75B6C800D0931B /* DateFormatter+.swift */,
+				686DBD382C79A1B30023960B /* UITextView+.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -359,6 +373,7 @@
 				68CED3D02C733E980043266A /* StarViewControllerEX.swift */,
 				68CED3D22C73406B0043266A /* SelectPhoto */,
 				68CED3D32C7340850043266A /* Write */,
+				686DBD352C7994A60023960B /* SearchLocation */,
 			);
 			path = WriteReview;
 			sourceTree = "<group>";
@@ -379,6 +394,8 @@
 			children = (
 				68CED3C92C732DF40043266A /* WriteViewController.swift */,
 				68CED3CB2C732E180043266A /* WriteView.swift */,
+				686DBD362C7999FB0023960B /* writeViewModel.swift */,
+				686DBD3A2C79B0A10023960B /* WriteCell.swift */,
 			);
 			path = Write;
 			sourceTree = "<group>";
@@ -479,6 +496,7 @@
 				68CED3B82C720F010043266A /* MyPageViewController.swift in Sources */,
 				68CED39C2C71DBDD0043266A /* UIStackView+.swift in Sources */,
 				68CED3B62C720EE00043266A /* PickedListViewController.swift in Sources */,
+				686DBD372C7999FB0023960B /* writeViewModel.swift in Sources */,
 				68CED3C52C73186B0043266A /* SearchView.swift in Sources */,
 				68CED3C32C73184B0043266A /* SearchViewController.swift in Sources */,
 				68CED38E2C70B9510043266A /* UserDefaultsManager.swift in Sources */,
@@ -495,6 +513,7 @@
 				68CED3B22C720DC70043266A /* DateDayTabBarController.swift in Sources */,
 				68CED3D72C7340CF0043266A /* SelectPhotoView.swift in Sources */,
 				68CED3752C6F2FEC0043266A /* SignUpViewController.swift in Sources */,
+				686DBD3B2C79B0A10023960B /* WriteCell.swift in Sources */,
 				68CED34F2C6C8F540043266A /* APIKey.swift in Sources */,
 				68CED3772C6F300A0043266A /* SignUpView.swift in Sources */,
 				68CED39A2C71D9A60043266A /* FeedViewModel.swift in Sources */,
@@ -514,6 +533,7 @@
 				68CED3662C6F20240043266A /* addSubviews+.swift in Sources */,
 				68CED33B2C6C8EF40043266A /* SceneDelegate.swift in Sources */,
 				68CED3812C6F4DC30043266A /* APIQuery.swift in Sources */,
+				686DBD392C79A1B30023960B /* UITextView+.swift in Sources */,
 				686DBD322C7796500023960B /* SelectPhotoViewModel.swift in Sources */,
 				686DBD342C779DBA0023960B /* SelectPhotoCell.swift in Sources */,
 				683477D22C75099300D0931B /* MembershipVerification.swift in Sources */,
