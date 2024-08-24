@@ -27,7 +27,7 @@ final class WriteViewController: UIViewController {
         super.viewDidLoad()
     
         configure()
-        
+        bind()
     }
     
     private func configure() {
@@ -42,11 +42,27 @@ final class WriteViewController: UIViewController {
         
         // collectionView
         writeView.hashTagCollectionView.register(WriteCell.self, forCellWithReuseIdentifier: WriteCell.id)
+        writeView.hashTagCollectionView.showsHorizontalScrollIndicator = false
+        
+        // starRatingView
+        writeView.starRatingView.didTouchCosmos = didTouchCosmos
     }
     
     private func bind() {
         let input = writeViewModel.Input()
         let output = viewModel.transform(input: input)
+        
+        output.hashTagList
+            .bind(to: writeView.hashTagCollectionView.rx.items(cellIdentifier: WriteCell.id, cellType: WriteCell.self)) { (row, element, cell) in
+                cell.hashTagLabel.text = element.atelierName
+            }
+            .disposed(by: disposeBag)
+        
+        writeView.hashTagCollectionView.rx.modelSelected(HashTagModel.self)
+            .bind(with: self) { owner, value in
+                owner.writeView.reviewTextView.text.append(" \(value.atelierName)")
+            }
+            .disposed(by: disposeBag)
     }
     
     private func rightBarButtonItem() -> UIBarButtonItem {
@@ -61,6 +77,20 @@ final class WriteViewController: UIViewController {
             .disposed(by: disposeBag)
         
         return UIBarButtonItem(customView: button)
+    }
+    
+    private class func formatValue(_ value: Double) -> String {
+        return String(format: "%.1f", value)
+    }
+    
+    private func didTouchCosmos(_ rating: Double) {
+        writeView.ratingLabel.text = WriteViewController.formatValue(rating)
+        writeView.ratingLabel.textColor = .black
+    }
+    
+    private func didFinishTouchingCosmos(_ rating: Double) {
+        writeView.ratingLabel.text = WriteViewController.formatValue(rating)
+        writeView.ratingLabel.textColor = .black
     }
 }
 

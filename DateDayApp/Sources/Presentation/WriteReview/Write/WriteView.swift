@@ -15,6 +15,7 @@ final class WriteView: BaseView {
     let titleLabel = UILabel()
     let searchLocationButton = UIButton()
     let reviewTextView = UITextView()
+    let hashTagNoticeLabel = UILabel()
     let hashTagCollectionView = UICollectionView(frame: .zero, collectionViewLayout: layout())
     let starRatingLabel = UILabel()
     let starRatingView = CosmosView()
@@ -24,7 +25,7 @@ final class WriteView: BaseView {
     let placeholder = "방문 후기를 작성해주세요! :)"
     
     override func addSubviews() {
-        addSubviews([titleView, searchLocationButton, reviewTextView, hashTagCollectionView, starRatingLabel, starRatingView, ratingLabel])
+        addSubviews([titleView, searchLocationButton, reviewTextView, hashTagNoticeLabel, hashTagCollectionView, starRatingLabel, starRatingView, ratingLabel])
         titleView.addSubview(titleLabel)
     }
     
@@ -53,11 +54,17 @@ final class WriteView: BaseView {
         reviewTextView.snp.makeConstraints {
             $0.top.equalTo(titleView.snp.bottom).offset(20)
             $0.horizontalEdges.equalTo(safeArea.snp.horizontalEdges).inset(30)
-            $0.height.equalTo(300)
+            $0.height.equalTo(280)
+        }
+        
+        hashTagNoticeLabel.snp.makeConstraints {
+            $0.top.equalTo(reviewTextView.snp.bottom).offset(20)
+            $0.horizontalEdges.equalTo(safeArea.snp.horizontalEdges).inset(30)
+            $0.height.equalTo(30)
         }
         
         hashTagCollectionView.snp.makeConstraints {
-            $0.top.equalTo(reviewTextView.snp.bottom).offset(20)
+            $0.top.equalTo(hashTagNoticeLabel.snp.bottom).offset(10)
             $0.horizontalEdges.equalTo(safeArea.snp.horizontalEdges).inset(30)
             $0.height.equalTo(120)
         }
@@ -91,25 +98,37 @@ final class WriteView: BaseView {
             cornerRadius: 10,
             borderColor: UIColor.primaryBorder.cgColor,
             borderWidth: 2)
+        
         titleView.basicUI(cornerRadius: 10)
-        reviewTextView.setUI(font: .systemFont(ofSize: 15, weight: .regular), text: placeholder)
+        
+        reviewTextView.setUI(
+            font: .systemFont(ofSize: 15, weight: .regular),
+            text: placeholder)
+        
         starRatingLabel.setUI(
-            txt: "방문하신 공방의 별점은~? •ܫ•",
+            txt: "방문하신 공방의 별점은~?'◡'",
             txtAlignment: .center,
             font: .systemFont(ofSize: 18, weight: .light),
             numOfLines: 1,
             txtColor: .black)
         
-        hashTagCollectionView.layer.borderColor = UIColor.black.cgColor
-        hashTagCollectionView.layer.borderWidth = 1
+        hashTagNoticeLabel.setUI(
+            txt: "해시태그를 선택해주세요!'◡'",
+            txtAlignment: .center,
+            font: .systemFont(ofSize: 18, weight: .light),
+            numOfLines: 1,
+            txtColor: .black)
+        
+        hashTagCollectionView.layer.borderColor = UIColor.primaryDark.cgColor
+        hashTagCollectionView.layer.borderWidth = 2
         starRatingView.myCosmosUI()
+        ratingLabel.text = "5.0"
     }
     
     private static func layout() -> UICollectionViewFlowLayout {
         let layout = UICollectionViewFlowLayout()
         let width = UIScreen.main.bounds.width - 60
-        layout.itemSize = CGSize(width: width / 4, height: 30)
-        layout.scrollDirection = .vertical
+        layout.itemSize = CGSize(width: width / 3, height: 30)
         layout.minimumLineSpacing = 0
         layout.minimumInteritemSpacing = 0
         return layout

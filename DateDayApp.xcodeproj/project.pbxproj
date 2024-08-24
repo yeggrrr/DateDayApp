@@ -17,6 +17,7 @@
 		686DBD372C7999FB0023960B /* writeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 686DBD362C7999FB0023960B /* writeViewModel.swift */; };
 		686DBD392C79A1B30023960B /* UITextView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 686DBD382C79A1B30023960B /* UITextView+.swift */; };
 		686DBD3B2C79B0A10023960B /* WriteCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 686DBD3A2C79B0A10023960B /* WriteCell.swift */; };
+		686DBD402C79B6280023960B /* HashTagModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 686DBD3F2C79B6280023960B /* HashTagModel.swift */; };
 		68CED3392C6C8EF40043266A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68CED3382C6C8EF40043266A /* AppDelegate.swift */; };
 		68CED33B2C6C8EF40043266A /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68CED33A2C6C8EF40043266A /* SceneDelegate.swift */; };
 		68CED33D2C6C8EF40043266A /* ReviewListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68CED33C2C6C8EF40043266A /* ReviewListViewController.swift */; };
@@ -67,7 +68,6 @@
 		68CED3CA2C732DF40043266A /* WriteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68CED3C92C732DF40043266A /* WriteViewController.swift */; };
 		68CED3CC2C732E180043266A /* WriteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68CED3CB2C732E180043266A /* WriteView.swift */; };
 		68CED3CF2C7338710043266A /* Cosmos in Frameworks */ = {isa = PBXBuildFile; productRef = 68CED3CE2C7338710043266A /* Cosmos */; };
-		68CED3D12C733E980043266A /* StarViewControllerEX.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68CED3D02C733E980043266A /* StarViewControllerEX.swift */; };
 		68CED3D52C7340B50043266A /* SelectPhotoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68CED3D42C7340B50043266A /* SelectPhotoViewController.swift */; };
 		68CED3D72C7340CF0043266A /* SelectPhotoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68CED3D62C7340CF0043266A /* SelectPhotoView.swift */; };
 /* End PBXBuildFile section */
@@ -83,6 +83,7 @@
 		686DBD362C7999FB0023960B /* writeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = writeViewModel.swift; sourceTree = "<group>"; };
 		686DBD382C79A1B30023960B /* UITextView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextView+.swift"; sourceTree = "<group>"; };
 		686DBD3A2C79B0A10023960B /* WriteCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WriteCell.swift; sourceTree = "<group>"; };
+		686DBD3F2C79B6280023960B /* HashTagModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HashTagModel.swift; sourceTree = "<group>"; };
 		68CED3352C6C8EF40043266A /* DateDayApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DateDayApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		68CED3382C6C8EF40043266A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		68CED33A2C6C8EF40043266A /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -129,7 +130,6 @@
 		68CED3C62C73298E0043266A /* UISearchBar+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UISearchBar+.swift"; sourceTree = "<group>"; };
 		68CED3C92C732DF40043266A /* WriteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WriteViewController.swift; sourceTree = "<group>"; };
 		68CED3CB2C732E180043266A /* WriteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WriteView.swift; sourceTree = "<group>"; };
-		68CED3D02C733E980043266A /* StarViewControllerEX.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StarViewControllerEX.swift; sourceTree = "<group>"; };
 		68CED3D42C7340B50043266A /* SelectPhotoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectPhotoViewController.swift; sourceTree = "<group>"; };
 		68CED3D62C7340CF0043266A /* SelectPhotoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectPhotoView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -156,6 +156,14 @@
 			children = (
 			);
 			path = SearchLocation;
+			sourceTree = "<group>";
+		};
+		686DBD3C2C79B5FE0023960B /* HashTagModel */ = {
+			isa = PBXGroup;
+			children = (
+				686DBD3F2C79B6280023960B /* HashTagModel.swift */,
+			);
+			path = HashTagModel;
 			sourceTree = "<group>";
 		};
 		68CED32C2C6C8EF40043266A = {
@@ -370,7 +378,6 @@
 		68CED3C82C732DD80043266A /* WriteReview */ = {
 			isa = PBXGroup;
 			children = (
-				68CED3D02C733E980043266A /* StarViewControllerEX.swift */,
 				68CED3D22C73406B0043266A /* SelectPhoto */,
 				68CED3D32C7340850043266A /* Write */,
 				686DBD352C7994A60023960B /* SearchLocation */,
@@ -392,6 +399,7 @@
 		68CED3D32C7340850043266A /* Write */ = {
 			isa = PBXGroup;
 			children = (
+				686DBD3C2C79B5FE0023960B /* HashTagModel */,
 				68CED3C92C732DF40043266A /* WriteViewController.swift */,
 				68CED3CB2C732E180043266A /* WriteView.swift */,
 				686DBD362C7999FB0023960B /* writeViewModel.swift */,
@@ -489,7 +497,6 @@
 				68CED37E2C6F4BCA0043266A /* Header.swift in Sources */,
 				68CED37C2C6F357C0043266A /* TargetType.swift in Sources */,
 				68CED3CA2C732DF40043266A /* WriteViewController.swift in Sources */,
-				68CED3D12C733E980043266A /* StarViewControllerEX.swift in Sources */,
 				68CED33D2C6C8EF40043266A /* ReviewListViewController.swift in Sources */,
 				683477F22C75ED1600D0931B /* Post.swift in Sources */,
 				68CED36F2C6F2BD70043266A /* BaseViewModel.swift in Sources */,
@@ -530,6 +537,7 @@
 				68CED37A2C6F35320043266A /* Router.swift in Sources */,
 				68CED3A02C71DDED0043266A /* UIView+.swift in Sources */,
 				68CED3AB2C71E64C0043266A /* UIScrollView+.swift in Sources */,
+				686DBD402C79B6280023960B /* HashTagModel.swift in Sources */,
 				68CED3662C6F20240043266A /* addSubviews+.swift in Sources */,
 				68CED33B2C6C8EF40043266A /* SceneDelegate.swift in Sources */,
 				68CED3812C6F4DC30043266A /* APIQuery.swift in Sources */,
