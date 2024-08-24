@@ -49,7 +49,7 @@ final class WriteViewController: UIViewController {
     }
     
     private func bind() {
-        let input = writeViewModel.Input()
+        let input = writeViewModel.Input(searchLocationButtonTap: writeView.searchLocationButton.rx.tap)
         let output = viewModel.transform(input: input)
         
         output.hashTagList
@@ -61,6 +61,13 @@ final class WriteViewController: UIViewController {
         writeView.hashTagCollectionView.rx.modelSelected(HashTagModel.self)
             .bind(with: self) { owner, value in
                 owner.writeView.reviewTextView.text.append(" \(value.atelierName)")
+            }
+            .disposed(by: disposeBag)
+        
+        output.searchLocationButtonTap
+            .bind(with: self) { owner, _ in
+                let vc = SearchLocationViewController()
+                owner.present(vc, animated: true)
             }
             .disposed(by: disposeBag)
     }
@@ -94,6 +101,7 @@ final class WriteViewController: UIViewController {
     }
 }
 
+// MARK: UITextViewDelegate
 extension WriteViewController: UITextViewDelegate {
     func textViewDidChange(_ textView: UITextView) {
         guard let text = textView.text else { return }

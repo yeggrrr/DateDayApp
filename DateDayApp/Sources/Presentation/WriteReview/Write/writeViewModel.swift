@@ -26,16 +26,19 @@ final class writeViewModel: BaseViewModel {
     ]
     
     struct Input {
-        
+        let searchLocationButtonTap: ControlEvent<Void>
     }
     
     struct Output {
+        let searchLocationButtonTap: ControlEvent<Void>
         let hashTagList: Observable<[HashTagModel]>
     }
     
     func transform(input: Input) -> Output {
         let hashTagList = BehaviorSubject(value: hashTag)
         
-        return Output(hashTagList: hashTagList)
+        return Output(
+            searchLocationButtonTap: input.searchLocationButtonTap,
+            hashTagList: hashTagList)
     }
 }

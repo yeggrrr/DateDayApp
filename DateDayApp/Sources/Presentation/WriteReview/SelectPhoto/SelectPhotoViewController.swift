@@ -104,9 +104,8 @@ final class SelectPhotoViewController: UIViewController {
             let itemProvider = result.itemProvider
             
             if itemProvider.canLoadObject(ofClass: UIImage.self) {
-                itemProvider.loadObject(ofClass: UIImage.self) { [weak self] image, error in
+                itemProvider.loadObject(ofClass: UIImage.self) { image, error in
                     guard let image = image as? UIImage else { return }
-                    
                     imagesDict[identifier] = image
                     dispatchGroup.leave()
                 }
