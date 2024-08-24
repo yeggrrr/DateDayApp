@@ -108,14 +108,14 @@ final class WriteView: BaseView {
         starRatingLabel.setUI(
             txt: "방문하신 공방의 별점은~?'◡'",
             txtAlignment: .center,
-            font: .systemFont(ofSize: 18, weight: .light),
+            font: .systemFont(ofSize: 18, weight: .semibold),
             numOfLines: 1,
             txtColor: .black)
         
         hashTagNoticeLabel.setUI(
             txt: "해시태그를 선택해주세요!'◡'",
             txtAlignment: .center,
-            font: .systemFont(ofSize: 18, weight: .light),
+            font: .systemFont(ofSize: 18, weight: .semibold),
             numOfLines: 1,
             txtColor: .black)
         
