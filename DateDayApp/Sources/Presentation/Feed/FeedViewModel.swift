@@ -16,17 +16,26 @@ final class FeedViewModel: BaseViewModel {
     
     struct Input {
         let writeButtonTap: ControlEvent<Void>
+        let toastMessage = PublishSubject<String>()
     }
     
     struct Output {
         let postData: BehaviorRelay<[ViewPost.PostData]>
         let imageFiles: BehaviorRelay<[Data]>
         let writeButtonTap: ControlEvent<Void>
+        let toastMessage: PublishSubject<String>
     }
     
     func transform(input: Input) -> Output {
         let postData = BehaviorRelay(value: postData)
         let imageFiles = BehaviorRelay(value: imageFiles)
+        let toastMessage = PublishSubject<String>()
+        
+        input.toastMessage
+            .bind(with: self) { owner, value in
+                toastMessage.onNext(value)
+            }
+            .disposed(by: disposeBag)
         
         NetworkManager.shared.viewPost()
             .subscribe(with: self) { owner, result in
@@ -45,14 +54,13 @@ final class FeedViewModel: BaseViewModel {
                 case .failure(let failure):
                     switch failure {
                     case .missingRequiredValue:
-                        print("잘못된 요청입니다.")
+                        input.toastMessage.onNext("잘못된 요청입니다.")
                     case .mismatchOrInvalid:
-                        print("유효하지 않은 토큰입니다.")
+                        input.toastMessage.onNext("유효하지 않은 토큰입니다.")
                     case .forbidden:
-                        print("접근 권한이 없습니다.")
+                        input.toastMessage.onNext("접근 권한이 없습니다.")
                     case .accessTokenExpiration:
-                        print("토큰 만료")
-                        
+                        input.toastMessage.onNext("토큰 만료") // 나중에 go
                     default:
                         break
                     }
@@ -67,6 +75,7 @@ final class FeedViewModel: BaseViewModel {
         return Output(
             postData: postData,
             imageFiles: imageFiles,
-            writeButtonTap: input.writeButtonTap)
+            writeButtonTap: input.writeButtonTap,
+            toastMessage: toastMessage)
     }
 }

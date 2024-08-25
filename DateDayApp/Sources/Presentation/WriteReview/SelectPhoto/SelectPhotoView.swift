@@ -13,7 +13,7 @@ final class SelectPhotoView: BaseView {
     private let descriptionLabel = UILabel()
     let AddImageButton = UIButton(type: .custom)
     let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout())
-
+    
     // MARK: Functions
     override func addSubviews() {
         addSubviews([descriptionLabel, AddImageButton, collectionView])
@@ -46,7 +46,7 @@ final class SelectPhotoView: BaseView {
         super.configureUI()
         
         descriptionLabel.setUI(
-            txt: "리뷰에 남길 사진을 선택해주세요! ✿'◡'✿",
+            txt: "리뷰에 남길 사진을 선택해주세요! '◡'",
             txtAlignment: .center,
             font: .systemFont(ofSize: 17, weight: .semibold),
             numOfLines: 0,

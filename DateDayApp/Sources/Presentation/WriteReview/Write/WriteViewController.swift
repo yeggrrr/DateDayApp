@@ -15,6 +15,7 @@ final class WriteViewController: UIViewController {
     let writeView = WriteView()
     
     // MARK: Properties
+    var selectedImages = PublishSubject<[UIImage]>()
     let viewModel = writeViewModel()
     let disposeBag = DisposeBag()
     
@@ -78,8 +79,19 @@ final class WriteViewController: UIViewController {
         button.setTitleColor(.black, for: .normal)
         
         button.rx.tap
-            .bind(with: self) { owner, _ in
-                print("포스트 업로드")
+            .withLatestFrom(selectedImages)
+            .bind(with: self) { owner, images in
+                print("업로드버튼 눌림")
+                
+                NetworkManager.shared.uploadImage(images: images)
+                    .subscribe(with: self) { owner, result in
+                        print(result)
+                    } onFailure: { owner, error in
+                        print("error: \(error)")
+                    } onDisposed: { owner in
+                        print("Disposed")
+                    }
+                    .disposed(by: owner.disposeBag)
             }
             .disposed(by: disposeBag)
         

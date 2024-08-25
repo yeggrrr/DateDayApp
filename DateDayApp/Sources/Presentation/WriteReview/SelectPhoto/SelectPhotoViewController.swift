@@ -15,12 +15,11 @@ final class SelectPhotoViewController: UIViewController {
     let selectPhotoView = SelectPhotoView()
     
     // MARK: Properties
+    private var selections = [String : PHPickerResult]()
+    private var selectedAssetIdentifiers = [String]()
     var selectedImages = PublishSubject<[UIImage]>()
     let viewModel = SelectPhotoViewModel()
     let disposeBag = DisposeBag()
-    
-    private var selections = [String : PHPickerResult]()
-    private var selectedAssetIdentifiers = [String]()
     
     // MARK: View Life Cycle
     override func loadView() {
@@ -72,6 +71,7 @@ final class SelectPhotoViewController: UIViewController {
         button.rx.tap
             .bind(with: self) { owner, _ in
                 let vc = WriteViewController()
+                vc.selectedImages = owner.selectedImages
                 owner.navigationController?.pushViewController(vc, animated: true)
             }
             .disposed(by: disposeBag)

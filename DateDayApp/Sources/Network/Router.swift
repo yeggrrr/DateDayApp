@@ -15,6 +15,7 @@ enum Router {
     case tokenRenewal
     case viewPost
     case viewPostImage(filePath: String)
+    case postImage
 }
 
 extension Router: TargetType {
@@ -36,6 +37,8 @@ extension Router: TargetType {
             return .get
         case .viewPostImage:
             return .get
+        case .postImage:
+            return .post
         }
     }
     
@@ -53,6 +56,8 @@ extension Router: TargetType {
             return "/posts"
         case let .viewPostImage(filePath):
             return filePath
+        case .postImage:
+            return "/posts/files"
         }
     }
     
@@ -88,6 +93,12 @@ extension Router: TargetType {
         case .viewPostImage:
             return [
                 Header.sesac.rawValue: APIKey.secretkey,
+                Header.authorization.rawValue: UserDefaultsManager.shared.token
+            ]
+        case .postImage:
+            return [
+                Header.sesac.rawValue: APIKey.secretkey,
+                Header.contentType.rawValue: Header.mutipart.rawValue,
                 Header.authorization.rawValue: UserDefaultsManager.shared.token
             ]
         }

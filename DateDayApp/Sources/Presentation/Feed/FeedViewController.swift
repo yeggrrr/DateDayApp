@@ -87,6 +87,12 @@ final class FeedViewController: UIViewController {
                 }
             }
             .disposed(by: disposeBag)
+        
+        output.toastMessage
+            .bind(with: self) { owner, value in
+                owner.showToast(message: value)
+            }
+            .disposed(by: disposeBag)
     }
     
     private func rightBarButtonItem() -> UIBarButtonItem {
