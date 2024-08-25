@@ -35,7 +35,7 @@ final class FeedView: BaseView {
         }
         
         collectionView.snp.makeConstraints {
-            $0.edges.equalTo(safeArea)
+            $0.edges.equalTo(safeArea).inset(5)
         }
         
         writeView.snp.makeConstraints {
@@ -61,11 +61,11 @@ final class FeedView: BaseView {
     
     static func layout() -> UICollectionViewFlowLayout {
         let layout = UICollectionViewFlowLayout()
-        let width = UIScreen.main.bounds.width - 5
+        let width = UIScreen.main.bounds.width - 10
         layout.itemSize = CGSize(width: width / 2, height: 320)
         layout.scrollDirection = .vertical
-        layout.minimumLineSpacing = 5
-        layout.minimumInteritemSpacing = 5
+        layout.minimumLineSpacing = 0
+        layout.minimumInteritemSpacing = 0
         return layout
     }
 }

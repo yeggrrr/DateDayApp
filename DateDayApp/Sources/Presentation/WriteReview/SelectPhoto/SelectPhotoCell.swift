@@ -28,7 +28,7 @@ final class SelectPhotoCell: UICollectionViewCell {
             $0.edges.equalTo(contentView.safeAreaLayoutGuide.snp.edges)
         }
         
-        selectedImageView.contentMode = .scaleAspectFill
+        selectedImageView.contentMode = .scaleAspectFit
         selectedImageView.layer.masksToBounds = true
     }
 }

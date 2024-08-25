@@ -11,7 +11,7 @@ import SnapKit
 final class SearchView: BaseView {
     // MARK: UI
     let searchBar = UISearchBar()
-    let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout.init())
+    let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout())
     
     // MARK: Functions
     override func addSubviews() {
@@ -27,14 +27,24 @@ final class SearchView: BaseView {
         
         collectionView.snp.makeConstraints {
             $0.top.equalTo(searchBar.snp.bottom)
-            $0.horizontalEdges.bottom.equalTo(safeArea)
+            $0.horizontalEdges.bottom.equalTo(safeArea).inset(5)
         }
     }
     
     override func configureUI() {
         super.configureUI()
         
-        collectionView.backgroundColor = .primaryCustomLight
+        collectionView.backgroundColor = .clear
         searchBar.setUI(placeholder: "검색")
+    }
+    
+    static func layout() -> UICollectionViewFlowLayout {
+        let layout = UICollectionViewFlowLayout()
+        let width = UIScreen.main.bounds.width - 10
+        layout.itemSize = CGSize(width: width / 2, height: 320)
+        layout.scrollDirection = .vertical
+        layout.minimumLineSpacing = 0
+        layout.minimumInteritemSpacing = 0
+        return layout
     }
 }

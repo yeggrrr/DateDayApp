@@ -10,6 +10,7 @@ import SnapKit
 
 final class FeedCell: UICollectionViewCell, ViewRepresentable {
     // MARK: UI
+    let cellBackgroundView = UIView()
     let mainImageView = UIImageView()
     private let detailView = UIView()
     let titleLabel = UILabel()
@@ -38,7 +39,7 @@ final class FeedCell: UICollectionViewCell, ViewRepresentable {
     
     // MARK: Functions
     func addSubviews() {
-        contentView.addSubviews([mainImageView, detailView])
+        contentView.addSubviews([cellBackgroundView, mainImageView, detailView])
         detailView.addSubviews([titleLabel, categoryLabel, reviewBackgroundView, etcInfoView])
         reviewBackgroundView.addSubview(reviewLabel)
         etcInfoView.addSubviews([likeImageView, likeLabel, markImageView, markLabel, starRatingImageView, starRatingInfoLabel])
@@ -47,14 +48,20 @@ final class FeedCell: UICollectionViewCell, ViewRepresentable {
     func setConstraints() {
         let safeArea = contentView.safeAreaLayoutGuide
         
+        cellBackgroundView.snp.makeConstraints {
+            $0.edges.equalTo(safeArea).inset(5)
+        }
+        
         mainImageView.snp.makeConstraints {
-            $0.top.horizontalEdges.equalTo(safeArea).inset(5)
+            $0.top.equalTo(cellBackgroundView.snp.top).offset(5)
+            $0.horizontalEdges.equalTo(cellBackgroundView.snp.horizontalEdges).inset(5)
             $0.height.equalTo(mainImageView.snp.width)
         }
         
         detailView.snp.makeConstraints {
             $0.top.equalTo(mainImageView.snp.bottom).offset(5)
-            $0.horizontalEdges.bottom.equalTo(safeArea).inset(5)
+            $0.horizontalEdges.equalTo(cellBackgroundView.snp.horizontalEdges).inset(5)
+            $0.bottom.equalTo(cellBackgroundView.snp.bottom).offset(-5)
         }
         
         titleLabel.snp.makeConstraints {
@@ -71,7 +78,7 @@ final class FeedCell: UICollectionViewCell, ViewRepresentable {
         
         reviewBackgroundView.snp.makeConstraints {
             $0.top.equalTo(categoryLabel.snp.bottom)
-            $0.horizontalEdges.equalTo(safeArea).inset(5)
+            $0.horizontalEdges.equalTo(cellBackgroundView.snp.horizontalEdges).inset(5)
             $0.bottom.equalTo(etcInfoView.snp.top)
         }
         
@@ -82,7 +89,8 @@ final class FeedCell: UICollectionViewCell, ViewRepresentable {
         }
         
         etcInfoView.snp.makeConstraints {
-            $0.bottom.horizontalEdges.equalTo(safeArea).inset(5)
+            $0.horizontalEdges.equalTo(cellBackgroundView.snp.horizontalEdges).inset(5)
+            $0.bottom.equalTo(cellBackgroundView.snp.bottom).offset(-5)
             $0.height.equalTo(20)
         }
         
@@ -122,8 +130,11 @@ final class FeedCell: UICollectionViewCell, ViewRepresentable {
     
     func configureUI() {
         backgroundColor = .clear
-        contentView.layer.borderWidth = 2
-        contentView.layer.borderColor = UIColor.primaryBorder.cgColor
+        cellBackgroundView.backgroundColor = .white
+        cellBackgroundView.layer.opacity = 0.5
+        cellBackgroundView.layer.borderColor = UIColor.primaryDark.cgColor
+        cellBackgroundView.layer.borderWidth = 1
+
         mainImageView.contentMode = .scaleAspectFill
         mainImageView.clipsToBounds = true
         titleLabel.font = .systemFont(ofSize: 17, weight: .black)

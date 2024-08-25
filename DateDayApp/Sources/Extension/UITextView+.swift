@@ -12,6 +12,7 @@ extension UITextView {
         self.font = font
         self.text = text
         self.textColor = .secondaryLabel
+        textContainer.lineFragmentPadding = 10
         layer.borderColor = UIColor.black.cgColor
         layer.borderWidth = 1
         layer.cornerRadius = 10
