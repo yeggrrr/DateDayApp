@@ -16,6 +16,7 @@ final class WriteViewController: UIViewController {
     
     // MARK: Properties
     var selectedImages = PublishSubject<[UIImage]>()
+    var selectedImageList: [UIImage] = []
     let viewModel = writeViewModel()
     let disposeBag = DisposeBag()
     
@@ -79,13 +80,32 @@ final class WriteViewController: UIViewController {
         button.setTitleColor(.black, for: .normal)
         
         button.rx.tap
-            .withLatestFrom(selectedImages)
+            .bind(with: self) { owner, _ in
+                owner.selectedImages.onNext(owner.selectedImageList)
+            }
+            .disposed(by: disposeBag)
+        
+        selectedImages
             .bind(with: self) { owner, images in
-                print("업로드버튼 눌림")
-                
                 NetworkManager.shared.uploadImage(images: images)
                     .subscribe(with: self) { owner, result in
-                        print(result)
+                        switch result {
+                        case .success(let success):
+                            print(success)
+                        case .failure(let failure):
+                            switch failure {
+                            case .missingRequiredValue:
+                                owner.showToast(message: "잘못된 요청입니다.")
+                            case .mismatchOrInvalid:
+                                owner.showToast(message: "인증할 수 없는 엑세스 토큰입니다.")
+                            case .forbidden:
+                                owner.showToast(message: "접근권한이 없습니다.")
+                            case .accessTokenExpiration:
+                                owner.updateToken()
+                            default:
+                                break
+                            }
+                        }
                     } onFailure: { owner, error in
                         print("error: \(error)")
                     } onDisposed: { owner in
@@ -94,7 +114,7 @@ final class WriteViewController: UIViewController {
                     .disposed(by: owner.disposeBag)
             }
             .disposed(by: disposeBag)
-        
+
         return UIBarButtonItem(customView: button)
     }
     

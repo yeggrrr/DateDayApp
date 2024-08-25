@@ -18,6 +18,7 @@ final class SelectPhotoViewController: UIViewController {
     private var selections = [String : PHPickerResult]()
     private var selectedAssetIdentifiers = [String]()
     var selectedImages = PublishSubject<[UIImage]>()
+    var selectedImageList: [UIImage] = []
     let viewModel = SelectPhotoViewModel()
     let disposeBag = DisposeBag()
     
@@ -71,7 +72,7 @@ final class SelectPhotoViewController: UIViewController {
         button.rx.tap
             .bind(with: self) { owner, _ in
                 let vc = WriteViewController()
-                vc.selectedImages = owner.selectedImages
+                vc.selectedImageList = owner.selectedImageList
                 owner.navigationController?.pushViewController(vc, animated: true)
             }
             .disposed(by: disposeBag)
@@ -118,6 +119,8 @@ final class SelectPhotoViewController: UIViewController {
             for identifier in self.selectedAssetIdentifiers  {
                 guard let image = imagesDict[identifier] else { return }
                 imageList.append(image)
+                selectedImageList.removeAll()
+                selectedImageList.append(contentsOf: imageList)
                 selectedImages.onNext(imageList)
             }
         }
