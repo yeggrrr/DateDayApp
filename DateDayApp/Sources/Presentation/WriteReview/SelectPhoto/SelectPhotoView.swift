@@ -37,8 +37,8 @@ final class SelectPhotoView: BaseView {
         
         collectionView.snp.makeConstraints {
             $0.top.equalTo(AddImageButton.snp.bottom).offset(30)
-            $0.horizontalEdges.equalTo(safeArea.snp.horizontalEdges).inset(50)
-            $0.bottom.equalTo(safeArea.snp.bottom).offset(-100)
+            $0.horizontalEdges.equalTo(safeArea.snp.horizontalEdges).inset(40)
+            $0.bottom.equalTo(safeArea.snp.bottom).offset(-90)
         }
     }
     
@@ -58,15 +58,16 @@ final class SelectPhotoView: BaseView {
         AddImageButton.tintColor = .white
         AddImageButton.layer.cornerRadius = 27
         AddImageButton.backgroundColor = .primaryBorder
-        collectionView.backgroundColor = .primaryCustomLight
+        collectionView.layer.borderWidth = 2
+        collectionView.layer.borderColor = UIColor.primaryCustomLight.cgColor
         collectionView.layer.cornerRadius = 20
         collectionView.layer.masksToBounds = true
     }
     
     private static func layout() -> UICollectionViewLayout {
         let layout  = UICollectionViewFlowLayout()
-        let sectionSpacing: CGFloat = 25
-        let cellSpacing: CGFloat = 25
+        let sectionSpacing: CGFloat = 20
+        let cellSpacing: CGFloat = 20
         let width = UIScreen.main.bounds.width - (sectionSpacing * 2) - (cellSpacing * 2)
         layout.itemSize = CGSize(width: width, height: width * 2)
         layout.scrollDirection = .horizontal

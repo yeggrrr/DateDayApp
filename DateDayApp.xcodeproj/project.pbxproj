@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		681E9FC02C7C63D500E4A718 /* PickedListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 681E9FBF2C7C63D500E4A718 /* PickedListView.swift */; };
+		681E9FC32C7C67D000E4A718 /* PickedListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 681E9FC22C7C67D000E4A718 /* PickedListViewModel.swift */; };
+		681E9FC52C7C6AA800E4A718 /* PickedListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 681E9FC42C7C6AA800E4A718 /* PickedListCell.swift */; };
 		683477CE2C74F98300D0931B /* HTTPStatusCodes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683477CD2C74F98300D0931B /* HTTPStatusCodes.swift */; };
 		683477D02C74FDCD00D0931B /* TokenUpdate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683477CF2C74FDCD00D0931B /* TokenUpdate.swift */; };
 		683477D22C75099300D0931B /* MembershipVerification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683477D12C75099300D0931B /* MembershipVerification.swift */; };
@@ -79,6 +82,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		681E9FBF2C7C63D500E4A718 /* PickedListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickedListView.swift; sourceTree = "<group>"; };
+		681E9FC22C7C67D000E4A718 /* PickedListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickedListViewModel.swift; sourceTree = "<group>"; };
+		681E9FC42C7C6AA800E4A718 /* PickedListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickedListCell.swift; sourceTree = "<group>"; };
 		683477CD2C74F98300D0931B /* HTTPStatusCodes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPStatusCodes.swift; sourceTree = "<group>"; };
 		683477CF2C74FDCD00D0931B /* TokenUpdate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenUpdate.swift; sourceTree = "<group>"; };
 		683477D12C75099300D0931B /* MembershipVerification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MembershipVerification.swift; sourceTree = "<group>"; };
@@ -365,6 +371,9 @@
 			isa = PBXGroup;
 			children = (
 				68CED3B52C720EE00043266A /* PickedListViewController.swift */,
+				681E9FBF2C7C63D500E4A718 /* PickedListView.swift */,
+				681E9FC22C7C67D000E4A718 /* PickedListViewModel.swift */,
+				681E9FC42C7C6AA800E4A718 /* PickedListCell.swift */,
 			);
 			path = PickedList;
 			sourceTree = "<group>";
@@ -539,9 +548,11 @@
 				68CED3AD2C720AFA0043266A /* FeedCell.swift in Sources */,
 				686DBD482C79D70E0023960B /* SearchLocation.swift in Sources */,
 				683477D02C74FDCD00D0931B /* TokenUpdate.swift in Sources */,
+				681E9FC02C7C63D500E4A718 /* PickedListView.swift in Sources */,
 				68CED3D52C7340B50043266A /* SelectPhotoViewController.swift in Sources */,
 				686DBD4C2C7B3EF10023960B /* Upload.swift in Sources */,
 				68CED3A52C71E1D60043266A /* BaseView.swift in Sources */,
+				681E9FC52C7C6AA800E4A718 /* PickedListCell.swift in Sources */,
 				683477CE2C74F98300D0931B /* HTTPStatusCodes.swift in Sources */,
 				68CED38A2C70AD210043266A /* UIViewController+.swift in Sources */,
 				68CED3962C70D7C60043266A /* UILabel+.swift in Sources */,
@@ -559,6 +570,7 @@
 				686DBD392C79A1B30023960B /* UITextView+.swift in Sources */,
 				686DBD322C7796500023960B /* SelectPhotoViewModel.swift in Sources */,
 				686DBD462C79D56C0023960B /* SearchLocationViewModel.swift in Sources */,
+				681E9FC32C7C67D000E4A718 /* PickedListViewModel.swift in Sources */,
 				686DBD342C779DBA0023960B /* SelectPhotoCell.swift in Sources */,
 				683477D22C75099300D0931B /* MembershipVerification.swift in Sources */,
 				68CED3942C70BC4C0043266A /* FeedViewController.swift in Sources */,
