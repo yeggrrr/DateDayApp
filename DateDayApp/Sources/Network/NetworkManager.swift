@@ -190,7 +190,6 @@ final class NetworkManager {
             
             return Disposables.create()
         }
-        .debug("viewPost 네트워크 통신")
     }
     
     // MARK: 위치 검색
@@ -219,12 +218,12 @@ final class NetworkManager {
             
             return Disposables.create()
         }
-        .debug("searchLocation 네트워크 통신")
     }
     
     // MARK: 포스트 이미지 업로드
     func uploadImage(images: [UIImage]) -> Single<Result<UploadImageModel, HTTPStatusCodes>> {
         return Single.create { observer -> Disposable in
+            
             do {
                 let request = try Router.postImage.asURLRequest()
                 
@@ -256,6 +255,46 @@ final class NetworkManager {
                         }
                     }
                 }
+            } catch {
+                print("error 발생!! - error:", error)
+            }
+            
+            return Disposables.create()
+        }
+    }
+    
+    // MARK: 포스트 작성
+    func uploadPost(uploadQuery: UploadPostQuery) -> Single<Result<UploadPostModel, HTTPStatusCodes>> {
+        return Single.create { observer -> Disposable in
+            
+            do {
+                let request = try Router.uploadPost(query: uploadQuery).asURLRequest()
+                
+                AF.request(request)
+                    .validate(statusCode: 200..<300)
+                    .responseDecodable(of: UploadPostModel.self) { response in
+                        switch response.result {
+                        case .success(let success):
+                            observer(.success(.success(success)))
+                        case .failure(_):
+                            let statusCode = response.response?.statusCode
+                            print(">>> statusCode: \(statusCode)")
+                            switch statusCode {
+                            case 400:
+                                observer(.success(.failure(.missingRequiredValue)))
+                            case 401:
+                                observer(.success(.failure(.mismatchOrInvalid)))
+                            case 403:
+                                observer(.success(.failure(.forbidden)))
+                            case 410:
+                                observer(.success(.failure(.serverErrorNotSavedOrCannotSearch)))
+                            case 419:
+                                observer(.success(.failure(.accessTokenExpiration)))
+                            default:
+                                break
+                            }
+                        }
+                    }
             } catch {
                 print("error 발생!! - error:", error)
             }

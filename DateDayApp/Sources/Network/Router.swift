@@ -16,6 +16,7 @@ enum Router {
     case viewPost
     case viewPostImage(filePath: String)
     case postImage
+    case uploadPost(query: UploadPostQuery)
 }
 
 extension Router: TargetType {
@@ -39,6 +40,8 @@ extension Router: TargetType {
             return .get
         case .postImage:
             return .post
+        case .uploadPost:
+            return .post
         }
     }
     
@@ -58,6 +61,8 @@ extension Router: TargetType {
             return filePath
         case .postImage:
             return "/posts/files"
+        case .uploadPost:
+            return "/posts"
         }
     }
     
@@ -101,6 +106,12 @@ extension Router: TargetType {
                 Header.contentType.rawValue: Header.mutipart.rawValue,
                 Header.authorization.rawValue: UserDefaultsManager.shared.token
             ]
+        case .uploadPost:
+            return [
+                Header.sesac.rawValue: APIKey.secretkey,
+                Header.authorization.rawValue: UserDefaultsManager.shared.token,
+                Header.contentType.rawValue: Header.json.rawValue
+            ]
         }
     }
     
@@ -135,6 +146,8 @@ extension Router: TargetType {
         case .validation(let query):
             return try? encoder.encode(query)
         case .login(let query):
+            return try? encoder.encode(query)
+        case .uploadPost(let query):
             return try? encoder.encode(query)
         default:
             return nil

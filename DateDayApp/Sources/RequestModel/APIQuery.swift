@@ -21,3 +21,16 @@ struct LoginQuery: Encodable {
     let email: String
     let password: String
 }
+
+struct UploadPostQuery: Encodable {
+    let title: String
+    let price: Int = 100
+    let content: String
+    let content1: String
+    let content2: String
+    let content3: String
+    let content4: String
+    let content5: String
+    let product_id: String = "TestProcutID" // yegrDateDay: DummyID
+    let files: [String]
+}
