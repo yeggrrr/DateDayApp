@@ -17,6 +17,7 @@ final class FeedViewModel: BaseViewModel {
     struct Input {
         let writeButtonTap: ControlEvent<Void>
         let toastMessage = PublishSubject<String>()
+        let tokenExpiredMessage = PublishSubject<String>()
     }
     
     struct Output {
@@ -24,16 +25,24 @@ final class FeedViewModel: BaseViewModel {
         let imageFiles: BehaviorRelay<[Data]>
         let writeButtonTap: ControlEvent<Void>
         let toastMessage: PublishSubject<String>
+        let tokenExpiredMessage: PublishSubject<String>
     }
     
     func transform(input: Input) -> Output {
         let postData = BehaviorRelay(value: postData)
         let imageFiles = BehaviorRelay(value: imageFiles)
         let toastMessage = PublishSubject<String>()
+        let tokenExpiredMessage = PublishSubject<String>()
         
         input.toastMessage
             .bind(with: self) { owner, value in
                 toastMessage.onNext(value)
+            }
+            .disposed(by: disposeBag)
+        
+        input.tokenExpiredMessage
+            .bind(with: self) { owner, value in
+                tokenExpiredMessage.onNext(value)
             }
             .disposed(by: disposeBag)
         
@@ -44,7 +53,7 @@ final class FeedViewModel: BaseViewModel {
                     postData.accept(success.data)
                     imageFiles.accept([])
                     postData.value.forEach { postData in
-                        if let image = postData.images.first {
+                        if let image = postData.imageFiles.first {
                             NetworkManager.shared.viewPostImage(filePath: image) { data in
                                 owner.imageFiles.append(data)
                             }
@@ -60,7 +69,7 @@ final class FeedViewModel: BaseViewModel {
                     case .forbidden:
                         input.toastMessage.onNext("접근 권한이 없습니다.")
                     case .accessTokenExpiration:
-                        input.toastMessage.onNext("토큰 만료") // 나중에 go
+                        input.tokenExpiredMessage.onNext("토큰이 만료되었습니다.")
                     default:
                         break
                     }
@@ -76,6 +85,7 @@ final class FeedViewModel: BaseViewModel {
             postData: postData,
             imageFiles: imageFiles,
             writeButtonTap: input.writeButtonTap,
-            toastMessage: toastMessage)
+            toastMessage: toastMessage,
+            tokenExpiredMessage: tokenExpiredMessage)
     }
 }

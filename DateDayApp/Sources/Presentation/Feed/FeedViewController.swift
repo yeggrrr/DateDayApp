@@ -80,7 +80,7 @@ final class FeedViewController: UIViewController {
                 cell.reviewLabel.text = element.content
                 cell.starRatingInfoLabel.text = element.starRating
                 
-                if let image = element.images.first {
+                if let image = element.imageFiles.first {
                     NetworkManager.shared.viewPostImage(filePath: image) { data in
                         cell.mainImageView.image = UIImage(data: data)
                     }
