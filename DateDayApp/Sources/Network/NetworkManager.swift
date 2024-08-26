@@ -278,7 +278,6 @@ final class NetworkManager {
                             observer(.success(.success(success)))
                         case .failure(_):
                             let statusCode = response.response?.statusCode
-                            print(">>> statusCode: \(statusCode)")
                             switch statusCode {
                             case 400:
                                 observer(.success(.failure(.missingRequiredValue)))
