@@ -27,7 +27,8 @@ final class SearchView: BaseView {
         
         collectionView.snp.makeConstraints {
             $0.top.equalTo(searchBar.snp.bottom)
-            $0.horizontalEdges.bottom.equalTo(safeArea).inset(5)
+            $0.horizontalEdges.equalTo(safeArea).inset(5)
+            $0.bottom.equalToSuperview()
         }
     }
     

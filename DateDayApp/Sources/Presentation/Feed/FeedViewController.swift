@@ -72,6 +72,7 @@ final class FeedViewController: UIViewController {
         output.writeButtonTap
             .bind(with: self) { owner, _ in
                 let vc = SelectPhotoViewController()
+                vc.hidesBottomBarWhenPushed = true
                 owner.navigationController?.pushViewController(vc, animated: true)
             }
             .disposed(by: disposeBag)
@@ -94,6 +95,9 @@ final class FeedViewController: UIViewController {
         output.collectionViewItemSelected
             .bind(with: self) { owner, indexPath in
                 print(indexPath)
+                let vc = DetailViewController()
+                vc.hidesBottomBarWhenPushed = true
+                owner.navigationController?.pushViewController(vc, animated: true)
             }
             .disposed(by: disposeBag)
         
@@ -118,6 +122,7 @@ final class FeedViewController: UIViewController {
         button.rx.tap
             .bind(with: self) { owner, _ in
                 let vc = SearchViewController()
+                vc.hidesBottomBarWhenPushed = true
                 owner.navigationController?.pushViewController(vc, animated: true)
             }
             .disposed(by: disposeBag)

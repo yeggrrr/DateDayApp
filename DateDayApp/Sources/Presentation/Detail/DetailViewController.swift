@@ -17,5 +17,12 @@ final class DetailViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        configure()
+    }
+    
+    private func configure() {
+        // navigation
+        navigationItem.title = "상세페이지"
     }
 }
