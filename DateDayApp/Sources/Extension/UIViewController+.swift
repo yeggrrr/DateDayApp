@@ -53,9 +53,9 @@ extension UIViewController {
         let stringSaveTime = UserDefaultsManager.shared.saveTime
         // 저장한 시간 Date로 변환
         guard let dateSaveTime = DateFormatter.stringToDateFormatter.date(from: stringSaveTime) else { return }
-        // 저장 시간 9분 45초 후, Date 정보
-        let justBeforeTokenExpiration = Date(timeInterval: 585, since: dateSaveTime)
-        // 만약, 9분 45초가 지났다면?
+        // 저장 시간 4분 45초 후, Date 정보
+        let justBeforeTokenExpiration = Date(timeInterval: 285, since: dateSaveTime)
+        // 만약, 4분 45초가 지났다면?
         if justBeforeTokenExpiration < Date() {
             print("곧 만료됨! 갱신 준비!")
             NetworkManager.shared.tokenUpdate { result in

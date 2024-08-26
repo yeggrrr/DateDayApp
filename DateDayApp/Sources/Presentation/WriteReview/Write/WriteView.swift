@@ -120,6 +120,7 @@ final class WriteView: BaseView {
         
         starRatingView.myCosmosUI()
         
+        titleLabel.font = .systemFont(ofSize: 17, weight: .semibold)
         ratingLabel.text = "5.0"
         ratingLabel.font = .systemFont(ofSize: 18, weight: .bold)
         scoreTextLabel.text = "점 '◡'"

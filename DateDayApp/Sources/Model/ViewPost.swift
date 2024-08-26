@@ -1,5 +1,5 @@
 //
-//  Post.swift
+//  ViewPost.swift
 //  DateDayApp
 //
 //  Created by YJ on 8/21/24.
@@ -29,7 +29,7 @@ struct ViewPost: Decodable {
         let category: String
         let createdAt: String
         let creator: Creator
-        let images: [String]
+        let imageFiles: [String]
         let likes: [String]
         let interest: [String]
         let buyers: [String]
@@ -40,7 +40,7 @@ struct ViewPost: Decodable {
             case productId = "product_id"
             case title
             case price
-            case content = "content"
+            case content
             case starRating = "content1"
             case longitude = "content2"
             case latitude = "content3"
@@ -48,8 +48,8 @@ struct ViewPost: Decodable {
             case category = "content5"
             case createdAt
             case creator
-            case images = "files"
-            case likes = "likes"
+            case imageFiles = "files"
+            case likes
             case interest = "likes2"
             case buyers
             case hashTags
