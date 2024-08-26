@@ -9,11 +9,11 @@ import UIKit
 import Cosmos
 
 extension UIView {
-    func basicUI(cornerRadius: CGFloat = 0) {
+    func basicUI(bgColor: UIColor = .white, cornerRadius: CGFloat = 0, borderWidth: CGFloat = 1, borderColor: CGColor = UIColor.black.cgColor) {
         layer.cornerRadius = cornerRadius
-        layer.borderWidth = 1
-        layer.borderColor = UIColor.black.cgColor
-        backgroundColor = .white
+        layer.borderWidth = borderWidth
+        layer.borderColor = borderColor
+        backgroundColor = bgColor
     }
 }
 

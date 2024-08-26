@@ -46,6 +46,7 @@ final class PickedListViewController: UIViewController {
         
         output.testInterestedList
             .bind(to: pickedListView.tableView.rx.items(cellIdentifier: PickedListCell.id, cellType: PickedListCell.self)) { (row, element, cell) in
+                cell.selectionStyle = .none
                 cell.titleLabel.text = element
             }
             .disposed(by: disposeBag)

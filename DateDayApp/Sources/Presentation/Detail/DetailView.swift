@@ -49,7 +49,7 @@ final class DetailView: BaseView {
         
         scrollView.snp.makeConstraints {
             $0.top.horizontalEdges.equalTo(safeArea)
-            $0.bottom.equalTo(bottomView.snp.top)
+            $0.bottom.equalTo(bottomView.snp.top).offset(5)
         }
         
         contentView.snp.makeConstraints {
@@ -97,7 +97,7 @@ final class DetailView: BaseView {
         }
         
         locationIconImageView.snp.makeConstraints {
-            $0.top.equalTo(reviewBgView.snp.bottom).offset(16)
+            $0.top.equalTo(reviewBgView.snp.bottom).offset(20)
             $0.leading.equalTo(reviewIconImageView.snp.leading)
             $0.height.width.equalTo(25)
         }
@@ -117,12 +117,13 @@ final class DetailView: BaseView {
             $0.top.equalTo(LocationMapView.snp.bottom).offset(20)
             $0.horizontalEdges.equalTo(safeArea.snp.horizontalEdges).inset(30)
             $0.height.equalTo(50)
-            $0.bottom.equalTo(contentView.snp.bottom).offset(-20)
+            $0.bottom.equalTo(contentView.snp.bottom).offset(-25)
         }
         
         bottomView.snp.makeConstraints {
-            $0.bottom.horizontalEdges.equalToSuperview()
-            $0.height.equalTo(120)
+            $0.horizontalEdges.equalTo(safeArea.snp.horizontalEdges)
+            $0.bottom.equalToSuperview()
+            $0.height.equalTo(110)
         }
         
         interestButton.snp.makeConstraints {
@@ -137,7 +138,6 @@ final class DetailView: BaseView {
             $0.trailing.equalTo(safeArea).offset(-16)
             $0.height.equalTo(50)
         }
-        
     }
     
     override func configureUI() {
@@ -145,9 +145,9 @@ final class DetailView: BaseView {
         
         backgroundImageView.image = UIImage(named: "seaBackground")
         
-        contentView.backgroundColor = .white
+        contentView.backgroundColor = .primaryCustomLight
         contentView.layer.opacity = 0.8
-                
+        
         likeButton.setImage(UIImage(systemName: "heart"), for: .normal)
         likeButton.tintColor = .primaryDark
         
@@ -163,11 +163,18 @@ final class DetailView: BaseView {
             numOfLines: 1,
             txtColor: .black)
         
-        reviewBgView.layer.cornerRadius = 10
-        reviewBgView.layer.borderColor = UIColor.primaryDark.cgColor
-        reviewBgView.layer.borderWidth = 2
+        reviewBgView.basicUI(
+            bgColor: .white,
+            cornerRadius: 10,
+            borderWidth: 2,
+            borderColor: UIColor.primaryDark.cgColor)
+        reviewBgView.layer.opacity = 0.5
         
-        reviewLabel.numberOfLines = 0
+        reviewLabel.setUI(
+            txtAlignment: .left,
+            font: .systemFont(ofSize: 15, weight: .regular),
+            numOfLines: 0,
+            txtColor: .black)
         
         locationIconImageView.image = UIImage(systemName: "location")
         locationIconImageView.tintColor = .black
@@ -181,26 +188,33 @@ final class DetailView: BaseView {
         
         LocationMapView.layer.cornerRadius = 15
         
-        moveToDetailButton.setTitle("상세페이지로 이동", for: .normal)
-        moveToDetailButton.setTitleColor(.black, for: .normal)
-        moveToDetailButton.backgroundColor = .white
         moveToDetailButton.titleLabel?.font = .systemFont(ofSize: 17, weight: .semibold)
-        moveToDetailButton.layer.cornerRadius = 5
-        moveToDetailButton.layer.borderWidth = 2
-        moveToDetailButton.layer.borderColor = UIColor.primaryBorder.cgColor
+        moveToDetailButton.squareUI(
+            bgColor: .white,
+            title: "상세페이지로 이동",
+            titleColor: .black,
+            cornerRadius: 5,
+            borderColor: UIColor.primaryBorder.cgColor,
+            borderWidth: 2)
         
-        bottomView.backgroundColor = .primaryCustomLight
+        bottomView.backgroundColor = .white
+        bottomView.layer.cornerRadius = 15
+        bottomView.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
+        bottomView.layer.masksToBounds = true
         
         interestButton.backgroundColor = .primaryButtonBg
         interestButton.layer.cornerRadius = 5
         interestButton.setImage(UIImage(systemName: "bookmark"), for: .normal)
         interestButton.tintColor = .white
         
-        reservationButton.setTitle("예약하기", for: .normal)
-        reservationButton.setTitleColor(.white, for: .normal)
         reservationButton.titleLabel?.font = .systemFont(ofSize: 17, weight: .bold)
-        reservationButton.backgroundColor = .primaryButtonBg
-        reservationButton.layer.cornerRadius = 5
+        reservationButton.squareUI(
+            bgColor: .primaryButtonBg,
+            title: "예약하기",
+            titleColor: .white,
+            cornerRadius: 5,
+            borderColor: UIColor.clear.cgColor,
+            borderWidth: 0)
         
         // 임시
         collectionView.backgroundColor = .systemGray

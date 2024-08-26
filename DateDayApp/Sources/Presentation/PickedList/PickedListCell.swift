@@ -32,8 +32,7 @@ final class PickedListCell: UITableViewCell, ViewRepresentable {
     
     // MARK: Functions
     func addSubviews() {
-        contentView.addSubview(backgroundContentView)
-        backgroundContentView.addSubviews([detailStackView, mainImageView])
+        contentView.addSubviews([backgroundContentView, detailStackView, mainImageView])
         detailStackView.addArrangedSubviews([titleLabel, categoryLabel, starRatingStackView])
         starRatingStackView.addArrangedSubviews([starImageView, starRatingLabel])
     }
@@ -56,8 +55,8 @@ final class PickedListCell: UITableViewCell, ViewRepresentable {
         }
         
         mainImageView.snp.makeConstraints {
-            $0.trailing.equalTo(backgroundContentView.snp.trailing)
-            $0.verticalEdges.equalTo(backgroundContentView.snp.verticalEdges)
+            $0.trailing.equalTo(backgroundContentView.snp.trailing).offset(-1)
+            $0.verticalEdges.equalTo(backgroundContentView.snp.verticalEdges).inset(1)
             $0.width.equalTo(110)
         }
     }
@@ -65,9 +64,9 @@ final class PickedListCell: UITableViewCell, ViewRepresentable {
     func configureUI() {
         backgroundColor = .clear
         backgroundContentView.backgroundColor = .white
-        backgroundContentView.layer.opacity = 0.8
+        backgroundContentView.layer.opacity = 0.5
         backgroundContentView.layer.borderColor = UIColor.primaryDark.cgColor
-        backgroundContentView.layer.borderWidth = 2
+        backgroundContentView.layer.borderWidth = 1
         backgroundContentView.layer.cornerRadius = 10
         
         detailStackView.axis = .vertical
@@ -79,7 +78,9 @@ final class PickedListCell: UITableViewCell, ViewRepresentable {
         starRatingStackView.spacing = 5
         
         mainImageView.contentMode = .scaleAspectFill
-        mainImageView.clipsToBounds = true
+        mainImageView.layer.cornerRadius = 10
+        mainImageView.layer.maskedCorners = [.layerMaxXMaxYCorner, .layerMaxXMinYCorner]
+        mainImageView.layer.masksToBounds = true
         
         starImageView.image = UIImage(systemName: "star.fill")
         starImageView.tintColor = .systemOrange
