@@ -17,6 +17,11 @@ final class WriteViewController: UIViewController {
     // MARK: Properties
     var selectedImages = PublishSubject<[UIImage]>()
     var selectedImageList: [UIImage] = []
+    var selectData = PublishSubject<SelectData>()
+    var selectLocationData: SelectData?
+    
+    var successUploadImages = PublishSubject<[String]>()
+    
     let viewModel = writeViewModel()
     let disposeBag = DisposeBag()
     
@@ -69,7 +74,61 @@ final class WriteViewController: UIViewController {
         output.searchLocationButtonTap
             .bind(with: self) { owner, _ in
                 let vc = SearchLocationViewController()
+                vc.delegate = self
                 owner.present(vc, animated: true)
+            }
+            .disposed(by: disposeBag)
+        
+        selectData
+            .bind(with: self) { owner, selectedData in
+                owner.writeView.titleLabel.text = selectedData.placeName
+            }
+            .disposed(by: disposeBag)
+        
+        successUploadImages
+            .bind(with: self) { owner, files in
+                guard let locationData = owner.selectLocationData else { return }
+                guard let ratingValue = owner.writeView.ratingLabel.text else { return }
+                
+                let uploadPostQuery = UploadPostQuery(
+                    title: locationData.placeName,
+                    content: owner.writeView.reviewTextView.text + " #\(locationData.placeName)",
+                    content1: ratingValue,
+                    content2: locationData.longitude,
+                    content3: locationData.latitude,
+                    content4: locationData.placeURL,
+                    content5: locationData.categoryName,
+                    files: files)
+                
+                NetworkManager.shared.uploadPost(uploadQuery: uploadPostQuery)
+                    .subscribe(with: self) { owner, result in
+                        switch result {
+                        case .success(let success):
+                            owner.okShowAlert(title: "업로드 성공!", message: "") { _ in
+                                owner.setRootViewController(DateDayTabBarController())
+                            }
+                        case .failure(let failure):
+                            switch failure {
+                            case .missingRequiredValue:
+                                owner.showToast(message: "유효하지 않은 값타입입니다.")
+                            case .mismatchOrInvalid:
+                                owner.showToast(message: "인증할 수 없는 엑세스 토큰입니다.")
+                            case .forbidden:
+                                owner.showToast(message: "접근권한이 없습니다.")
+                            case .serverErrorNotSavedOrCannotSearch:
+                                owner.showToast(message: "생성된 게시글이 없습니다.")
+                            case .accessTokenExpiration:
+                                owner.updateToken()
+                            default:
+                                break
+                            }
+                        }
+                    } onFailure: { owner, error in
+                        print("error: \(error)")
+                    } onDisposed: { owner in
+                        print("Disposed")
+                    }
+                    .disposed(by: owner.disposeBag)
             }
             .disposed(by: disposeBag)
     }
@@ -91,7 +150,7 @@ final class WriteViewController: UIViewController {
                     .subscribe(with: self) { owner, result in
                         switch result {
                         case .success(let success):
-                            print(success)
+                            owner.successUploadImages.onNext(success.files)
                         case .failure(let failure):
                             switch failure {
                             case .missingRequiredValue:
@@ -154,5 +213,12 @@ extension WriteViewController: UITextViewDelegate {
                 textView.textColor = .lightGray
             }
         }
+    }
+}
+
+extension WriteViewController: SelectDataDelegate {
+    func sendSelectedData(selectedData: SelectData) {
+        selectData.onNext(selectedData)
+        selectLocationData = selectedData
     }
 }

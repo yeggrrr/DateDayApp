@@ -15,10 +15,12 @@ final class SearchLocationViewModel: BaseViewModel {
     struct Input {
         let searchButtonTap: ControlEvent<Void>
         let searchText: ControlProperty<String>
+        let tableViewModelSelected: ControlEvent<SearchLocationModel.Documents>
     }
     
     struct Output {
         let searchResult: PublishSubject<[SearchLocationModel.Documents]>
+        let tableViewModelSelected: ControlEvent<SearchLocationModel.Documents>
     }
     
     func transform(input: Input) -> Output {
@@ -35,7 +37,6 @@ final class SearchLocationViewModel: BaseViewModel {
                     }
             }
             .subscribe(with: self) { owner, result in
-                print(result.documents)
                 searchResult.onNext(result.documents)
                 
             } onError: { owner, error in
@@ -47,6 +48,8 @@ final class SearchLocationViewModel: BaseViewModel {
             }
             .disposed(by: disposeBag)
         
-        return Output(searchResult: searchResult)
+        return Output(
+            searchResult: searchResult,
+            tableViewModelSelected: input.tableViewModelSelected)
     }
 }

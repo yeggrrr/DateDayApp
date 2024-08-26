@@ -20,7 +20,7 @@ final class SearchLocationView: BaseView {
         let safeArea = safeAreaLayoutGuide
         
         searchBar.snp.makeConstraints {
-            $0.top.equalTo(safeArea).offset(10)
+            $0.top.equalTo(safeArea)
             $0.horizontalEdges.equalTo(safeArea.snp.horizontalEdges)
         }
         
@@ -34,7 +34,6 @@ final class SearchLocationView: BaseView {
     override func configureUI() {
         super.configureUI()  
         
-        searchBar.setUI(placeholder: "공방 이름을 입력해주세요")
-        tableView.backgroundColor = .systemGray
+        searchBar.setUI(placeholder: "공방 이름을 입력해주세요 '◡'")
     }
 }
