@@ -15,12 +15,14 @@ final class FeedViewModel: BaseViewModel {
     private let disposeBag = DisposeBag()
     
     struct Input {
+        let collectionViewItemSelected: ControlEvent<IndexPath>
         let writeButtonTap: ControlEvent<Void>
         let toastMessage = PublishSubject<String>()
         let tokenExpiredMessage = PublishSubject<String>()
     }
     
     struct Output {
+        let collectionViewItemSelected: ControlEvent<IndexPath>
         let postData: BehaviorRelay<[ViewPost.PostData]>
         let imageFiles: BehaviorRelay<[Data]>
         let writeButtonTap: ControlEvent<Void>
@@ -82,6 +84,7 @@ final class FeedViewModel: BaseViewModel {
             .disposed(by: disposeBag)
         
         return Output(
+            collectionViewItemSelected: input.collectionViewItemSelected,
             postData: postData,
             imageFiles: imageFiles,
             writeButtonTap: input.writeButtonTap,

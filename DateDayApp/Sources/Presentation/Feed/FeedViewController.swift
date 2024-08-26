@@ -63,7 +63,10 @@ final class FeedViewController: UIViewController {
     }
     
     private func bind() {
-        let input = FeedViewModel.Input(writeButtonTap: feedView.writeButton.rx.tap)
+        let input = FeedViewModel.Input(
+            collectionViewItemSelected: feedView.collectionView.rx.itemSelected,
+            writeButtonTap: feedView.writeButton.rx.tap)
+        
         let output = viewModel.transform(input: input)
         
         output.writeButtonTap
@@ -88,9 +91,21 @@ final class FeedViewController: UIViewController {
             }
             .disposed(by: disposeBag)
         
+        output.collectionViewItemSelected
+            .bind(with: self) { owner, indexPath in
+                print(indexPath)
+            }
+            .disposed(by: disposeBag)
+        
         output.toastMessage
             .bind(with: self) { owner, value in
                 owner.showToast(message: value)
+            }
+            .disposed(by: disposeBag)
+        
+        output.tokenExpiredMessage
+            .bind(with: self) { owner, value in
+                owner.updateToken()
             }
             .disposed(by: disposeBag)
     }

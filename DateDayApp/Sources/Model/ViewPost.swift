@@ -56,8 +56,8 @@ struct ViewPost: Decodable {
         }
         
         struct Creator: Decodable {
-            let userID: String
-            let nick: String
+            let userID: String?
+            let nick: String?
             
             enum CodingKeys: String, CodingKey {
                 case userID = "user_id"
