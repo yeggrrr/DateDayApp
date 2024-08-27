@@ -34,7 +34,6 @@
 		686DBD4C2C7B3EF10023960B /* Upload.swift in Sources */ = {isa = PBXBuildFile; fileRef = 686DBD4B2C7B3EF10023960B /* Upload.swift */; };
 		68CED3392C6C8EF40043266A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68CED3382C6C8EF40043266A /* AppDelegate.swift */; };
 		68CED33B2C6C8EF40043266A /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68CED33A2C6C8EF40043266A /* SceneDelegate.swift */; };
-		68CED33D2C6C8EF40043266A /* ReviewListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68CED33C2C6C8EF40043266A /* ReviewListViewController.swift */; };
 		68CED3422C6C8EF50043266A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 68CED3412C6C8EF50043266A /* Assets.xcassets */; };
 		68CED3452C6C8EF50043266A /* Base in Resources */ = {isa = PBXBuildFile; fileRef = 68CED3442C6C8EF50043266A /* Base */; };
 		68CED34D2C6C8F390043266A /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 68CED34C2C6C8F390043266A /* .gitignore */; };
@@ -115,7 +114,6 @@
 		68CED3352C6C8EF40043266A /* DateDayApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DateDayApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		68CED3382C6C8EF40043266A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		68CED33A2C6C8EF40043266A /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		68CED33C2C6C8EF40043266A /* ReviewListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewListViewController.swift; sourceTree = "<group>"; };
 		68CED3412C6C8EF50043266A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		68CED3442C6C8EF50043266A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		68CED3462C6C8EF50043266A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -251,10 +249,7 @@
 		68CED35F2C6E14730043266A /* Sources */ = {
 			isa = PBXGroup;
 			children = (
-				68CED3A32C71E1C40043266A /* Base */,
 				68CED38F2C70B9570043266A /* DataStorage */,
-				68CED3822C6F4F380043266A /* Model */,
-				68CED37F2C6F4DB20043266A /* RequestModel */,
 				68CED3702C6F2F800043266A /* Network */,
 				68CED3692C6F21EC0043266A /* Protocol */,
 				68CED3602C6E14840043266A /* Extension */,
@@ -285,7 +280,7 @@
 		68CED3612C6E148B0043266A /* Presentation */ = {
 			isa = PBXGroup;
 			children = (
-				68CED33C2C6C8EF40043266A /* ReviewListViewController.swift */,
+				68CED3A32C71E1C40043266A /* Base */,
 				68CED3622C6F1FE50043266A /* Login */,
 				68CED3732C6F2FD60043266A /* SignUp */,
 				68CED3922C70BC3A0043266A /* Feed */,
@@ -323,6 +318,8 @@
 		68CED3702C6F2F800043266A /* Network */ = {
 			isa = PBXGroup;
 			children = (
+				68CED3822C6F4F380043266A /* Model */,
+				68CED37F2C6F4DB20043266A /* RequestQuery */,
 				68CED3712C6F2F8C0043266A /* NetworkManager.swift */,
 				68CED3792C6F35320043266A /* Router.swift */,
 				68CED37B2C6F357C0043266A /* TargetType.swift */,
@@ -342,12 +339,12 @@
 			path = SignUp;
 			sourceTree = "<group>";
 		};
-		68CED37F2C6F4DB20043266A /* RequestModel */ = {
+		68CED37F2C6F4DB20043266A /* RequestQuery */ = {
 			isa = PBXGroup;
 			children = (
 				68CED3802C6F4DC30043266A /* APIQuery.swift */,
 			);
-			path = RequestModel;
+			path = RequestQuery;
 			sourceTree = "<group>";
 		};
 		68CED3822C6F4F380043266A /* Model */ = {
@@ -547,7 +544,6 @@
 				68CED37E2C6F4BCA0043266A /* Header.swift in Sources */,
 				68CED37C2C6F357C0043266A /* TargetType.swift in Sources */,
 				68CED3CA2C732DF40043266A /* WriteViewController.swift in Sources */,
-				68CED33D2C6C8EF40043266A /* ReviewListViewController.swift in Sources */,
 				683477F22C75ED1600D0931B /* ViewPost.swift in Sources */,
 				68CED36F2C6F2BD70043266A /* BaseViewModel.swift in Sources */,
 				68CED3B82C720F010043266A /* MyPageViewController.swift in Sources */,
