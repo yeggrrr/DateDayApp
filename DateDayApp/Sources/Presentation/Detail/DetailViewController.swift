@@ -58,6 +58,9 @@ final class DetailViewController: UIViewController {
                             owner.viewModel.detailData.onNext(success)
                             owner.navigationItem.title = success.title
                             owner.detailView.reviewLabel.text = success.content
+                            let createdAt = DateFormatter.dateToContainLetter(dateString: success.createdAt)
+                            owner.detailView.createdAtLabel.text = "\(createdAt) 작성됨"
+                            
                         case .failure(let failure):
                             switch failure {
                             case .accessTokenExpiration:

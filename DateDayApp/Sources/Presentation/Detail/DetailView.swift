@@ -16,6 +16,7 @@ final class DetailView: BaseView {
     private let contentView = UIView()
     let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout())
     let likeButton = UIButton(type: .system)
+    let createdAtLabel = UILabel()
     private let dividerView = UIView()
     private let reviewIconImageView = UIImageView()
     private let reviewTextLabel = UILabel()
@@ -34,7 +35,7 @@ final class DetailView: BaseView {
     override func addSubviews() {
         addSubviews([backgroundImageView, scrollView, bottomView])
         scrollView.addSubview(contentView)
-        contentView.addSubviews([collectionView, likeButton, dividerView, reviewTextLabel, reviewBgView, reviewLabel, reviewIconImageView, locationTextLabel, locationIconImageView, LocationMapView, moveToDetailButton])
+        contentView.addSubviews([collectionView, likeButton, createdAtLabel, dividerView, reviewTextLabel, reviewBgView, reviewLabel, reviewIconImageView, locationTextLabel, locationIconImageView, LocationMapView, moveToDetailButton])
         bottomView.addSubviews([interestButton, reservationButton])
     }
     
@@ -67,6 +68,12 @@ final class DetailView: BaseView {
             $0.top.equalTo(collectionView.snp.bottom).offset(10)
             $0.leading.equalTo(safeArea.snp.leading).offset(10)
             $0.height.width.equalTo(40)
+        }
+        
+        createdAtLabel.snp.makeConstraints {
+            $0.top.equalTo(collectionView.snp.bottom).offset(10)
+            $0.trailing.equalTo(safeArea.snp.trailing).offset(-10)
+            $0.centerY.equalTo(likeButton.snp.centerY)
         }
         
         dividerView.snp.makeConstraints {
@@ -151,6 +158,12 @@ final class DetailView: BaseView {
         likeButton.setImage(UIImage(systemName: "heart"), for: .normal)
         likeButton.tintColor = .primaryDark
         
+        createdAtLabel.setUI(
+            txtAlignment: .right,
+            font: .systemFont(ofSize: 15, weight: .semibold),
+            numOfLines: 1,
+            txtColor: .darkGray)
+        
         dividerView.backgroundColor = .primaryDark
         
         reviewIconImageView.image = UIImage(systemName: "highlighter")
@@ -215,6 +228,9 @@ final class DetailView: BaseView {
             cornerRadius: 5,
             borderColor: UIColor.clear.cgColor,
             borderWidth: 0)
+        
+        // 임시
+        createdAtLabel.text = "2024년 08월 28일 작성됨"
     }
     
     func createAnnotaion(title: String, coordinate: CLLocationCoordinate2D) {

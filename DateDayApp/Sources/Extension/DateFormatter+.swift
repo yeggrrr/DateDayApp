@@ -8,7 +8,7 @@
 import Foundation
 
 extension DateFormatter {
-    static let dateToStringFormatter: DateFormatter = {
+    static let containTimeDateFormatter: DateFormatter = {
         let dateFormat = DateFormatter()
         dateFormat.locale = Locale(identifier: "ko_KR")
         dateFormat.dateFormat = "yyyy-MM-dd HH:mm:ss"
@@ -16,11 +16,23 @@ extension DateFormatter {
         return dateFormat
     }()
     
-    static let stringToDateFormatter: DateFormatter = {
+    static let koreanDateFormatter: DateFormatter = {
         let dateFormat = DateFormatter()
         dateFormat.locale = Locale(identifier: "ko_KR")
-        dateFormat.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        dateFormat.dateFormat = "yyyy년 MM월 dd일"
         dateFormat.timeZone = TimeZone(identifier: "UTC")
         return dateFormat
     }()
+    
+    static let stringToDateFormatter: DateFormatter = {
+        let dateFormat = DateFormatter()
+        dateFormat.locale = Locale(identifier: "ko_KR")
+        dateFormat.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
+        return dateFormat
+    }()
+    
+    static func dateToContainLetter(dateString: String) -> String {
+        guard let date = DateFormatter.stringToDateFormatter.date(from: dateString) else { return "-" }
+        return DateFormatter.koreanDateFormatter.string(from: date)
+    }
 }

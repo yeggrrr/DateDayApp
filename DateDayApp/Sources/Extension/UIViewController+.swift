@@ -25,7 +25,7 @@ extension UIViewController {
                           width: 320,
                           height: 40))
         
-        toastLabel.backgroundColor = UIColor.primaryDark.withAlphaComponent(0.7)
+        toastLabel.backgroundColor = UIColor.primaryButtonBg.withAlphaComponent(0.7)
         toastLabel.textColor = UIColor.white
         toastLabel.font = .systemFont(ofSize: 16, weight: .semibold)
         toastLabel.textAlignment = .center
@@ -52,7 +52,7 @@ extension UIViewController {
         // 로그인 시, 저장한 시간
         let stringSaveTime = UserDefaultsManager.shared.saveTime
         // 저장한 시간 Date로 변환
-        guard let dateSaveTime = DateFormatter.stringToDateFormatter.date(from: stringSaveTime) else { return }
+        guard let dateSaveTime = DateFormatter.containTimeDateFormatter.date(from: stringSaveTime) else { return }
         // 저장 시간 4분 45초 후, Date 정보
         let justBeforeTokenExpiration = Date(timeInterval: 285, since: dateSaveTime)
         // 만약, 4분 45초가 지났다면?
