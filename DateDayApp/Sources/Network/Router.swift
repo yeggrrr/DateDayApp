@@ -27,23 +27,9 @@ extension Router: TargetType {
     
     var method: HTTPMethod {
         switch self {
-        case .signUp:
+        case .signUp, .validation, .login, .postImage, .uploadPost:
             return .post
-        case .validation:
-            return .post
-        case .login:
-            return .post
-        case .tokenRenewal:
-            return .get
-        case .viewPost:
-            return .get
-        case .viewPostImage:
-            return .get
-        case .postImage:
-            return .post
-        case .uploadPost:
-            return .post
-        case .viewSpecificPost:
+        case .tokenRenewal, .viewPost, .viewPostImage, .viewSpecificPost:
             return .get
         }
     }
@@ -73,20 +59,10 @@ extension Router: TargetType {
     
     var header: [String : String] {
         switch self {
-        case .signUp:
+        case .signUp, .validation, .login:
             return [
                 Header.contentType.rawValue: Header.json.rawValue,
                 Header.sesac.rawValue: APIKey.secretkey,
-            ]
-        case .validation:
-            return [
-                Header.contentType.rawValue: Header.json.rawValue,
-                Header.sesac.rawValue: APIKey.secretkey
-            ]
-        case .login:
-            return [
-                Header.contentType.rawValue: Header.json.rawValue,
-                Header.sesac.rawValue: APIKey.secretkey
             ]
         case .tokenRenewal:
             return [
@@ -94,33 +70,22 @@ extension Router: TargetType {
                 Header.refresh.rawValue: UserDefaultsManager.shared.refresh,
                 Header.sesac.rawValue: APIKey.secretkey
             ]
-        case .viewPost:
+        case .viewPostImage, .viewPost, .viewSpecificPost:
             return [
                 Header.authorization.rawValue: UserDefaultsManager.shared.token,
                 Header.sesac.rawValue: APIKey.secretkey
             ]
-            
-        case .viewPostImage:
-            return [
-                Header.sesac.rawValue: APIKey.secretkey,
-                Header.authorization.rawValue: UserDefaultsManager.shared.token
-            ]
         case .postImage:
             return [
-                Header.sesac.rawValue: APIKey.secretkey,
+                Header.authorization.rawValue: UserDefaultsManager.shared.token,
                 Header.contentType.rawValue: Header.mutipart.rawValue,
-                Header.authorization.rawValue: UserDefaultsManager.shared.token
+                Header.sesac.rawValue: APIKey.secretkey
             ]
         case .uploadPost:
             return [
-                Header.sesac.rawValue: APIKey.secretkey,
                 Header.authorization.rawValue: UserDefaultsManager.shared.token,
-                Header.contentType.rawValue: Header.json.rawValue
-            ]
-        case .viewSpecificPost:
-            return [
-                Header.sesac.rawValue: APIKey.secretkey,
-                Header.authorization.rawValue: UserDefaultsManager.shared.token
+                Header.contentType.rawValue: Header.json.rawValue,
+                Header.sesac.rawValue: APIKey.secretkey
             ]
         }
     }
