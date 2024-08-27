@@ -8,6 +8,7 @@
 import UIKit
 import RxSwift
 import RxCocoa
+import MapKit
 
 final class DetailViewController: UIViewController {
     // MARK: UI
@@ -36,7 +37,10 @@ final class DetailViewController: UIViewController {
     }
     
     private func bind() {
-        let input = DetailViewModel.Input(moveToDetailButtonTap: detailView.moveToDetailButton.rx.tap)
+        let input = DetailViewModel.Input(
+            moveToDetailButtonTap: detailView.moveToDetailButton.rx.tap,
+            reservationButtonTap: detailView.reservationButton.rx.tap)
+        
         let output = viewModel.transform(input: input)
         
         postID
@@ -45,6 +49,11 @@ final class DetailViewController: UIViewController {
                     .subscribe(with: self) { owner, result in
                         switch result {
                         case .success(let success):
+                            if let latitude = Double(success.latitude),
+                               let longitude = Double(success.longitude) {
+                                owner.detailView.createAnnotaion(title: success.title, subtitle: "", coordinate: CLLocationCoordinate2D(latitude: latitude, longitude: longitude))
+                            }
+                            
                             owner.viewModel.imageFiles.onNext(success.imageFiles)
                             owner.viewModel.detailData.onNext(success)
                             owner.navigationItem.title = success.title

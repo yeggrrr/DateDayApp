@@ -217,6 +217,16 @@ final class DetailView: BaseView {
             borderWidth: 0)
     }
     
+    func createAnnotaion(title: String, subtitle: String, coordinate: CLLocationCoordinate2D) {
+        LocationMapView.region = MKCoordinateRegion(center: coordinate, latitudinalMeters: 100, longitudinalMeters: 100)
+        
+        let annotation = MKPointAnnotation()
+        annotation.coordinate = coordinate
+        annotation.title = title
+        annotation.subtitle = subtitle
+        LocationMapView.addAnnotation(annotation)
+    }
+    
     private static func layout() -> UICollectionViewLayout {
         let layout  = UICollectionViewFlowLayout()
         let width = UIScreen.main.bounds.width
