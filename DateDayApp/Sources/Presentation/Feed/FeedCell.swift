@@ -7,6 +7,7 @@
 
 import UIKit
 import SnapKit
+import RxSwift
 
 final class FeedCell: UICollectionViewCell, ViewRepresentable {
     // MARK: UI
@@ -25,8 +26,13 @@ final class FeedCell: UICollectionViewCell, ViewRepresentable {
     private let starRatingImageView = UIImageView()
     let starRatingInfoLabel = UILabel()
     
-    
     // MARK: View Life Cycle
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        
+        mainImageView.image = nil
+    }
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         

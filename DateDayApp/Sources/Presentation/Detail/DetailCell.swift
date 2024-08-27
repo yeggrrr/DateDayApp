@@ -7,11 +7,14 @@
 
 import UIKit
 import SnapKit
+import RxSwift
 
 final class DetailCell: UICollectionViewCell {
+    // MARK: UI
     let bgView = UIView()
     let postImageView = UIImageView()
     
+    // MARK: View Life Cycle
     override init(frame: CGRect) {
         super.init(frame: frame)
         
@@ -20,6 +23,7 @@ final class DetailCell: UICollectionViewCell {
     
     required init?(coder: NSCoder) { fatalError("init(coder:) has not been implemented") }
     
+    // MARK: Functions
     private func configure() {
         contentView.addSubviews([bgView, postImageView])
         

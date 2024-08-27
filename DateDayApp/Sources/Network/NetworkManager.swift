@@ -167,7 +167,6 @@ final class NetworkManager {
                     .responseDecodable(of: ViewPost.self) { response in
                         switch response.result {
                         case .success(let success):
-                            print("NW success.nextCursor: \(success.nextCursor)")
                             observer(.success(.success(success)))
                         case .failure(_):
                             let statusCode = response.response?.statusCode

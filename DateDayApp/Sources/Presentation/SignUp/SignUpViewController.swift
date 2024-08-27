@@ -9,7 +9,6 @@ import UIKit
 import RxSwift
 import RxCocoa
 
-// TODO: KeyboardDismiss / Nickname 중복 UI 변경 / 반복 코드 처리
 final class SignUpViewController: UIViewController {
     // MARK: UI
     private let signUpView = SignUpView()
