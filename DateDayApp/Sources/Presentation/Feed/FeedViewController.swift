@@ -14,7 +14,7 @@ final class FeedViewController: UIViewController {
     private let feedView = FeedView()
 
     // MARK: Properties
-    private var isAfterLoggedIn = false
+    var showLoginAlert: Bool?
     private let viewModel = FeedViewModel()
     private let disposeBag = DisposeBag()
     
@@ -25,8 +25,7 @@ final class FeedViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        isAfterLoggedIn = true
+
         configureCollectionView()
         configureNavigation()
         bind()
@@ -35,9 +34,9 @@ final class FeedViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        if isAfterLoggedIn  {
+        if showLoginAlert == true {
             showToast(message: "로그인 성공! :)", heightY: 500, delayTime: 0.5)
-            isAfterLoggedIn = false
+            self.showLoginAlert = false
         }
     }
     

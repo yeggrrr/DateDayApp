@@ -103,9 +103,10 @@ final class WriteViewController: UIViewController {
                 NetworkManager.shared.uploadPost(uploadQuery: uploadPostQuery)
                     .subscribe(with: self) { owner, result in
                         switch result {
-                        case .success(let success):
+                        case .success(_):
                             owner.okShowAlert(title: "업로드 성공!", message: "") { _ in
-                                owner.setRootViewController(DateDayTabBarController())
+                                let vc = DateDayTabBarController(showLoginAlert: false)
+                                owner.setRootViewController(vc)
                             }
                         case .failure(let failure):
                             switch failure {

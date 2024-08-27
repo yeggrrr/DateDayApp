@@ -8,6 +8,15 @@
 import UIKit
 
 final class DateDayTabBarController: UITabBarController {
+    var showLoginAlert: Bool
+    
+    init(showLoginAlert: Bool) {
+        self.showLoginAlert = showLoginAlert
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) { fatalError("init(coder:) has not been implemented") }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -21,6 +30,7 @@ final class DateDayTabBarController: UITabBarController {
         tabBar.unselectedItemTintColor = .darkGray
         
         let feedVC = FeedViewController()
+        feedVC.showLoginAlert = showLoginAlert
         let feedNav = UINavigationController(rootViewController: feedVC)
         feedNav.tabBarItem = UITabBarItem(title: "", image: UIImage(systemName: "scribble"), selectedImage: UIImage(systemName: "scribble.variable"))
         
