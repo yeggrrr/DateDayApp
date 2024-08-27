@@ -9,6 +9,7 @@ import UIKit
 import SnapKit
 
 final class DetailCell: UICollectionViewCell {
+    let bgView = UIView()
     let postImageView = UIImageView()
     
     override init(frame: CGRect) {
@@ -20,11 +21,22 @@ final class DetailCell: UICollectionViewCell {
     required init?(coder: NSCoder) { fatalError("init(coder:) has not been implemented") }
     
     private func configure() {
-        contentView.addSubview(postImageView)
-        postImageView.snp.makeConstraints {
-            $0.edges.equalTo(contentView.safeAreaLayoutGuide)
+        contentView.addSubviews([bgView, postImageView])
+        
+        let safeArea = contentView.safeAreaLayoutGuide
+        
+        bgView.snp.makeConstraints {
+            $0.top.horizontalEdges.equalTo(safeArea)
+            $0.bottom.equalTo(safeArea.snp.bottom).offset(-2)
         }
         
+        postImageView.snp.makeConstraints {
+            $0.edges.equalTo(bgView.snp.edges)
+        }
+        
+        backgroundColor = .primaryBorder
+        
         postImageView.contentMode = .scaleAspectFill
+        postImageView.layer.masksToBounds = true
     }
 }

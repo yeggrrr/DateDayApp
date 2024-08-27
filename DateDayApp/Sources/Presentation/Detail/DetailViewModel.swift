@@ -11,13 +11,16 @@ import RxCocoa
 
 final class DetailViewModel: BaseViewModel {
     let imageFiles = PublishSubject<[String]>()
-    
+    let detailData = PublishSubject<UploadPostModel>()
     let disposeBag = DisposeBag()
     
-    struct Input { }
+    struct Input { 
+        let moveToDetailButtonTap: ControlEvent<Void>
+    }
     
     struct Output {
         let imageDatas: PublishSubject<[Data]>
+        let moveToDetailButtonTap: ControlEvent<Void>
     }
     
     func transform(input: Input) -> Output {
@@ -48,6 +51,8 @@ final class DetailViewModel: BaseViewModel {
             }
             .disposed(by: disposeBag)
         
-        return Output(imageDatas: imageDatas)
+        return Output(
+            imageDatas: imageDatas,
+            moveToDetailButtonTap: input.moveToDetailButtonTap)
     }
 }

@@ -36,7 +36,7 @@ final class DetailViewController: UIViewController {
     }
     
     private func bind() {
-        let input = DetailViewModel.Input()
+        let input = DetailViewModel.Input(moveToDetailButtonTap: detailView.moveToDetailButton.rx.tap)
         let output = viewModel.transform(input: input)
         
         postID
@@ -46,10 +46,16 @@ final class DetailViewController: UIViewController {
                         switch result {
                         case .success(let success):
                             owner.viewModel.imageFiles.onNext(success.imageFiles)
+                            owner.viewModel.detailData.onNext(success)
                             owner.navigationItem.title = success.title
                             owner.detailView.reviewLabel.text = success.content
                         case .failure(let failure):
-                            print(failure)
+                            switch failure {
+                            case .accessTokenExpiration:
+                                owner.updateToken()
+                            default:
+                                break
+                            }
                         }
                     } onFailure: { owner, error in
                         print("error: \(error)")
@@ -63,6 +69,14 @@ final class DetailViewController: UIViewController {
         output.imageDatas
             .bind(to: detailView.collectionView.rx.items(cellIdentifier: DetailCell.id, cellType: DetailCell.self)) { (row, element, cell) in
                 cell.postImageView.image = UIImage(data: element)
+            }
+            .disposed(by: disposeBag)
+        
+        Observable.combineLatest(output.moveToDetailButtonTap, viewModel.detailData)
+            .bind(with: self) { owner, value in
+                let vc = DetailWebViewController()
+                vc.detailLink = value.1.detailURL
+                owner.present(vc, animated: true)
             }
             .disposed(by: disposeBag)
     }
