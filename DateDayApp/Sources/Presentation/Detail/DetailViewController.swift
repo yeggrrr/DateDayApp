@@ -51,7 +51,7 @@ final class DetailViewController: UIViewController {
                         case .success(let success):
                             if let latitude = Double(success.latitude),
                                let longitude = Double(success.longitude) {
-                                owner.detailView.createAnnotaion(title: success.title, subtitle: "", coordinate: CLLocationCoordinate2D(latitude: latitude, longitude: longitude))
+                                owner.detailView.createAnnotaion(title: success.title, coordinate: CLLocationCoordinate2D(latitude: latitude, longitude: longitude))
                             }
                             
                             owner.viewModel.imageFiles.onNext(success.imageFiles)

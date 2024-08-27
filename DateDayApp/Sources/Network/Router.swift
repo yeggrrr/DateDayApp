@@ -13,7 +13,7 @@ enum Router {
     case validation(query: validEmailQuery)
     case login(query: LoginQuery)
     case tokenRenewal
-    case viewPost
+    case viewPost(next: String)
     case viewPostImage(filePath: String)
     case postImage
     case uploadPost(query: UploadPostQuery)
@@ -127,8 +127,9 @@ extension Router: TargetType {
     
     var parameters: [String : String]? {
         switch self {
-        case .viewPost:
+        case .viewPost(let query):
             return [
+                "next": query,
                 "limit" : "10",
                 "product_id" : "yegrDateDay"
             ]

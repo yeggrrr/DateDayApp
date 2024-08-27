@@ -10,7 +10,7 @@ import RxSwift
 import RxCocoa
 
 final class FeedViewModel: BaseViewModel {
-    private var postData: [ViewPost.PostData] = []
+    let postData = BehaviorRelay(value: [ViewPost.PostData]())
     private let disposeBag = DisposeBag()
     
     struct Input {
@@ -18,6 +18,7 @@ final class FeedViewModel: BaseViewModel {
         let writeButtonTap: ControlEvent<Void>
         let toastMessage = PublishSubject<String>()
         let tokenExpiredMessage = PublishSubject<String>()
+        let nextCursor = PublishSubject<String>()
     }
     
     struct Output {
@@ -26,10 +27,10 @@ final class FeedViewModel: BaseViewModel {
         let writeButtonTap: ControlEvent<Void>
         let toastMessage: PublishSubject<String>
         let tokenExpiredMessage: PublishSubject<String>
+        let nextCursor: PublishSubject<String>
     }
     
     func transform(input: Input) -> Output {
-        let postData = BehaviorRelay(value: postData)
         let toastMessage = PublishSubject<String>()
         let tokenExpiredMessage = PublishSubject<String>()
         
@@ -49,7 +50,8 @@ final class FeedViewModel: BaseViewModel {
             .subscribe(with: self) { owner, result in
                 switch result {
                 case .success(let success):
-                    postData.accept(success.data)
+                    owner.postData.accept(success.data)
+                    input.nextCursor.onNext(success.nextCursor)
                 case .failure(let failure):
                     switch failure {
                     case .missingRequiredValue:
@@ -76,6 +78,13 @@ final class FeedViewModel: BaseViewModel {
             postData: postData,
             writeButtonTap: input.writeButtonTap,
             toastMessage: toastMessage,
-            tokenExpiredMessage: tokenExpiredMessage)
+            tokenExpiredMessage: tokenExpiredMessage,
+            nextCursor: input.nextCursor)
+    }
+    
+    func append(items: [ViewPost.PostData]) {
+        var data = postData.value
+        data.append(contentsOf: items)
+        postData.accept(data)
     }
 }

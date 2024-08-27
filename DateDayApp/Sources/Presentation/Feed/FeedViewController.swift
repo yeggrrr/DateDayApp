@@ -91,6 +91,39 @@ final class FeedViewController: UIViewController {
                 }
             }
             .disposed(by: disposeBag)
+
+        
+        Observable.combineLatest(feedView.collectionView.rx.prefetchItems, output.nextCursor)
+            .throttle(.seconds(1), scheduler: MainScheduler.instance)
+            .bind(with: self) { owner, value in
+                for indexPath in value.0 {
+                    if indexPath.item == 3 {
+                        if value.1 != "0" {
+                            NetworkManager.shared.viewPost(next: value.1)
+                                .subscribe(with: self) { owner, result in
+                                    switch result {
+                                    case .success(let success):
+                                        owner.viewModel.append(items: success.data)
+                                        input.nextCursor.onNext(success.nextCursor)
+                                    case .failure(let failure):
+                                        switch failure {
+                                        case .accessTokenExpiration:
+                                            owner.updateToken()
+                                        default:
+                                            break
+                                        }
+                                    }
+                                } onFailure: { owner, error in
+                                    print("error: \(error)")
+                                } onDisposed: { owner in
+                                    print("Disposed")
+                                }
+                                .disposed(by: owner.disposeBag)
+                        }
+                    }
+                }
+            }
+            .disposed(by: disposeBag)
         
         Observable.combineLatest(output.postData, output.collectionViewItemSelected)
             .bind(with: self) { owner, value in

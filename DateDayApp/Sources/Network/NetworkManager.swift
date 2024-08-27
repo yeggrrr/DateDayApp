@@ -157,16 +157,17 @@ final class NetworkManager {
     }
     
     // MARK: 게시글 조회
-    func viewPost() -> Single<Result<ViewPost, HTTPStatusCodes>> {
+    func viewPost(next: String = "") -> Single<Result<ViewPost, HTTPStatusCodes>> {
         return Single.create { observer -> Disposable in
             do {
-                let request = try Router.viewPost.asURLRequest()
+                let request = try Router.viewPost(next: next).asURLRequest()
                 
                 AF.request(request)
                     .validate(statusCode: 200..<300)
                     .responseDecodable(of: ViewPost.self) { response in
                         switch response.result {
                         case .success(let success):
+                            print("NW success.nextCursor: \(success.nextCursor)")
                             observer(.success(.success(success)))
                         case .failure(_):
                             let statusCode = response.response?.statusCode

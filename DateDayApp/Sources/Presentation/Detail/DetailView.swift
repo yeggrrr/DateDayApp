@@ -217,13 +217,12 @@ final class DetailView: BaseView {
             borderWidth: 0)
     }
     
-    func createAnnotaion(title: String, subtitle: String, coordinate: CLLocationCoordinate2D) {
+    func createAnnotaion(title: String, coordinate: CLLocationCoordinate2D) {
         LocationMapView.region = MKCoordinateRegion(center: coordinate, latitudinalMeters: 100, longitudinalMeters: 100)
         
         let annotation = MKPointAnnotation()
         annotation.coordinate = coordinate
         annotation.title = title
-        annotation.subtitle = subtitle
         LocationMapView.addAnnotation(annotation)
     }
     
