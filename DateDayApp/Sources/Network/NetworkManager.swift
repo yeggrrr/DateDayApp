@@ -192,6 +192,41 @@ final class NetworkManager {
         }
     }
     
+    // MARK: 특정 포스트 조회
+    func viewSpecificPost(postID: String) -> Single<Result<UploadPostModel, HTTPStatusCodes>> {
+        return Single.create { observer -> Disposable in
+            
+            do {
+                let request = try Router.viewSpecificPost(postID: postID).asURLRequest()
+                AF.request(request)
+                    .responseDecodable(of: UploadPostModel.self) { response in
+                        switch response.result {
+                        case .success(let success):
+                            observer(.success(.success(success)))
+                        case .failure(_):
+                            let statusCode = response.response?.statusCode
+                            switch statusCode {
+                            case 400:
+                                observer(.success(.failure(.missingRequiredValue)))
+                            case 401:
+                                observer(.success(.failure(.mismatchOrInvalid)))
+                            case 403:
+                                observer(.success(.failure(.forbidden)))
+                            case 419:
+                                observer(.success(.failure(.accessTokenExpiration)))
+                            default:
+                                break
+                            }
+                        }
+                    }
+            } catch {
+                print("error 발생!! - error:", error)
+            }
+            
+            return Disposables.create()
+        }
+    }
+    
     // MARK: 위치 검색
     func searchLocation(query: String) -> Single<SearchLocationModel> {
         let url = APIKey.kakaoURL

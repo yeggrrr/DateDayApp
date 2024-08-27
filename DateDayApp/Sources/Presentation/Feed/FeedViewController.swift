@@ -92,12 +92,16 @@ final class FeedViewController: UIViewController {
             }
             .disposed(by: disposeBag)
         
-        output.collectionViewItemSelected
-            .bind(with: self) { owner, indexPath in
-                print(indexPath)
-                let vc = DetailViewController()
-                vc.hidesBottomBarWhenPushed = true
-                owner.navigationController?.pushViewController(vc, animated: true)
+        Observable.combineLatest(output.postData, output.collectionViewItemSelected)
+            .bind(with: self) { owner, value in
+                if !value.0.isEmpty {
+                    let vc = DetailViewController()
+                    vc.postID.onNext(value.0[value.1.item].postId)
+                    vc.hidesBottomBarWhenPushed = true
+                    owner.navigationController?.pushViewController(vc, animated: true)
+                } else {
+                    owner.showToast(message: "잠시후 다시 시도해주세요.")
+                }
             }
             .disposed(by: disposeBag)
         

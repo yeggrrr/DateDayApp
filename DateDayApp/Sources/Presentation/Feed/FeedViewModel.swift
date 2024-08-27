@@ -11,7 +11,6 @@ import RxCocoa
 
 final class FeedViewModel: BaseViewModel {
     private var postData: [ViewPost.PostData] = []
-    private var imageFiles: [Data] = []
     private let disposeBag = DisposeBag()
     
     struct Input {
@@ -24,7 +23,6 @@ final class FeedViewModel: BaseViewModel {
     struct Output {
         let collectionViewItemSelected: ControlEvent<IndexPath>
         let postData: BehaviorRelay<[ViewPost.PostData]>
-        let imageFiles: BehaviorRelay<[Data]>
         let writeButtonTap: ControlEvent<Void>
         let toastMessage: PublishSubject<String>
         let tokenExpiredMessage: PublishSubject<String>
@@ -32,7 +30,6 @@ final class FeedViewModel: BaseViewModel {
     
     func transform(input: Input) -> Output {
         let postData = BehaviorRelay(value: postData)
-        let imageFiles = BehaviorRelay(value: imageFiles)
         let toastMessage = PublishSubject<String>()
         let tokenExpiredMessage = PublishSubject<String>()
         
@@ -53,15 +50,6 @@ final class FeedViewModel: BaseViewModel {
                 switch result {
                 case .success(let success):
                     postData.accept(success.data)
-                    imageFiles.accept([])
-                    postData.value.forEach { postData in
-                        if let image = postData.imageFiles.first {
-                            NetworkManager.shared.viewPostImage(filePath: image) { data in
-                                owner.imageFiles.append(data)
-                            }
-                        }
-                    }
-                    imageFiles.accept(owner.imageFiles)                    
                 case .failure(let failure):
                     switch failure {
                     case .missingRequiredValue:
@@ -79,14 +67,13 @@ final class FeedViewModel: BaseViewModel {
             } onFailure: { owner, error in
                 print("error: \(error)")
             } onDisposed: { owner in
-                print("Disposed")
+                print("FeedVC viewPost - Disposed")
             }
             .disposed(by: disposeBag)
         
         return Output(
             collectionViewItemSelected: input.collectionViewItemSelected,
             postData: postData,
-            imageFiles: imageFiles,
             writeButtonTap: input.writeButtonTap,
             toastMessage: toastMessage,
             tokenExpiredMessage: tokenExpiredMessage)

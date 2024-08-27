@@ -10,7 +10,7 @@ import Foundation
 struct UploadImageModel: Decodable {
     let files: [String]
 }
-
+// 포스트 업로드 & 특정 포스트 조회
 struct UploadPostModel: Decodable {
     let postId: String
     let productId: String

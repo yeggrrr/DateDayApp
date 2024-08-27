@@ -14,7 +14,7 @@ final class DetailView: BaseView {
     private let backgroundImageView = UIImageView()
     private let scrollView = UIScrollView()
     private let contentView = UIView()
-    let collectionView = UICollectionView(frame: .zero, collectionViewLayout: .init())
+    let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout())
     let likeButton = UIButton(type: .system)
     private let dividerView = UIView()
     private let reviewIconImageView = UIImageView()
@@ -219,5 +219,15 @@ final class DetailView: BaseView {
         // 임시
         collectionView.backgroundColor = .systemGray
         reviewLabel.text =  "6월 2일에 다녀왔어요. 향료가 80개나 되서 고르는데 너무 힘들었지만, 선생님이 조언을 잘해주셔서..ㅎㅎ 딱 맘에 드는 향수를 고를 수 있었어요!! 선택 장애라 오래걸렸는데도 너무너무 친절하게 해주시고, 향수병도 고를 수 있었고, 조향을 3번 해보고 가장 맘에 드는 향으로 선택할 수 있어서 정말 좋았습니다!!^0^ 당장 사용하고 싶지만, 1-2주 정도 숙성시키고 사용하라고 말씀해주셔서 다담주부터 잘 쓰고 다닐 것 같아요~! 다음에 또 조향하러 오면 여기 올 것 같아요! #투데이이즈조이 #향수공방"
+    }
+    
+    private static func layout() -> UICollectionViewLayout {
+        let layout  = UICollectionViewFlowLayout()
+        let width = UIScreen.main.bounds.width
+        layout.itemSize = CGSize(width: width, height: 300)
+        layout.scrollDirection = .horizontal
+        layout.minimumLineSpacing = .zero
+        layout.minimumInteritemSpacing = .zero
+        return layout
     }
 }
