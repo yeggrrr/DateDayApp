@@ -11,7 +11,6 @@ import RxSwift
 
 final class DetailCell: UICollectionViewCell {
     // MARK: UI
-    let bgView = UIView()
     let postImageView = UIImageView()
     
     // MARK: View Life Cycle
@@ -25,17 +24,12 @@ final class DetailCell: UICollectionViewCell {
     
     // MARK: Functions
     private func configure() {
-        contentView.addSubviews([bgView, postImageView])
+        contentView.addSubview(postImageView)
         
         let safeArea = contentView.safeAreaLayoutGuide
         
-        bgView.snp.makeConstraints {
-            $0.top.horizontalEdges.equalTo(safeArea)
-            $0.bottom.equalTo(safeArea.snp.bottom).offset(-2)
-        }
-        
         postImageView.snp.makeConstraints {
-            $0.edges.equalTo(bgView.snp.edges)
+            $0.edges.equalTo(safeArea.snp.edges)
         }
         
         backgroundColor = .primaryBorder

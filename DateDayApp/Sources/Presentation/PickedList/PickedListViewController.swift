@@ -74,6 +74,7 @@ final class PickedListViewController: UIViewController {
             .bind(with: self) { owner, postID in
                 let vc = DetailViewController()
                 vc.postID.onNext(postID)
+                vc.hidesBottomBarWhenPushed = true
                 owner.navigationController?.pushViewController(vc, animated: true)
             }
             .disposed(by: disposeBag)

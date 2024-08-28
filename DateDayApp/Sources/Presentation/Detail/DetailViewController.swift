@@ -89,7 +89,6 @@ final class DetailViewController: UIViewController {
         
         output.isInterestIdList
             .bind(with: self) { owner, interestedList in
-                print("interestedList: \(interestedList)")
                 interestedList.forEach { userID in
                     if userID == UserDefaultsManager.shared.saveLoginUserID {
                         owner.detailView.interestButton.isSelected = true
@@ -112,7 +111,6 @@ final class DetailViewController: UIViewController {
                         case .success(let success):
                             owner.detailView.interestButton.isSelected = success.likeStatus
                             input.interestStatus.onNext(success.likeStatus)
-                            print("likestatus:\(success.likeStatus)")
                         case .failure(let failure):
                             switch failure {
                             case .accessTokenExpiration:

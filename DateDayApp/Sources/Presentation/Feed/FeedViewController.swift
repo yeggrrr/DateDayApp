@@ -38,8 +38,6 @@ final class FeedViewController: UIViewController {
             showToast(message: "로그인 성공! :)", heightY: 500, delayTime: 0.5)
             self.showLoginAlert = false
         }
-        
-        // TODO: 관심 목록 추가 & 게시글 좋아요 기능에 변화 있을 시, 네트워크 통신해서 업데이트
     }
     
     // MARK: Functions
@@ -129,7 +127,6 @@ final class FeedViewController: UIViewController {
         
         Observable.combineLatest(output.collectionViewItemSelected, output.postData)
             .bind(with: self) { owner, value in
-                print("collectionViewItemSelected")
                 if !value.1.isEmpty {
                     print("value: \(value)")
                     let vc = DetailViewController()

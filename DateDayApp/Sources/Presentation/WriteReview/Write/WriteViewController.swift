@@ -197,7 +197,6 @@ final class WriteViewController: UIViewController {
 extension WriteViewController: UITextViewDelegate {
     func textViewDidChange(_ textView: UITextView) {
         guard let text = textView.text else { return }
-        print(text)
     }
     
     func textViewDidBeginEditing(_ textView: UITextView) {
