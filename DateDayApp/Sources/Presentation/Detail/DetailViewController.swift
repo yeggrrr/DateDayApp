@@ -16,6 +16,10 @@ final class DetailViewController: UIViewController {
     
     // MARK: Properties
     var postID = BehaviorSubject(value: "")
+    var InterestBtnInitialState: Bool?
+    var isChangeInterestBtnState: Bool?
+    weak var delegate: ButtonStateDelegate?
+    
     let viewModel = DetailViewModel()
     let disposeBag = DisposeBag()
     
@@ -28,6 +32,26 @@ final class DetailViewController: UIViewController {
         
         configure()
         bind()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        InterestBtnInitialState = detailView.interestButton.isSelected
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        let currentInterestBtnState = detailView.interestButton.isSelected
+        
+        if InterestBtnInitialState == currentInterestBtnState {
+            isChangeInterestBtnState = false
+        } else {
+            isChangeInterestBtnState = true
+        }
+        
+        delegate?.buttonStateChangedOrNot(isChanged: isChangeInterestBtnState)
     }
     
     private func configure() {
@@ -102,7 +126,6 @@ final class DetailViewController: UIViewController {
             .bind(with: self) { owner, value in
                 
                 owner.detailView.interestButton.isSelected.toggle()
-                
                 let buttonStatus = owner.detailView.interestButton.isSelected
                 
                 NetworkManager.shared.postInterestStatus(interestStatus: buttonStatus, postID: value.1)
@@ -145,4 +168,8 @@ final class DetailViewController: UIViewController {
             }
             .disposed(by: disposeBag)
     }
+}
+
+protocol ButtonStateDelegate: AnyObject {
+    func buttonStateChangedOrNot(isChanged: Bool?)
 }

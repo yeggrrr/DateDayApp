@@ -14,6 +14,8 @@ final class PickedListViewController: UIViewController {
     let pickedListView = PickedListView()
     
     // MARK: Properties
+    var isChanged: Bool?
+    
     let viewModel = PickedListViewModel()
     let disposeBag = DisposeBag()
     
@@ -24,7 +26,8 @@ final class PickedListViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-     
+        
+        isChanged = false
         configure()
         bind()
     }
@@ -32,7 +35,10 @@ final class PickedListViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        updateData()
+        guard let isChanged = isChanged else { return }
+        if !isChanged {
+            updateData()
+        }
     }
     
     // MARK: Functions
@@ -84,6 +90,7 @@ final class PickedListViewController: UIViewController {
                 let vc = DetailViewController()
                 vc.postID.onNext(postID)
                 vc.hidesBottomBarWhenPushed = true
+                vc.delegate = self
                 owner.navigationController?.pushViewController(vc, animated: true)
             }
             .disposed(by: disposeBag)
@@ -119,5 +126,16 @@ final class PickedListViewController: UIViewController {
                 print("PickedListVC Disposed")
             }
             .disposed(by: disposeBag)
+    }
+}
+
+extension PickedListViewController: ButtonStateDelegate {
+    func buttonStateChangedOrNot(isChanged: Bool?) {
+        
+        self.isChanged = isChanged
+        guard let isChanged = isChanged else { return }
+        if !isChanged {
+            updateData()
+        }
     }
 }

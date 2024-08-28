@@ -13,6 +13,7 @@ final class DetailViewModel: BaseViewModel {
     let imageFiles = PublishSubject<[String]>()
     let detailData = PublishSubject<UploadPostModel>()
     let isInterestIdList = PublishSubject<[String]>()
+    
     let disposeBag = DisposeBag()
     
     struct Input { 

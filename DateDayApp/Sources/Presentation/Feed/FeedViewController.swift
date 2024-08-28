@@ -128,7 +128,6 @@ final class FeedViewController: UIViewController {
         Observable.combineLatest(output.collectionViewItemSelected, output.postData)
             .bind(with: self) { owner, value in
                 if !value.1.isEmpty {
-                    print("value: \(value)")
                     let vc = DetailViewController()
                     vc.postID.onNext(value.1[value.0.item].postId)
                     vc.hidesBottomBarWhenPushed = true
