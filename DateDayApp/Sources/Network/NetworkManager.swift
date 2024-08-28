@@ -264,8 +264,8 @@ final class NetworkManager {
                 
                 AF.upload(multipartFormData: { mulitpartFormData in
                     for image in images {
-                        if let image = image.pngData() {
-                            mulitpartFormData.append(image, withName: "files", fileName: "yegr.png", mimeType: "image/png")
+                        if let image = image.jpegData(compressionQuality: 0.5) {
+                            mulitpartFormData.append(image, withName: "files", fileName: "yegr.jpeg", mimeType: "image/jpeg")
                         }
                     }
                 }, with: request)
@@ -337,7 +337,7 @@ final class NetworkManager {
         }
     }
     
-    // MARK: 포스트 좋아요 & 취소 (관심목록추가) - Like2
+    // MARK: 포스트 좋아요 & 취소 (관심목록추가 - Like2)
     func postInterestStatus(interestStatus: Bool, postID: String) -> Single<Result<PostLike, HTTPStatusCodes>> {
         return Single.create { observer -> Disposable in
             
@@ -362,6 +362,44 @@ final class NetworkManager {
                                 observer(.success(.failure(.forbidden)))
                             case 410:
                                 observer(.success(.failure(.serverErrorNotSavedOrCannotSearch)))
+                            case 419:
+                                observer(.success(.failure(.accessTokenExpiration)))
+                            default:
+                                break
+                            }
+                        }
+                    }
+            } catch {
+                print("error 발생!! - error:", error)
+            }
+            
+            return Disposables.create()
+        }
+    }
+    
+    // MARK: 좋아요한 포스트 조회 - (관심목록추가 - Like2)
+    func viewInterestList(next: String = "") -> Single<Result<ViewPost, HTTPStatusCodes>> {
+        return Single.create { observer -> Disposable in
+            
+            do {
+                let request = try Router.viewInterestPost(next: next).asURLRequest()
+                AF.request(request)
+                    .validate(statusCode: 200..<300)
+                    .responseDecodable(of: ViewPost.self) { response in
+                        print(">>> statusCode: \(response.response?.statusCode)")
+                        
+                        switch response.result {
+                        case .success(let success):
+                            observer(.success(.success(success)))
+                        case .failure(_):
+                            let statusCode = response.response?.statusCode
+                            switch statusCode {
+                            case 400:
+                                observer(.success(.failure(.missingRequiredValue)))
+                            case 401:
+                                observer(.success(.failure(.mismatchOrInvalid)))
+                            case 403:
+                                observer(.success(.failure(.forbidden)))
                             case 419:
                                 observer(.success(.failure(.accessTokenExpiration)))
                             default:

@@ -27,6 +27,21 @@ final class PickedListViewController: UIViewController {
      
         configure()
         bind()
+        
+        NetworkManager.shared.viewInterestList()
+            .subscribe(with: self) { owner, result in
+                switch result {
+                case .success(let success):
+                    print(">>> success: \(success)")
+                case .failure(let failure):
+                    print(failure)
+                }
+            } onFailure: { owner, error in
+                print("error: \(error)")
+            } onDisposed: { owner in
+                print("PickedListVC Disposed")
+            }
+            .disposed(by: disposeBag)
     }
     
     // MARK: Functions

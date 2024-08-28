@@ -19,6 +19,7 @@ enum Router {
     case uploadPost(query: UploadPostQuery)
     case viewSpecificPost(postID: String)
     case postInterest(postID: String, likeStatus: PostInterestQuery)
+    case viewInterestPost(next: String)
 }
 
 extension Router: TargetType {
@@ -30,7 +31,7 @@ extension Router: TargetType {
         switch self {
         case .signUp, .validation, .login, .postImage, .uploadPost, .postInterest:
             return .post
-        case .tokenRenewal, .viewPost, .viewPostImage, .viewSpecificPost:
+        case .tokenRenewal, .viewPost, .viewPostImage, .viewSpecificPost, .viewInterestPost:
             return .get
         }
     }
@@ -55,8 +56,10 @@ extension Router: TargetType {
             return "/posts"
         case let .viewSpecificPost(postID):
             return "/posts/\(postID)"
-        case let .postInterest(postID, likeStatus):
+        case let .postInterest(postID, _):
             return "/posts/\(postID)/like-2"
+        case .viewInterestPost:
+            return "/posts/likes-2/me"
         }
     }
     
@@ -73,7 +76,7 @@ extension Router: TargetType {
                 Header.refresh.rawValue: UserDefaultsManager.shared.refresh,
                 Header.sesac.rawValue: APIKey.secretkey
             ]
-        case .viewPostImage, .viewPost, .viewSpecificPost, .postInterest, .uploadPost:
+        case .viewPostImage, .viewPost, .viewSpecificPost, .postInterest, .uploadPost, .viewInterestPost:
             return [
                 Header.authorization.rawValue: UserDefaultsManager.shared.token,
                 Header.contentType.rawValue: Header.json.rawValue,
@@ -90,11 +93,16 @@ extension Router: TargetType {
     
     var parameters: [String : String]? {
         switch self {
-        case .viewPost(let query):
+        case .viewPost(let next):
             return [
-                "next": query,
+                "next" : next,
                 "limit" : "10",
                 "product_id" : "yegrDateDay"
+            ]
+        case .viewInterestPost(let next):
+            return [
+                "next" : next,
+                "limit" : "10"
             ]
         default:
             return nil
@@ -104,6 +112,10 @@ extension Router: TargetType {
     var queryItems: [URLQueryItem]? {
         switch self {
         case .viewPost:
+            return parameters?.map {
+                URLQueryItem(name: $0.key, value: $0.value)
+            }
+        case .viewInterestPost:
             return parameters?.map {
                 URLQueryItem(name: $0.key, value: $0.value)
             }
@@ -123,7 +135,7 @@ extension Router: TargetType {
             return try? encoder.encode(query)
         case .uploadPost(let query):
             return try? encoder.encode(query)
-        case let .postInterest(postID, likeStatus):
+        case let .postInterest(_, likeStatus):
             return try? encoder.encode(likeStatus)
         default:
             return nil

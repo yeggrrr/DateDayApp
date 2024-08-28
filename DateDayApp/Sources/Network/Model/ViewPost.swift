@@ -7,6 +7,7 @@
 
 import Foundation
 
+//  포스트 조회 & 좋아요한 포스트 조회
 struct ViewPost: Decodable {
     let data: [PostData]
     let nextCursor: String
