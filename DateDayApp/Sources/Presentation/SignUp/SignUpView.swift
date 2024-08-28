@@ -122,7 +122,7 @@ final class SignUpView: BaseView {
     override func configureUI() {
         super.configureUI()
         
-        logoImageView.image = UIImage(named: "Logo")
+        logoImageView.image = UIImage(named: "MainLogo")
  
         inputStackView.setUI(
             axis: .vertical,
@@ -138,7 +138,11 @@ final class SignUpView: BaseView {
         emailTextField.setUI(placeholder: "이메일을 입력해주세요", keyboardType: .emailAddress)
         passwordTextField.setUI(placeholder: "비밀번호를 입력해주세요", keyboardType: .asciiCapable)
         
-        signUpButton.roundUI(title: "회원가입", bgColor: .primaryCustomLight, borderColor: UIColor.black.cgColor)
+        signUpButton.roundUI(
+            title: "회원가입",
+            bgColor: .primaryCustomLight,
+            font: .systemFont(ofSize: 17, weight: .semibold),
+            borderColor: UIColor.clear.cgColor)
         
         nicknameValidImageView.initialIconUI()
         emailValidImageView.initialIconUI()

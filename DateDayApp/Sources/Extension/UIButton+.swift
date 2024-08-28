@@ -8,9 +8,10 @@
 import UIKit
 
 extension UIButton {
-    func roundUI(title: String, bgColor: UIColor, borderColor: CGColor, borderWidth: CGFloat = 1) {
+    func roundUI(title: String, titleColor: UIColor = .black, bgColor: UIColor, font: UIFont, borderColor: CGColor, borderWidth: CGFloat = 1) {
         setTitle(title, for: .normal)
-        setTitleColor(.black, for: .normal)
+        setTitleColor(titleColor, for: .normal)
+        titleLabel?.font = font
         backgroundColor = bgColor
         layer.cornerRadius = 20
         layer.borderColor = borderColor

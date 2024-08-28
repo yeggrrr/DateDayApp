@@ -76,7 +76,7 @@ final class LoginView: BaseView {
     override func configureUI() {
         super.configureUI()
         
-        logoImageView.image = UIImage(named: "Logo")
+        logoImageView.image = UIImage(named: "MainLogo")
         
         inputStackView.setUI(
             axis: .vertical,
@@ -92,16 +92,18 @@ final class LoginView: BaseView {
         signUpLabel.setUI(
             txt: "처음 방문하시나요?",
             txtAlignment: .center,
-            font: .systemFont(ofSize: 17, weight: .semibold),
+            font: .systemFont(ofSize: 16, weight: .semibold),
             txtColor: .black)
         
         loginButton.roundUI(
             title: "로그인",
             bgColor: .primaryCustomLight,
-            borderColor: UIColor.primaryBorder.cgColor,
+            font: .systemFont(ofSize: 17, weight: .semibold),
+            borderColor: UIColor.clear.cgColor,
             borderWidth: 2)
         
         signUpButton.basicUI(title: "회원가입", color: .primaryDark)
+        signUpButton.titleLabel?.font = .systemFont(ofSize: 17, weight: .semibold)
         
         emailTextField.text = "yegryegr@yegr.com" // 임시
         passwordTextField.text = "Yegryegr123" // 임시

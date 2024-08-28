@@ -92,12 +92,15 @@ final class SignUpViewController: UIViewController {
                 owner.signUpView.signUpButton.isEnabled = true
                 owner.signUpView.signUpButton.roundUI(
                     title: "회원가입",
+                    titleColor: .white,
                     bgColor: .primaryButtonBg,
-                    borderColor: UIColor.primaryBorder.cgColor,
+                    font: .systemFont(ofSize: 17, weight: .semibold),
+                    borderColor: UIColor.clear.cgColor,
                     borderWidth: 2)
             } else {
                 owner.signUpView.signUpButton.isEnabled = false
                 owner.signUpView.signUpButton.backgroundColor = .primaryCustomLight
+                owner.signUpView.signUpButton.setTitleColor(.black, for: .normal)
             }
         }
         .disposed(by: disposeBag)

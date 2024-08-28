@@ -15,6 +15,7 @@
 		681E9FCC2C7CD54A00E4A718 /* DetailCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 681E9FCB2C7CD54A00E4A718 /* DetailCell.swift */; };
 		681E9FCE2C7CD61700E4A718 /* DetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 681E9FCD2C7CD61700E4A718 /* DetailViewModel.swift */; };
 		681E9FDF2C7D941300E4A718 /* DetailWebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 681E9FDE2C7D941300E4A718 /* DetailWebViewController.swift */; };
+		681E9FEA2C7ED88F00E4A718 /* PostLike.swift in Sources */ = {isa = PBXBuildFile; fileRef = 681E9FE92C7ED88F00E4A718 /* PostLike.swift */; };
 		683477CE2C74F98300D0931B /* HTTPStatusCodes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683477CD2C74F98300D0931B /* HTTPStatusCodes.swift */; };
 		683477D02C74FDCD00D0931B /* TokenUpdate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683477CF2C74FDCD00D0931B /* TokenUpdate.swift */; };
 		683477D22C75099300D0931B /* MembershipVerification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683477D12C75099300D0931B /* MembershipVerification.swift */; };
@@ -94,6 +95,7 @@
 		681E9FCB2C7CD54A00E4A718 /* DetailCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailCell.swift; sourceTree = "<group>"; };
 		681E9FCD2C7CD61700E4A718 /* DetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewModel.swift; sourceTree = "<group>"; };
 		681E9FDE2C7D941300E4A718 /* DetailWebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailWebViewController.swift; sourceTree = "<group>"; };
+		681E9FE92C7ED88F00E4A718 /* PostLike.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostLike.swift; sourceTree = "<group>"; };
 		683477CD2C74F98300D0931B /* HTTPStatusCodes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPStatusCodes.swift; sourceTree = "<group>"; };
 		683477CF2C74FDCD00D0931B /* TokenUpdate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenUpdate.swift; sourceTree = "<group>"; };
 		683477D12C75099300D0931B /* MembershipVerification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MembershipVerification.swift; sourceTree = "<group>"; };
@@ -356,6 +358,7 @@
 				686DBD472C79D70E0023960B /* SearchLocation.swift */,
 				686DBD3F2C79B6280023960B /* HashTagModel.swift */,
 				686DBD4B2C7B3EF10023960B /* Upload.swift */,
+				681E9FE92C7ED88F00E4A718 /* PostLike.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -585,6 +588,7 @@
 				681E9FC52C7C6AA800E4A718 /* PickedListCell.swift in Sources */,
 				683477CE2C74F98300D0931B /* HTTPStatusCodes.swift in Sources */,
 				68CED38A2C70AD210043266A /* UIViewController+.swift in Sources */,
+				681E9FEA2C7ED88F00E4A718 /* PostLike.swift in Sources */,
 				68CED3962C70D7C60043266A /* UILabel+.swift in Sources */,
 				68CED3642C6F1FF80043266A /* LoginViewController.swift in Sources */,
 				68CED3AF2C720B5B0043266A /* ReusableProtocol.swift in Sources */,
