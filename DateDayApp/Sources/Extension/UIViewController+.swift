@@ -41,6 +41,37 @@ extension UIViewController {
         })
     }
     
+    func showImageToast(imageSysName: String, delayTime: TimeInterval = 0.5) {
+        let safeArea = view.safeAreaLayoutGuide
+        let toastView = UIView()
+        
+        let imageView = UIImageView(image: UIImage(systemName: imageSysName))
+        imageView.tintColor = .primaryCustomLight
+        
+        toastView.backgroundColor = UIColor.primaryDark.withAlphaComponent(0.7)
+        toastView.alpha = 1.0
+        toastView.layer.cornerRadius = 20
+        toastView.clipsToBounds = true
+        
+        view.addSubview(toastView)
+        toastView.addSubview(imageView)
+        toastView.snp.makeConstraints {
+            $0.centerX.equalTo(safeArea.snp.centerX)
+            $0.centerY.equalTo(safeArea.snp.centerY).offset(-80)
+            $0.height.width.equalTo(40)
+        }
+        
+        imageView.snp.makeConstraints {
+            $0.edges.equalTo(toastView.snp.edges).inset(10)
+        }
+
+        UIView.animate(withDuration: 3.0, delay: delayTime, options: .curveLinear, animations: {
+            toastView.alpha = 0.0
+        }, completion: { isCompleted in
+            toastView.removeFromSuperview()
+        })
+    }
+    
     func okShowAlert(title: String, message: String, completion: @escaping (UIAlertAction) -> Void) {
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         let okButton = UIAlertAction(title: "확인", style: .default, handler: completion)
