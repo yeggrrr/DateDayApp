@@ -111,7 +111,8 @@ final class DetailViewController: UIViewController {
                         switch result {
                         case .success(let success):
                             owner.detailView.interestButton.isSelected = success.likeStatus
-                            print(success.likeStatus)
+                            input.interestStatus.onNext(success.likeStatus)
+                            print("likestatus:\(success.likeStatus)")
                         case .failure(let failure):
                             switch failure {
                             case .accessTokenExpiration:
@@ -126,6 +127,14 @@ final class DetailViewController: UIViewController {
                         print("DetailVC - interestButtonTap Disposed")
                     }
                     .disposed(by: owner.disposeBag)
+            }
+            .disposed(by: disposeBag)
+        
+        output.interestStatus
+            .bind(with: self) { owner, value in
+                if value {
+                    owner.showToast(message: "관심 목록에 추가되었습니다! :)", heightY: 500, delayTime: 0.5)
+                }
             }
             .disposed(by: disposeBag)
         

@@ -27,21 +27,6 @@ final class PickedListViewController: UIViewController {
      
         configure()
         bind()
-        
-        NetworkManager.shared.viewInterestList()
-            .subscribe(with: self) { owner, result in
-                switch result {
-                case .success(let success):
-                    print(">>> success: \(success)")
-                case .failure(let failure):
-                    print(failure)
-                }
-            } onFailure: { owner, error in
-                print("error: \(error)")
-            } onDisposed: { owner in
-                print("PickedListVC Disposed")
-            }
-            .disposed(by: disposeBag)
     }
     
     // MARK: Functions
@@ -52,17 +37,32 @@ final class PickedListViewController: UIViewController {
         // tableView
         pickedListView.tableView.register(PickedListCell.self, forCellReuseIdentifier: PickedListCell.id)
         pickedListView.tableView.showsVerticalScrollIndicator = false
-        pickedListView.tableView.rowHeight = 150
+        pickedListView.tableView.rowHeight = 140
     }
     
     private func bind() {
         let input = PickedListViewModel.Input()
         let output = viewModel.transform(input: input)
         
-        output.testInterestedList
+        output.pickedListData
             .bind(to: pickedListView.tableView.rx.items(cellIdentifier: PickedListCell.id, cellType: PickedListCell.self)) { (row, element, cell) in
                 cell.selectionStyle = .none
-                cell.titleLabel.text = element
+                cell.titleLabel.text = element.title
+                cell.categoryLabel.text = element.category
+                cell.starRatingLabel.text = element.starRating
+                if let image = element.imageFiles.first {
+                    NetworkManager.shared.viewPostImage(filePath: image) { data in
+                        cell.mainImageView.image = UIImage(data: data)
+                    }
+                }
+                
+            }
+            .disposed(by: disposeBag)
+        
+        // 토큰 만료 - 업데이트
+        output.tokenExpiredMessage
+            .bind(with: self) { owner, value in
+                owner.updateToken()
             }
             .disposed(by: disposeBag)
     }

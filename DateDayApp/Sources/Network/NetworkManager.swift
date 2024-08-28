@@ -386,7 +386,6 @@ final class NetworkManager {
                 AF.request(request)
                     .validate(statusCode: 200..<300)
                     .responseDecodable(of: ViewPost.self) { response in
-                        print(">>> statusCode: \(response.response?.statusCode)")
                         
                         switch response.result {
                         case .success(let success):

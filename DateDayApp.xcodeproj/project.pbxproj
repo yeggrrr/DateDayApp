@@ -403,8 +403,8 @@
 			children = (
 				68CED3B52C720EE00043266A /* PickedListViewController.swift */,
 				681E9FBF2C7C63D500E4A718 /* PickedListView.swift */,
-				681E9FC22C7C67D000E4A718 /* PickedListViewModel.swift */,
 				681E9FC42C7C6AA800E4A718 /* PickedListCell.swift */,
+				681E9FC22C7C67D000E4A718 /* PickedListViewModel.swift */,
 			);
 			path = PickedList;
 			sourceTree = "<group>";

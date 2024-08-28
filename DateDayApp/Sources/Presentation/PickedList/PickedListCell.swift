@@ -10,8 +10,8 @@ import SnapKit
 
 final class PickedListCell: UITableViewCell, ViewRepresentable {
     // MARK: UI
-    let backgroundContentView = UIView()
-    let detailStackView = UIStackView()
+    private let backgroundContentView = UIView()
+    private let detailStackView = UIStackView()
     let titleLabel = UILabel()
     let categoryLabel = UILabel()
     private let starRatingStackView = UIStackView()
@@ -85,13 +85,8 @@ final class PickedListCell: UITableViewCell, ViewRepresentable {
         starImageView.image = UIImage(systemName: "star.fill")
         starImageView.tintColor = .systemOrange
         
-        titleLabel.font = .systemFont(ofSize: 22, weight: .semibold)
-        categoryLabel.font = .systemFont(ofSize: 17, weight: .regular)
+        titleLabel.font = .systemFont(ofSize: 20, weight: .semibold)
+        categoryLabel.font = .systemFont(ofSize: 16, weight: .regular)
         starRatingLabel.font = .systemFont(ofSize: 17, weight: .bold)
-        
-        // 임시
-        mainImageView.image = UIImage(named: "seaBackground")
-        starRatingLabel.text = "5.0"
-        categoryLabel.text = "문화,예술 > 미술,공예 > 목공예"
     }
 }

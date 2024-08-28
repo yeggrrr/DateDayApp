@@ -19,6 +19,7 @@ final class DetailViewModel: BaseViewModel {
         let moveToDetailButtonTap: ControlEvent<Void>
         let reservationButtonTap: ControlEvent<Void>
         let interestButtonTap: ControlEvent<Void>
+        let interestStatus = PublishSubject<Bool>()
     }
     
     struct Output {
@@ -26,6 +27,7 @@ final class DetailViewModel: BaseViewModel {
         let moveToDetailButtonTap: ControlEvent<Void>
         let interestButtonTap: ControlEvent<Void>
         let isInterestIdList: PublishSubject<[String]>
+        let interestStatus: PublishSubject<Bool>
     }
     
     func transform(input: Input) -> Output {
@@ -66,6 +68,7 @@ final class DetailViewModel: BaseViewModel {
             imageDatas: imageDatas,
             moveToDetailButtonTap: input.moveToDetailButtonTap,
             interestButtonTap: input.interestButtonTap,
-            isInterestIdList: isInterestIdList)
+            isInterestIdList: isInterestIdList,
+            interestStatus: input.interestStatus)
     }
 }
