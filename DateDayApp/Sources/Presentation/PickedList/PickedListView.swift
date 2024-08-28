@@ -31,7 +31,7 @@ final class PickedListView: BaseView {
     override func configureUI() {
         super.configureUI()
         
-        backgroundImageView.image = UIImage(named: "paperTextureBackground")
+        backgroundImageView.image = UIImage(named: "seaBackground")
         backgroundImageView.layer.opacity = 0.8
         tableView.backgroundColor = .clear
     }

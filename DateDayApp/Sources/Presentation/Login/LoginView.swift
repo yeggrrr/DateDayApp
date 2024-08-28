@@ -33,7 +33,8 @@ final class LoginView: BaseView {
         
         logoImageView.snp.makeConstraints {
             $0.top.equalTo(safeArea).offset(50)
-            $0.horizontalEdges.equalTo(safeArea.snp.horizontalEdges).inset(60)
+            $0.leading.equalTo(safeArea.snp.leading).offset(80)
+            $0.trailing.equalTo(safeArea.snp.trailing).offset(-50)
             $0.bottom.lessThanOrEqualTo(inputStackView.snp.top).offset(-50)
         }
         
@@ -75,7 +76,7 @@ final class LoginView: BaseView {
     override func configureUI() {
         super.configureUI()
         
-        logoImageView.image = UIImage(named: "DDLogo")
+        logoImageView.image = UIImage(named: "Logo")
         
         inputStackView.setUI(
             axis: .vertical,
@@ -102,7 +103,7 @@ final class LoginView: BaseView {
         
         signUpButton.basicUI(title: "회원가입", color: .primaryDark)
         
-        emailTextField.text = "yeggrrr@yegr.com" // 임시
-        passwordTextField.text = "Yeggrrr123" // 임시
+        emailTextField.text = "yegryegr@yegr.com" // 임시
+        passwordTextField.text = "Yegryegr123" // 임시
     }
 }

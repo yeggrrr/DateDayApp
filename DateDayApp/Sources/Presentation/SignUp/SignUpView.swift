@@ -44,14 +44,15 @@ final class SignUpView: BaseView {
         let scrollViewContent = regulationsInfoScrollView.contentLayoutGuide
         
         logoImageView.snp.makeConstraints {
-            $0.top.equalTo(safeArea).offset(50)
-            $0.horizontalEdges.equalTo(safeArea.snp.horizontalEdges).inset(60)
-            $0.bottom.lessThanOrEqualTo(inputStackView.snp.top).offset(-40)
+            $0.top.equalTo(safeArea).offset(40)
+            $0.leading.equalTo(safeArea.snp.leading).offset(80)
+            $0.trailing.equalTo(safeArea.snp.trailing).offset(-50)
+            $0.bottom.lessThanOrEqualTo(inputStackView.snp.top).offset(-50)
         }
         
         inputStackView.snp.makeConstraints {
             $0.centerX.equalTo(safeArea.snp.centerX)
-            $0.centerY.equalTo(safeArea.snp.centerY).offset(-100)
+            $0.centerY.equalTo(safeArea.snp.centerY).offset(-90)
             $0.horizontalEdges.equalTo(safeArea).inset(50)
             $0.height.equalTo(135)
         }
@@ -98,7 +99,7 @@ final class SignUpView: BaseView {
         regulationsInfoScrollView.snp.makeConstraints {
             $0.top.equalTo(signUpButton.snp.bottom).offset(20)
             $0.horizontalEdges.equalTo(safeArea.snp.horizontalEdges).inset(20)
-            $0.height.equalTo(170)
+            $0.height.equalTo(190)
         }
         
         regulationsInfoContentView.snp.makeConstraints {
@@ -121,7 +122,7 @@ final class SignUpView: BaseView {
     override func configureUI() {
         super.configureUI()
         
-        logoImageView.image = UIImage(named: "DDLogo")
+        logoImageView.image = UIImage(named: "Logo")
  
         inputStackView.setUI(
             axis: .vertical,
