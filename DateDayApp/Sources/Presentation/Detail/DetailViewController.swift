@@ -87,6 +87,17 @@ final class DetailViewController: UIViewController {
             }
             .disposed(by: disposeBag)
         
+        output.isInterestIdList
+            .bind(with: self) { owner, interestedList in
+                print("interestedList: \(interestedList)")
+                interestedList.forEach { userID in
+                    if userID == UserDefaultsManager.shared.saveLoginUserID {
+                        owner.detailView.interestButton.isSelected = true
+                    }
+                }
+            }
+            .disposed(by: disposeBag)
+        
         // 관심 목록 추가 버튼
         Observable.combineLatest(output.interestButtonTap, postID)
             .bind(with: self) { owner, value in
@@ -117,8 +128,6 @@ final class DetailViewController: UIViewController {
                     .disposed(by: owner.disposeBag)
             }
             .disposed(by: disposeBag)
-        
-        
         
         // WebView 이동
         Observable.combineLatest(output.moveToDetailButtonTap, viewModel.detailData)

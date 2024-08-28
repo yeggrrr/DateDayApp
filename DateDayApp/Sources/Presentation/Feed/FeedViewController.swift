@@ -25,7 +25,7 @@ final class FeedViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         configureCollectionView()
         configureNavigation()
         bind()
@@ -38,6 +38,8 @@ final class FeedViewController: UIViewController {
             showToast(message: "로그인 성공! :)", heightY: 500, delayTime: 0.5)
             self.showLoginAlert = false
         }
+        
+        // TODO: 관심 목록 추가 & 게시글 좋아요 기능에 변화 있을 시, 네트워크 통신해서 업데이트
     }
     
     // MARK: Functions
@@ -82,6 +84,8 @@ final class FeedViewController: UIViewController {
                 cell.categoryLabel.text = element.category
                 cell.reviewLabel.text = element.content
                 cell.starRatingInfoLabel.text = element.starRating
+                cell.likeLabel.text = "\(element.likes.count)"
+                cell.markLabel.text = "\(element.interest.count)"
                 
                 if let image = element.imageFiles.first {
                     NetworkManager.shared.viewPostImage(filePath: image) { data in
@@ -90,7 +94,6 @@ final class FeedViewController: UIViewController {
                 }
             }
             .disposed(by: disposeBag)
-
         
         Observable.combineLatest(feedView.collectionView.rx.prefetchItems, output.nextCursor)
             .throttle(.seconds(1), scheduler: MainScheduler.instance)
@@ -124,11 +127,13 @@ final class FeedViewController: UIViewController {
             }
             .disposed(by: disposeBag)
         
-        Observable.combineLatest(output.postData, output.collectionViewItemSelected)
+        Observable.combineLatest(output.collectionViewItemSelected, output.postData)
             .bind(with: self) { owner, value in
-                if !value.0.isEmpty {
+                print("collectionViewItemSelected")
+                if !value.1.isEmpty {
+                    print("value: \(value)")
                     let vc = DetailViewController()
-                    vc.postID.onNext(value.0[value.1.item].postId)
+                    vc.postID.onNext(value.1[value.0.item].postId)
                     vc.hidesBottomBarWhenPushed = true
                     owner.navigationController?.pushViewController(vc, animated: true)
                 } else {

@@ -53,6 +53,7 @@ final class LoginViewController: UIViewController {
                             UserDefaultsManager.shared.refresh = success.refreshToken
                             UserDefaultsManager.shared.token = success.accessToken
                             UserDefaultsManager.shared.saveTime = DateFormatter.containTimeDateFormatter.string(from: Date())
+                            UserDefaultsManager.shared.saveLoginUserID = success.userId
                             
                             let vc = DateDayTabBarController(showLoginAlert: true)
                             self.setRootViewController(vc)

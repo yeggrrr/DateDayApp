@@ -25,6 +25,7 @@ final class DetailViewModel: BaseViewModel {
         let imageDatas: PublishSubject<[Data]>
         let moveToDetailButtonTap: ControlEvent<Void>
         let interestButtonTap: ControlEvent<Void>
+        let isInterestIdList: PublishSubject<[String]>
     }
     
     func transform(input: Input) -> Output {
@@ -64,6 +65,7 @@ final class DetailViewModel: BaseViewModel {
         return Output(
             imageDatas: imageDatas,
             moveToDetailButtonTap: input.moveToDetailButtonTap,
-            interestButtonTap: input.interestButtonTap)
+            interestButtonTap: input.interestButtonTap,
+            isInterestIdList: isInterestIdList)
     }
 }
