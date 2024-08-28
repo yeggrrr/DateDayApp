@@ -15,11 +15,16 @@ final class PickedListViewModel: BaseViewModel {
     struct Input {
         let pickedListData = PublishSubject<[ViewPost.PostData]>()
         let tokenExpiredMessage = PublishSubject<String>()
+        let itemSelected: ControlEvent<IndexPath>
+        let selectedCellIndex = PublishSubject<ControlEvent<IndexPath>.Element>()
+        let selectedPostID = BehaviorSubject(value: "")
     }
     
     struct Output {
         let pickedListData: PublishSubject<[ViewPost.PostData]>
         let tokenExpiredMessage: PublishSubject<String>
+        let itemSelected: ControlEvent<IndexPath>
+        let selectedPostID: BehaviorSubject<String>
     }
 
     func transform(input: Input) -> Output {
@@ -45,8 +50,17 @@ final class PickedListViewModel: BaseViewModel {
             }
             .disposed(by: disposeBag)
         
+        Observable.combineLatest(input.pickedListData, input.selectedCellIndex)
+            .bind(with: self) { owner, value in
+                let selectedPostID = value.0[value.1.row].postId
+                input.selectedPostID.onNext(selectedPostID)
+            }
+            .disposed(by: disposeBag)
+        
         return Output(
             pickedListData: input.pickedListData,
-            tokenExpiredMessage: tokenExpiredMessage)
+            tokenExpiredMessage: tokenExpiredMessage,
+            itemSelected: input.itemSelected,
+            selectedPostID: input.selectedPostID)
     }
 }
