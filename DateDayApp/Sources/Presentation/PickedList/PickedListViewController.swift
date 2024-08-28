@@ -29,6 +29,12 @@ final class PickedListViewController: UIViewController {
         bind()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        updateData()
+    }
+    
     // MARK: Functions
     private func configure() {
         // navigation
@@ -83,6 +89,28 @@ final class PickedListViewController: UIViewController {
         output.tokenExpiredMessage
             .bind(with: self) { owner, value in
                 owner.updateToken()
+            }
+            .disposed(by: disposeBag)
+    }
+    
+    private func updateData() {
+        NetworkManager.shared.viewInterestList()
+            .subscribe(with: self) { owner, result in
+                switch result {
+                case .success(let success):
+                    owner.viewModel.pickedListData.onNext(success.data)
+                case .failure(let failure):
+                    switch failure {
+                    case .accessTokenExpiration:
+                        owner.viewModel.tokenExpiredMessage.onNext("토큰이 만료되었습니다.")
+                    default:
+                        break
+                    }
+                }
+            } onFailure: { owner, error in
+                print("error: \(error)")
+            } onDisposed: { owner in
+                print("PickedListVC Disposed")
             }
             .disposed(by: disposeBag)
     }
