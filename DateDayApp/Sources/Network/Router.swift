@@ -18,6 +18,7 @@ enum Router {
     case postImage
     case uploadPost(query: UploadPostQuery)
     case viewSpecificPost(postID: String)
+    case postInterest(postID: String, likeStatus: PostInterestQuery)
 }
 
 extension Router: TargetType {
@@ -27,7 +28,7 @@ extension Router: TargetType {
     
     var method: HTTPMethod {
         switch self {
-        case .signUp, .validation, .login, .postImage, .uploadPost:
+        case .signUp, .validation, .login, .postImage, .uploadPost, .postInterest:
             return .post
         case .tokenRenewal, .viewPost, .viewPostImage, .viewSpecificPost:
             return .get
@@ -54,6 +55,8 @@ extension Router: TargetType {
             return "/posts"
         case let .viewSpecificPost(postID):
             return "/posts/\(postID)"
+        case let .postInterest(postID, likeStatus):
+            return "/posts/\(postID)/like-2"
         }
     }
     
@@ -70,21 +73,16 @@ extension Router: TargetType {
                 Header.refresh.rawValue: UserDefaultsManager.shared.refresh,
                 Header.sesac.rawValue: APIKey.secretkey
             ]
-        case .viewPostImage, .viewPost, .viewSpecificPost:
+        case .viewPostImage, .viewPost, .viewSpecificPost, .postInterest, .uploadPost:
             return [
                 Header.authorization.rawValue: UserDefaultsManager.shared.token,
+                Header.contentType.rawValue: Header.json.rawValue,
                 Header.sesac.rawValue: APIKey.secretkey
             ]
         case .postImage:
             return [
                 Header.authorization.rawValue: UserDefaultsManager.shared.token,
                 Header.contentType.rawValue: Header.mutipart.rawValue,
-                Header.sesac.rawValue: APIKey.secretkey
-            ]
-        case .uploadPost:
-            return [
-                Header.authorization.rawValue: UserDefaultsManager.shared.token,
-                Header.contentType.rawValue: Header.json.rawValue,
                 Header.sesac.rawValue: APIKey.secretkey
             ]
         }
@@ -125,6 +123,8 @@ extension Router: TargetType {
             return try? encoder.encode(query)
         case .uploadPost(let query):
             return try? encoder.encode(query)
+        case let .postInterest(postID, likeStatus):
+            return try? encoder.encode(likeStatus)
         default:
             return nil
         }

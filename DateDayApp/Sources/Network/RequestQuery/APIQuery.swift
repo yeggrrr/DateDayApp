@@ -34,3 +34,11 @@ struct UploadPostQuery: Encodable {
     let product_id: String = "TestProcutID" // yegrDateDay: DummyID
     let files: [String]
 }
+
+struct PostInterestQuery: Encodable {
+    let likeStatus: Bool
+    
+    enum CodingKeys: String, CodingKey {
+        case likeStatus = "like_status"
+    }
+}

@@ -336,4 +336,44 @@ final class NetworkManager {
             return Disposables.create()
         }
     }
+    
+    // MARK: 포스트 좋아요 & 취소 (관심목록추가) - Like2
+    func postInterestStatus(interestStatus: Bool, postID: String) -> Single<Result<PostLike, HTTPStatusCodes>> {
+        return Single.create { observer -> Disposable in
+            
+            do {
+                let query = PostInterestQuery(likeStatus: interestStatus)
+                let request = try Router.postInterest(postID: postID, likeStatus: query).asURLRequest()
+                
+                AF.request(request)
+                    .validate(statusCode: 200..<300)
+                    .responseDecodable(of: PostLike.self) { response in
+                        switch response.result {
+                        case .success(let success):
+                            observer(.success(.success(success)))
+                        case .failure(_):
+                            let statusCode = response.response?.statusCode
+                            switch statusCode {
+                            case 400:
+                                observer(.success(.failure(.missingRequiredValue)))
+                            case 401:
+                                observer(.success(.failure(.mismatchOrInvalid)))
+                            case 403:
+                                observer(.success(.failure(.forbidden)))
+                            case 410:
+                                observer(.success(.failure(.serverErrorNotSavedOrCannotSearch)))
+                            case 419:
+                                observer(.success(.failure(.accessTokenExpiration)))
+                            default:
+                                break
+                            }
+                        }
+                    }
+            } catch {
+                print("error 발생!! - error:", error)
+            }
+            
+            return Disposables.create()
+        }
+    }
 }

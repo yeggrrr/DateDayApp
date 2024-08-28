@@ -15,6 +15,8 @@ final class DetailView: BaseView {
     private let scrollView = UIScrollView()
     private let contentView = UIView()
     let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout())
+    let detailView = UIView()
+    let detailBgview = UIView()
     let likeButton = UIButton(type: .system)
     let createdAtLabel = UILabel()
     private let dividerView = UIView()
@@ -35,7 +37,8 @@ final class DetailView: BaseView {
     override func addSubviews() {
         addSubviews([backgroundImageView, scrollView, bottomView])
         scrollView.addSubview(contentView)
-        contentView.addSubviews([collectionView, likeButton, createdAtLabel, dividerView, reviewTextLabel, reviewBgView, reviewLabel, reviewIconImageView, locationTextLabel, locationIconImageView, LocationMapView, moveToDetailButton])
+        contentView.addSubviews([collectionView, detailView])
+        detailView.addSubviews([detailBgview, likeButton, createdAtLabel, dividerView, reviewTextLabel, reviewBgView, reviewLabel, reviewIconImageView, locationTextLabel, locationIconImageView, LocationMapView, moveToDetailButton])
         bottomView.addSubviews([interestButton, reservationButton])
     }
     
@@ -56,6 +59,16 @@ final class DetailView: BaseView {
         contentView.snp.makeConstraints {
             $0.verticalEdges.equalTo(scrollViewContent.snp.verticalEdges)
             $0.horizontalEdges.equalTo(scrollViewFrame.snp.horizontalEdges)
+        }
+        
+        detailView.snp.makeConstraints {
+            $0.top.equalTo(collectionView.snp.bottom)
+            $0.horizontalEdges.equalTo(safeArea.snp.horizontalEdges)
+            $0.bottom.equalTo(contentView.snp.bottom)
+        }
+        
+        detailBgview.snp.makeConstraints {
+            $0.edges.equalTo(detailView.snp.edges)
         }
         
         collectionView.snp.makeConstraints {
@@ -151,10 +164,9 @@ final class DetailView: BaseView {
         super.configureUI()
         
         backgroundImageView.image = UIImage(named: "seaBackground")
-        
-        contentView.backgroundColor = .primaryCustomLight
-        contentView.layer.opacity = 0.8
-        
+        collectionView.backgroundColor = .primaryCustomLight
+        detailBgview.backgroundColor = .primaryCustomLight
+        detailBgview.layer.opacity = 0.5
         likeButton.setImage(UIImage(systemName: "heart"), for: .normal)
         likeButton.tintColor = .primaryDark
         
@@ -215,10 +227,7 @@ final class DetailView: BaseView {
         bottomView.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
         bottomView.layer.masksToBounds = true
         
-        interestButton.backgroundColor = .primaryButtonBg
-        interestButton.layer.cornerRadius = 5
-        interestButton.setImage(UIImage(systemName: "bookmark"), for: .normal)
-        interestButton.tintColor = .white
+        interestButton.markUpdateUI()
         
         reservationButton.titleLabel?.font = .systemFont(ofSize: 17, weight: .bold)
         reservationButton.squareUI(
@@ -228,9 +237,6 @@ final class DetailView: BaseView {
             cornerRadius: 5,
             borderColor: UIColor.clear.cgColor,
             borderWidth: 0)
-        
-        // 임시
-        createdAtLabel.text = "2024년 08월 28일 작성됨"
     }
     
     func createAnnotaion(title: String, coordinate: CLLocationCoordinate2D) {
