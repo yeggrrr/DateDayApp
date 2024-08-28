@@ -49,7 +49,10 @@ final class PickedListViewController: UIViewController {
     }
     
     private func bind() {
-        let input = PickedListViewModel.Input(itemSelected: pickedListView.tableView.rx.itemSelected)
+        let input = PickedListViewModel.Input(
+            itemSelected: pickedListView.tableView.rx.itemSelected,
+            tableViewPrefetchRows: pickedListView.tableView.rx.prefetchRows)
+        
         let output = viewModel.transform(input: input)
         
         // 관심 목록 collectionView
@@ -98,6 +101,9 @@ final class PickedListViewController: UIViewController {
             .subscribe(with: self) { owner, result in
                 switch result {
                 case .success(let success):
+                    owner.viewModel.pickedList.removeAll()
+                    owner.viewModel.pickedList.append(contentsOf: success.data)
+                    owner.viewModel.nextCursor.onNext(success.nextCursor)
                     owner.viewModel.pickedListData.onNext(success.data)
                 case .failure(let failure):
                     switch failure {
