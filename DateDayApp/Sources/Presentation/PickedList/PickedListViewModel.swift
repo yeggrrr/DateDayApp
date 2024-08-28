@@ -22,6 +22,7 @@ final class PickedListViewModel: BaseViewModel {
         let selectedCellIndex = PublishSubject<ControlEvent<IndexPath>.Element>()
         let selectedPostID = BehaviorSubject(value: "")
         let tableViewPrefetchRows: ControlEvent<[IndexPath]>
+        let tokenExpiredMessage = PublishSubject<String>()
     }
     
     struct Output {
@@ -32,8 +33,6 @@ final class PickedListViewModel: BaseViewModel {
     }
 
     func transform(input: Input) -> Output {
-        let tokenExpiredMessage = PublishSubject<String>()
-        
         // 네트워크 통신
         NetworkManager.shared.viewInterestList()
             .subscribe(with: self) { owner, result in
@@ -46,7 +45,7 @@ final class PickedListViewModel: BaseViewModel {
                 case .failure(let failure):
                     switch failure {
                     case .accessTokenExpiration:
-                        tokenExpiredMessage.onNext("토큰이 만료되었습니다.")
+                        input.tokenExpiredMessage.onNext("토큰이 만료되었습니다.")
                     default:
                         break
                     }
@@ -84,7 +83,7 @@ final class PickedListViewModel: BaseViewModel {
                                     case .failure(let failure):
                                         switch failure {
                                         case .accessTokenExpiration:
-                                            tokenExpiredMessage.onNext("토큰이 만료되었습니다.")
+                                            owner.tokenExpiredMessage.onNext("토큰이 만료되었습니다.")
                                         default:
                                             break
                                         }
@@ -103,7 +102,7 @@ final class PickedListViewModel: BaseViewModel {
         
         return Output(
             pickedListData: pickedListData,
-            tokenExpiredMessage: tokenExpiredMessage,
+            tokenExpiredMessage: input.tokenExpiredMessage,
             itemSelected: input.itemSelected,
             selectedPostID: input.selectedPostID)
     }

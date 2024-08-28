@@ -10,48 +10,42 @@ import RxSwift
 import RxCocoa
 
 final class FeedViewModel: BaseViewModel {
-    let postData = BehaviorRelay(value: [ViewPost.PostData]())
+    let postData = PublishSubject<[ViewPost.PostData]>()
+    let nextCursor = PublishSubject<String>()
+    var feedDataList: [ViewPost.PostData] = []
+    
     private let disposeBag = DisposeBag()
     
     struct Input {
         let collectionViewItemSelected: ControlEvent<IndexPath>
+        let collectionViewPrefetchItems: ControlEvent<[IndexPath]>
         let writeButtonTap: ControlEvent<Void>
+        let selectedPostID = BehaviorSubject(value: "")
         let toastMessage = PublishSubject<String>()
         let tokenExpiredMessage = PublishSubject<String>()
-        let nextCursor = PublishSubject<String>()
+        
     }
     
     struct Output {
         let collectionViewItemSelected: ControlEvent<IndexPath>
-        let postData: BehaviorRelay<[ViewPost.PostData]>
+        let postData: PublishSubject<[ViewPost.PostData]>
         let writeButtonTap: ControlEvent<Void>
+        let selectedPostID: BehaviorSubject<String>
         let toastMessage: PublishSubject<String>
         let tokenExpiredMessage: PublishSubject<String>
         let nextCursor: PublishSubject<String>
     }
     
     func transform(input: Input) -> Output {
-        let toastMessage = PublishSubject<String>()
-        let tokenExpiredMessage = PublishSubject<String>()
-        
-        input.toastMessage
-            .bind(with: self) { owner, value in
-                toastMessage.onNext(value)
-            }
-            .disposed(by: disposeBag)
-        
-        input.tokenExpiredMessage
-            .bind(with: self) { owner, value in
-                tokenExpiredMessage.onNext(value)
-            }
-            .disposed(by: disposeBag)
-        
+        // 네트워크 통신
         NetworkManager.shared.viewPost()
             .subscribe(with: self) { owner, result in
                 switch result {
                 case .success(let success):
-                    owner.postData.accept(success.data)
-                    input.nextCursor.onNext(success.nextCursor)
+                    owner.feedDataList.removeAll()
+                    owner.feedDataList.append(contentsOf: success.data)
+                    owner.postData.onNext(success.data)
+                    owner.nextCursor.onNext(success.nextCursor)
                 case .failure(let failure):
                     switch failure {
                     case .missingRequiredValue:
@@ -73,18 +67,54 @@ final class FeedViewModel: BaseViewModel {
             }
             .disposed(by: disposeBag)
         
+        Observable.combineLatest(postData, input.collectionViewItemSelected)
+            .bind(with: self) { owner, value in
+                guard value.1.row < value.0.count else { return }
+                let selectedPostID = value.0[value.1.row].postId
+                input.selectedPostID.onNext(selectedPostID)
+            }
+            .disposed(by: disposeBag)
+        
+        Observable.combineLatest(input.collectionViewPrefetchItems, nextCursor)
+            .throttle(.seconds(1), scheduler: MainScheduler.instance)
+            .bind(with: self) { owner, value in
+                for indexPath in value.0 {
+                    if indexPath.item == 3 {
+                        if value.1 != "0" {
+                            NetworkManager.shared.viewPost(next: value.1)
+                                .subscribe(with: self) { owner, result in
+                                    switch result {
+                                    case .success(let success):
+                                        owner.feedDataList.append(contentsOf: success.data)
+                                        owner.postData.onNext(owner.feedDataList)
+                                        owner.nextCursor.onNext(success.nextCursor)
+                                    case .failure(let failure):
+                                        switch failure {
+                                        case .accessTokenExpiration:
+                                            input.tokenExpiredMessage.onNext("토큰이 만료되었습니다.")
+                                        default:
+                                            break
+                                        }
+                                    }
+                                } onFailure: { owner, error in
+                                    print("error: \(error)")
+                                } onDisposed: { owner in
+                                    print("Disposed")
+                                }
+                                .disposed(by: owner.disposeBag)
+                        }
+                    }
+                }
+            }
+            .disposed(by: disposeBag)
+        
         return Output(
             collectionViewItemSelected: input.collectionViewItemSelected,
             postData: postData,
             writeButtonTap: input.writeButtonTap,
-            toastMessage: toastMessage,
-            tokenExpiredMessage: tokenExpiredMessage,
-            nextCursor: input.nextCursor)
-    }
-    
-    func append(items: [ViewPost.PostData]) {
-        var data = postData.value
-        data.append(contentsOf: items)
-        postData.accept(data)
+            selectedPostID: input.selectedPostID,
+            toastMessage: input.toastMessage,
+            tokenExpiredMessage: input.tokenExpiredMessage,
+            nextCursor: nextCursor)
     }
 }

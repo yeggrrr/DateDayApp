@@ -15,6 +15,7 @@ final class FeedViewController: UIViewController {
 
     // MARK: Properties
     var showLoginAlert: Bool?
+    var isChanged: Bool?
     private let viewModel = FeedViewModel()
     private let disposeBag = DisposeBag()
     
@@ -26,6 +27,7 @@ final class FeedViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        isChanged = false
         configureCollectionView()
         configureNavigation()
         bind()
@@ -64,6 +66,7 @@ final class FeedViewController: UIViewController {
     private func bind() {
         let input = FeedViewModel.Input(
             collectionViewItemSelected: feedView.collectionView.rx.itemSelected,
+            collectionViewPrefetchItems: feedView.collectionView.rx.prefetchItems,
             writeButtonTap: feedView.writeButton.rx.tap)
         
         let output = viewModel.transform(input: input)
@@ -93,48 +96,13 @@ final class FeedViewController: UIViewController {
             }
             .disposed(by: disposeBag)
         
-        Observable.combineLatest(feedView.collectionView.rx.prefetchItems, output.nextCursor)
-            .throttle(.seconds(1), scheduler: MainScheduler.instance)
-            .bind(with: self) { owner, value in
-                for indexPath in value.0 {
-                    if indexPath.item == 3 {
-                        if value.1 != "0" {
-                            NetworkManager.shared.viewPost(next: value.1)
-                                .subscribe(with: self) { owner, result in
-                                    switch result {
-                                    case .success(let success):
-                                        owner.viewModel.append(items: success.data)
-                                        input.nextCursor.onNext(success.nextCursor)
-                                    case .failure(let failure):
-                                        switch failure {
-                                        case .accessTokenExpiration:
-                                            owner.updateToken()
-                                        default:
-                                            break
-                                        }
-                                    }
-                                } onFailure: { owner, error in
-                                    print("error: \(error)")
-                                } onDisposed: { owner in
-                                    print("Disposed")
-                                }
-                                .disposed(by: owner.disposeBag)
-                        }
-                    }
-                }
-            }
-            .disposed(by: disposeBag)
-        
-        Observable.combineLatest(output.collectionViewItemSelected, output.postData)
-            .bind(with: self) { owner, value in
-                if !value.1.isEmpty {
-                    let vc = DetailViewController()
-                    vc.postID.onNext(value.1[value.0.item].postId)
-                    vc.hidesBottomBarWhenPushed = true
-                    owner.navigationController?.pushViewController(vc, animated: true)
-                } else {
-                    owner.showToast(message: "잠시후 다시 시도해주세요.")
-                }
+        output.collectionViewItemSelected
+            .withLatestFrom(output.selectedPostID)
+            .bind(with: self) { owner, postID in
+                let vc = DetailViewController()
+                vc.postID.onNext(postID)
+                vc.hidesBottomBarWhenPushed = true
+                owner.navigationController?.pushViewController(vc, animated: true)
             }
             .disposed(by: disposeBag)
         
@@ -147,6 +115,32 @@ final class FeedViewController: UIViewController {
         output.tokenExpiredMessage
             .bind(with: self) { owner, value in
                 owner.updateToken()
+            }
+            .disposed(by: disposeBag)
+    }
+    
+    private func updateData() {
+        print(">>> FeedVC - updateData!")
+        NetworkManager.shared.viewPost()
+            .subscribe(with: self) { owner, result in
+                switch result {
+                case .success(let success):
+                    owner.viewModel.feedDataList.removeAll()
+                    owner.viewModel.feedDataList.append(contentsOf: success.data)
+                    owner.viewModel.postData.onNext(success.data)
+                    owner.viewModel.nextCursor.onNext(success.nextCursor)
+                case .failure(let failure):
+                    switch failure {
+                    case .accessTokenExpiration:
+                        owner.updateToken()
+                    default:
+                        break
+                    }
+                }
+            } onFailure: { owner, error in
+                print("error: \(error)")
+            } onDisposed: { owner in
+                print("FeedVC viewPost - Disposed")
             }
             .disposed(by: disposeBag)
     }
