@@ -43,7 +43,7 @@ final class SearchView: BaseView {
         backgroundImageView.image = UIImage(named: "seaBackground")
         backgroundImageView.layer.opacity = 0.8
         collectionView.backgroundColor = .clear
-        searchBar.setUI(placeholder: "검색")
+        searchBar.setUI(placeholder: "해시태그 검색")
     }
     
     static func layout() -> UICollectionViewFlowLayout {

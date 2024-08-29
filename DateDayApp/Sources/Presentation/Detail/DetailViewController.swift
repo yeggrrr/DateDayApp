@@ -12,16 +12,16 @@ import MapKit
 
 final class DetailViewController: UIViewController {
     // MARK: UI
-    let detailView = DetailView()
+    private let detailView = DetailView()
     
     // MARK: Properties
     var postID = BehaviorSubject(value: "")
-    var InterestBtnInitialState: Bool?
-    var isChangeInterestBtnState: Bool?
+    private var InterestBtnInitialState: Bool?
+    private var isChangeInterestBtnState: Bool?
     weak var delegate: ButtonStateDelegate?
     
-    let viewModel = DetailViewModel()
-    let disposeBag = DisposeBag()
+    private let viewModel = DetailViewModel()
+    private let disposeBag = DisposeBag()
     
     // MARK: View Life Cycle
     override func loadView() {

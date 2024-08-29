@@ -9,7 +9,7 @@ import UIKit
 import SnapKit
 
 final class SearchLocationCell: UITableViewCell, ViewRepresentable {
-    let verticalStackView = UIStackView()
+    private let verticalStackView = UIStackView()
     let placeNameLabel = UILabel()
     let categoryLabel = UILabel()
     let addressLabel = UILabel()

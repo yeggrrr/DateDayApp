@@ -195,10 +195,6 @@ final class WriteViewController: UIViewController {
 
 // MARK: UITextViewDelegate
 extension WriteViewController: UITextViewDelegate {
-    func textViewDidChange(_ textView: UITextView) {
-        guard let text = textView.text else { return }
-    }
-    
     func textViewDidBeginEditing(_ textView: UITextView) {
         guard textView.textColor == .secondaryLabel else { return }
                 textView.text = nil

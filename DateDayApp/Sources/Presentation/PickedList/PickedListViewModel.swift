@@ -15,7 +15,7 @@ final class PickedListViewModel: BaseViewModel {
     let nextCursor = PublishSubject<String>()
     var pickedList: [ViewPost.PostData] = []
     
-    let disposeBag = DisposeBag()
+    private let disposeBag = DisposeBag()
     
     struct Input {
         let itemSelected: ControlEvent<IndexPath>

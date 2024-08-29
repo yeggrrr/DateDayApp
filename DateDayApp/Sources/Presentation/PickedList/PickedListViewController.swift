@@ -11,13 +11,13 @@ import RxCocoa
 
 final class PickedListViewController: UIViewController {
     // MARK: UI
-    let pickedListView = PickedListView()
+    private let pickedListView = PickedListView()
     
     // MARK: Properties
-    var isChanged: Bool?
+    private var isChanged: Bool?
     
-    let viewModel = PickedListViewModel()
-    let disposeBag = DisposeBag()
+    private let viewModel = PickedListViewModel()
+    private let disposeBag = DisposeBag()
     
     // MARK: View Life Cycle
     override func loadView() {

@@ -15,7 +15,7 @@ final class FeedViewController: UIViewController {
 
     // MARK: Properties
     var showLoginAlert: Bool?
-    var isChanged: Bool?
+    private var isChanged: Bool?
     private let viewModel = FeedViewModel()
     private let disposeBag = DisposeBag()
     

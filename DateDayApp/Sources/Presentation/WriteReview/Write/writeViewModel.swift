@@ -10,7 +10,7 @@ import RxSwift
 import RxCocoa
 
 final class writeViewModel: BaseViewModel {
-    var hashTag: [HashTagModel] = [
+    private var hashTag: [HashTagModel] = [
         HashTagModel(atelierName: "#그림공방"),
         HashTagModel(atelierName: "#도자기공방"),
         HashTagModel(atelierName: "#뜨개공방"),

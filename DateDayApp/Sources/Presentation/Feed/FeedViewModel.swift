@@ -23,7 +23,6 @@ final class FeedViewModel: BaseViewModel {
         let selectedPostID = BehaviorSubject(value: "")
         let toastMessage = PublishSubject<String>()
         let tokenExpiredMessage = PublishSubject<String>()
-        
     }
     
     struct Output {

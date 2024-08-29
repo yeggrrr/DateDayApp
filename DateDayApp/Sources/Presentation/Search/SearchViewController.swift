@@ -11,7 +11,7 @@ import RxCocoa
 
 final class SearchViewController: UIViewController {
     // MARK: UI
-    let searchView = SearchView()
+    private let searchView = SearchView()
     
     // MARK: Properties
     private let viewModel = SearchViewModel()
@@ -30,7 +30,7 @@ final class SearchViewController: UIViewController {
     }
     
     // MARK: Functions
-    func configure() {
+    private func configure() {
         // navigation
         navigationItem.title = "리뷰 검색"
         
@@ -39,7 +39,7 @@ final class SearchViewController: UIViewController {
         searchView.collectionView.showsVerticalScrollIndicator = false
     }
     
-    func bind() {
+    private func bind() {
         let input = SearchViewModel.Input(
             searchButtonClicked: searchView.searchBar.rx.searchButtonClicked,
             searchText: searchView.searchBar.rx.text.orEmpty,

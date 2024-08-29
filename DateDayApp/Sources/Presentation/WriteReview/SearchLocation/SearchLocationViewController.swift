@@ -76,7 +76,7 @@ final class SearchLocationViewController: UIViewController {
             .disposed(by: disposeBag)
     }
     
-    func removeSpacing(placeName: String) -> String {
+    private func removeSpacing(placeName: String) -> String {
         let removeSpacing = placeName
             .components(separatedBy: " ")
             .joined()
