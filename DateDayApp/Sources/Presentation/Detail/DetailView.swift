@@ -167,8 +167,8 @@ final class DetailView: BaseView {
         collectionView.backgroundColor = .primaryCustomLight
         detailBgview.backgroundColor = .primaryCustomLight
         detailBgview.layer.opacity = 0.5
-        likeButton.setImage(UIImage(systemName: "heart"), for: .normal)
-        likeButton.tintColor = .primaryDark
+        
+        likeButton.heartUpdateUI()
         
         createdAtLabel.setUI(
             txtAlignment: .right,

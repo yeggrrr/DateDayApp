@@ -32,6 +32,23 @@ extension UIButton {
         layer.borderWidth = borderWidth
     }
     
+    func heartUpdateUI() {
+        tintColor = .clear
+        backgroundColor = .clear
+        layer.cornerRadius = 20
+        
+        setImage(UIImage(systemName: "heart")?.withTintColor(.primaryDark, renderingMode: .alwaysOriginal),
+                 for: .normal)
+        setImage(UIImage(systemName: "heart")?.withTintColor(.primaryDark, renderingMode: .alwaysOriginal),
+                                for: .highlighted)
+        setImage(UIImage(systemName: "heart.fill")?.withTintColor(.primaryDark, renderingMode: .alwaysOriginal),
+                                for: .selected)
+        
+        setBackgroundColor(color: .clear, forState: .normal)
+        setBackgroundColor(color: .white, forState: .highlighted)
+        setBackgroundColor(color: .white, forState: .selected)
+    }
+    
     func markUpdateUI() {
         tintColor = .primaryButtonBg
         backgroundColor = .primaryButtonBg

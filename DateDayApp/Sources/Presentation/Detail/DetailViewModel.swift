@@ -13,6 +13,7 @@ final class DetailViewModel: BaseViewModel {
     let imageFiles = PublishSubject<[String]>()
     let detailData = PublishSubject<UploadPostModel>()
     let isInterestIdList = PublishSubject<[String]>()
+    let isLikeIdList = PublishSubject<[String]>()
     
     let disposeBag = DisposeBag()
     
@@ -20,15 +21,20 @@ final class DetailViewModel: BaseViewModel {
         let moveToDetailButtonTap: ControlEvent<Void>
         let reservationButtonTap: ControlEvent<Void>
         let interestButtonTap: ControlEvent<Void>
+        let likeButtonTap: ControlEvent<Void>
         let interestStatus = PublishSubject<Bool>()
+        let likeStatus = PublishSubject<Bool>()
     }
     
     struct Output {
         let imageDatas: PublishSubject<[Data]>
         let moveToDetailButtonTap: ControlEvent<Void>
         let interestButtonTap: ControlEvent<Void>
+        let likeButtonTap: ControlEvent<Void>
         let isInterestIdList: PublishSubject<[String]>
+        let isLikeIdList: PublishSubject<[String]>
         let interestStatus: PublishSubject<Bool>
+        let likdStatus: PublishSubject<Bool>
     }
     
     func transform(input: Input) -> Output {
@@ -69,7 +75,10 @@ final class DetailViewModel: BaseViewModel {
             imageDatas: imageDatas,
             moveToDetailButtonTap: input.moveToDetailButtonTap,
             interestButtonTap: input.interestButtonTap,
+            likeButtonTap: input.likeButtonTap,
             isInterestIdList: isInterestIdList,
-            interestStatus: input.interestStatus)
+            isLikeIdList: isLikeIdList,
+            interestStatus: input.interestStatus,
+            likdStatus: input.likeStatus)
     }
 }

@@ -46,9 +46,9 @@ extension UIViewController {
         let toastView = UIView()
         
         let imageView = UIImageView(image: UIImage(systemName: imageSysName))
-        imageView.tintColor = .primaryCustomLight
+        imageView.tintColor = UIColor.white.withAlphaComponent(0.7)
         
-        toastView.backgroundColor = UIColor.primaryDark.withAlphaComponent(0.7)
+        toastView.backgroundColor = .clear
         toastView.alpha = 1.0
         toastView.layer.cornerRadius = 20
         toastView.clipsToBounds = true
@@ -58,11 +58,11 @@ extension UIViewController {
         toastView.snp.makeConstraints {
             $0.centerX.equalTo(safeArea.snp.centerX)
             $0.centerY.equalTo(safeArea.snp.centerY).offset(-80)
-            $0.height.width.equalTo(40)
+            $0.height.width.equalTo(100)
         }
         
         imageView.snp.makeConstraints {
-            $0.edges.equalTo(toastView.snp.edges).inset(10)
+            $0.edges.equalTo(toastView.snp.edges).inset(5)
         }
 
         UIView.animate(withDuration: 3.0, delay: delayTime, options: .curveLinear, animations: {

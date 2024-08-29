@@ -35,7 +35,7 @@ struct UploadPostQuery: Encodable {
     let files: [String]
 }
 
-struct PostInterestQuery: Encodable {
+struct PostLikeQuery: Encodable {
     let likeStatus: Bool
     
     enum CodingKeys: String, CodingKey {

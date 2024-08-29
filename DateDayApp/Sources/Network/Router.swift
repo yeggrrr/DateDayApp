@@ -18,8 +18,9 @@ enum Router {
     case postImage
     case uploadPost(query: UploadPostQuery)
     case viewSpecificPost(postID: String)
-    case postInterest(postID: String, likeStatus: PostInterestQuery)
+    case postInterest(postID: String, likeStatus: PostLikeQuery)
     case viewInterestPost(next: String)
+    case postLike(postID: String, likeStatus: PostLikeQuery)
 }
 
 extension Router: TargetType {
@@ -29,7 +30,7 @@ extension Router: TargetType {
     
     var method: HTTPMethod {
         switch self {
-        case .signUp, .validation, .login, .postImage, .uploadPost, .postInterest:
+        case .signUp, .validation, .login, .postImage, .uploadPost, .postInterest, .postLike:
             return .post
         case .tokenRenewal, .viewPost, .viewPostImage, .viewSpecificPost, .viewInterestPost:
             return .get
@@ -60,6 +61,8 @@ extension Router: TargetType {
             return "/posts/\(postID)/like-2"
         case .viewInterestPost:
             return "/posts/likes-2/me"
+        case let .postLike(postID, _):
+            return "/posts/\(postID)/like"
         }
     }
     
@@ -76,7 +79,7 @@ extension Router: TargetType {
                 Header.refresh.rawValue: UserDefaultsManager.shared.refresh,
                 Header.sesac.rawValue: APIKey.secretkey
             ]
-        case .viewPostImage, .viewPost, .viewSpecificPost, .postInterest, .uploadPost, .viewInterestPost:
+        case .viewPostImage, .viewPost, .viewSpecificPost, .postInterest, .uploadPost, .viewInterestPost, .postLike:
             return [
                 Header.authorization.rawValue: UserDefaultsManager.shared.token,
                 Header.contentType.rawValue: Header.json.rawValue,
@@ -136,6 +139,8 @@ extension Router: TargetType {
         case .uploadPost(let query):
             return try? encoder.encode(query)
         case let .postInterest(_, likeStatus):
+            return try? encoder.encode(likeStatus)
+        case let .postLike(_, likeStatus):
             return try? encoder.encode(likeStatus)
         default:
             return nil

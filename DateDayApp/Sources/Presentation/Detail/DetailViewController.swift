@@ -23,6 +23,7 @@ final class DetailViewController: UIViewController {
     let viewModel = DetailViewModel()
     let disposeBag = DisposeBag()
     
+    // MARK: View Life Cycle
     override func loadView() {
         view = detailView
     }
@@ -54,6 +55,7 @@ final class DetailViewController: UIViewController {
         delegate?.buttonStateChangedOrNot(isChanged: isChangeInterestBtnState)
     }
     
+    // MARK: Functions
     private func configure() {
         // collectionView
         detailView.collectionView.register(DetailCell.self, forCellWithReuseIdentifier: DetailCell.id)
@@ -64,7 +66,8 @@ final class DetailViewController: UIViewController {
         let input = DetailViewModel.Input(
             moveToDetailButtonTap: detailView.moveToDetailButton.rx.tap,
             reservationButtonTap: detailView.reservationButton.rx.tap,
-            interestButtonTap: detailView.interestButton.rx.tap)
+            interestButtonTap: detailView.interestButton.rx.tap,
+            likeButtonTap: detailView.likeButton.rx.tap)
         
         let output = viewModel.transform(input: input)
         
@@ -82,6 +85,7 @@ final class DetailViewController: UIViewController {
                             
                             owner.viewModel.imageFiles.onNext(success.imageFiles)
                             owner.viewModel.isInterestIdList.onNext(success.interest)
+                            owner.viewModel.isLikeIdList.onNext(success.likes)
                             owner.viewModel.detailData.onNext(success)
                             owner.navigationItem.title = success.title
                             owner.detailView.reviewLabel.text = success.content
@@ -116,6 +120,16 @@ final class DetailViewController: UIViewController {
                 interestedList.forEach { userID in
                     if userID == UserDefaultsManager.shared.saveLoginUserID {
                         owner.detailView.interestButton.isSelected = true
+                    }
+                }
+            }
+            .disposed(by: disposeBag)
+        
+        output.isLikeIdList
+            .bind(with: self) { owner, likedList in
+                likedList.forEach { userID in
+                    if userID == UserDefaultsManager.shared.saveLoginUserID {
+                        owner.detailView.likeButton.isSelected = true
                     }
                 }
             }
@@ -159,6 +173,44 @@ final class DetailViewController: UIViewController {
             }
             .disposed(by: disposeBag)
         
+        // 좋아요 버튼 클릭
+        Observable.combineLatest(output.likeButtonTap, postID)
+            .bind(with: self) { owner, value in
+                owner.detailView.likeButton.isSelected.toggle()
+                let buttonStatus  = owner.detailView.likeButton.isSelected
+                
+                NetworkManager.shared.postLikeStatus(likeStatus: buttonStatus, postID: value.1)
+                    .subscribe(with: self) { owner, result in
+                        switch result {
+                        case .success(let success):
+                            owner.detailView.likeButton.isSelected = success.likeStatus
+                            input.likeStatus.onNext(success.likeStatus)
+                        case .failure(let failure):
+                            switch failure {
+                            case .accessTokenExpiration:
+                                owner.updateToken()
+                            default:
+                                break
+                            }
+                        }
+                    } onFailure: { owner, error in
+                        print("error: \(error)")
+                    } onDisposed: { owner in
+                        print("DetailVC - interestButtonTap Disposed")
+                    }
+                    .disposed(by: owner.disposeBag)
+                
+            }
+            .disposed(by: disposeBag)
+        
+        output.likdStatus
+            .bind(with: self) { owner, value in
+                if value {
+                    owner.showImageToast(imageSysName: "heart.fill")
+                }
+            }
+            .disposed(by: disposeBag)
+        
         // WebView 이동
         Observable.combineLatest(output.moveToDetailButtonTap, viewModel.detailData)
             .bind(with: self) { owner, value in
@@ -170,6 +222,7 @@ final class DetailViewController: UIViewController {
     }
 }
 
+// MARK: ButtonStateDelegate
 protocol ButtonStateDelegate: AnyObject {
     func buttonStateChangedOrNot(isChanged: Bool?)
 }
