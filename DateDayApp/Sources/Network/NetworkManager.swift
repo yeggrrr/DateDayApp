@@ -453,4 +453,40 @@ final class NetworkManager {
             return Disposables.create()
         }
     }
+    
+    // MARK: 해시태그 검색
+    func searchHashTag(next: String = "", hashTag: String) -> Single<Result<SearchHashTag, HTTPStatusCodes>> {
+        return Single.create { observer -> Disposable in
+            
+            do {
+                let request = try Router.searchHashTag(next: next, hashTag: hashTag).asURLRequest()
+                
+                AF.request(request)
+                    .responseDecodable(of: SearchHashTag.self) { response in
+                        switch response.result {
+                        case .success(let success):
+                            observer(.success(.success(success)))
+                        case .failure(_):
+                            let statusCode = response.response?.statusCode
+                            switch statusCode {
+                            case 400:
+                                observer(.success(.failure(.missingRequiredValue)))
+                            case 401:
+                                observer(.success(.failure(.mismatchOrInvalid)))
+                            case 403:
+                                observer(.success(.failure(.forbidden)))
+                            case 419:
+                                observer(.success(.failure(.accessTokenExpiration)))
+                            default:
+                                break
+                            }
+                        }
+                    }
+            } catch {
+                print("error 발생!! - error:", error)
+            }
+            
+            return Disposables.create()
+        }
+    }
 }

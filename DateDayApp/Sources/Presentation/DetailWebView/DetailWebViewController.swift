@@ -16,12 +16,14 @@ final class DetailWebViewController: UIViewController {
     // MARK: Properties
     var detailLink: String?
     
+    // MARK: View Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         
         configureUI()
     }
     
+    // MARK: Functions
     func configureUI() {
         view.addSubview(webView)
         

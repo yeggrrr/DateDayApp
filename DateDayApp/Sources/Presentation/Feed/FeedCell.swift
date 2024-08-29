@@ -11,7 +11,7 @@ import RxSwift
 
 final class FeedCell: UICollectionViewCell, ViewRepresentable {
     // MARK: UI
-    let cellBackgroundView = UIView()
+    private let cellBackgroundView = UIView()
     let mainImageView = UIImageView()
     private let detailView = UIView()
     let titleLabel = UILabel()

@@ -11,15 +11,20 @@ import SnapKit
 final class SearchView: BaseView {
     // MARK: UI
     let searchBar = UISearchBar()
+    private let backgroundImageView = UIImageView()
     let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout())
     
     // MARK: Functions
     override func addSubviews() {
-        addSubviews([searchBar, collectionView])
+        addSubviews([backgroundImageView, searchBar, collectionView])
     }
     
     override func setConstraints() {
         let safeArea = safeAreaLayoutGuide
+        
+        backgroundImageView.snp.makeConstraints {
+            $0.edges.equalToSuperview()
+        }
         
         searchBar.snp.makeConstraints {
             $0.top.horizontalEdges.equalTo(safeArea)
@@ -35,6 +40,8 @@ final class SearchView: BaseView {
     override func configureUI() {
         super.configureUI()
         
+        backgroundImageView.image = UIImage(named: "seaBackground")
+        backgroundImageView.layer.opacity = 0.8
         collectionView.backgroundColor = .clear
         searchBar.setUI(placeholder: "검색")
     }

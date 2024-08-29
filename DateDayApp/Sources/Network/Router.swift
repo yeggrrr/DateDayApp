@@ -21,6 +21,7 @@ enum Router {
     case postInterest(postID: String, likeStatus: PostLikeQuery)
     case viewInterestPost(next: String)
     case postLike(postID: String, likeStatus: PostLikeQuery)
+    case searchHashTag(next: String, hashTag: String)
 }
 
 extension Router: TargetType {
@@ -32,7 +33,7 @@ extension Router: TargetType {
         switch self {
         case .signUp, .validation, .login, .postImage, .uploadPost, .postInterest, .postLike:
             return .post
-        case .tokenRenewal, .viewPost, .viewPostImage, .viewSpecificPost, .viewInterestPost:
+        case .tokenRenewal, .viewPost, .viewPostImage, .viewSpecificPost, .viewInterestPost, .searchHashTag:
             return .get
         }
     }
@@ -63,6 +64,8 @@ extension Router: TargetType {
             return "/posts/likes-2/me"
         case let .postLike(postID, _):
             return "/posts/\(postID)/like"
+        case .searchHashTag:
+            return "/posts/hashtags"
         }
     }
     
@@ -79,7 +82,7 @@ extension Router: TargetType {
                 Header.refresh.rawValue: UserDefaultsManager.shared.refresh,
                 Header.sesac.rawValue: APIKey.secretkey
             ]
-        case .viewPostImage, .viewPost, .viewSpecificPost, .postInterest, .uploadPost, .viewInterestPost, .postLike:
+        case .viewPostImage, .viewPost, .viewSpecificPost, .postInterest, .uploadPost, .viewInterestPost, .postLike, .searchHashTag:
             return [
                 Header.authorization.rawValue: UserDefaultsManager.shared.token,
                 Header.contentType.rawValue: Header.json.rawValue,
@@ -107,6 +110,14 @@ extension Router: TargetType {
                 "next" : next,
                 "limit" : "10"
             ]
+            
+        case .searchHashTag(let next, let hashTag):
+            return [
+                "next" : next,
+                "limit" : "10",
+                "product_id" : "yegrDateDay",
+                "hashTag" : hashTag
+            ]
         default:
             return nil
         }
@@ -119,6 +130,10 @@ extension Router: TargetType {
                 URLQueryItem(name: $0.key, value: $0.value)
             }
         case .viewInterestPost:
+            return parameters?.map {
+                URLQueryItem(name: $0.key, value: $0.value)
+            }
+        case .searchHashTag:
             return parameters?.map {
                 URLQueryItem(name: $0.key, value: $0.value)
             }
