@@ -42,3 +42,15 @@ struct PostLikeQuery: Encodable {
         case likeStatus = "like_status"
     }
 }
+
+struct EditProfileQuery: Encodable {
+    let nickname: String
+    let myIntroduce: String
+    let profile: Data
+    
+    enum CodingKeys: String, CodingKey {
+        case nickname = "nick"
+        case myIntroduce = "phoneNum"
+        case profile = "profile"
+    }
+}

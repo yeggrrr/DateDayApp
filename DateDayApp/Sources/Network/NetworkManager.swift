@@ -489,4 +489,37 @@ final class NetworkManager {
             return Disposables.create()
         }
     }
+    
+    // MARK: 내 프로필 조회
+    func viewMyProfile() -> Single<Result<ViewMyProfileModel, HTTPStatusCodes>>{
+        return Single.create { observer -> Disposable in
+            
+            do {
+                let request = try Router.viewMyProfile.asURLRequest()
+                AF.request(request)
+                    .responseDecodable(of: ViewMyProfileModel.self) { response in
+                        switch response.result {
+                        case .success(let success):
+                            observer(.success(.success(success)))
+                        case .failure(_):
+                            let statusCode = response.response?.statusCode
+                            switch statusCode {
+                            case 401:
+                                observer(.success(.failure(.mismatchOrInvalid)))
+                            case 403:
+                                observer(.success(.failure(.forbidden)))
+                            case 419:
+                                observer(.success(.failure(.accessTokenExpiration)))
+                            default:
+                                break
+                            }
+                        }
+                    }
+            } catch {
+                print("error 발생!! - error:", error)
+            }
+            
+            return Disposables.create()
+        }
+    }
 }

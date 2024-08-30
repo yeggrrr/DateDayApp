@@ -22,6 +22,8 @@ enum Router {
     case viewInterestPost(next: String)
     case postLike(postID: String, likeStatus: PostLikeQuery)
     case searchHashTag(next: String, hashTag: String)
+    case viewMyProfile
+    case editMyProfile(query: EditProfileQuery)
 }
 
 extension Router: TargetType {
@@ -33,8 +35,10 @@ extension Router: TargetType {
         switch self {
         case .signUp, .validation, .login, .postImage, .uploadPost, .postInterest, .postLike:
             return .post
-        case .tokenRenewal, .viewPost, .viewPostImage, .viewSpecificPost, .viewInterestPost, .searchHashTag:
+        case .tokenRenewal, .viewPost, .viewPostImage, .viewSpecificPost, .viewInterestPost, .searchHashTag, .viewMyProfile:
             return .get
+        case .editMyProfile:
+            return .put
         }
     }
     
@@ -66,6 +70,10 @@ extension Router: TargetType {
             return "/posts/\(postID)/like"
         case .searchHashTag:
             return "/posts/hashtags"
+        case .viewMyProfile:
+            return "/users/me/profile"
+        case .editMyProfile(query: let query):
+            return "/users/me/profile"
         }
     }
     
@@ -82,13 +90,13 @@ extension Router: TargetType {
                 Header.refresh.rawValue: UserDefaultsManager.shared.refresh,
                 Header.sesac.rawValue: APIKey.secretkey
             ]
-        case .viewPostImage, .viewPost, .viewSpecificPost, .postInterest, .uploadPost, .viewInterestPost, .postLike, .searchHashTag:
+        case .viewPostImage, .viewPost, .viewSpecificPost, .postInterest, .uploadPost, .viewInterestPost, .postLike, .searchHashTag, .viewMyProfile:
             return [
                 Header.authorization.rawValue: UserDefaultsManager.shared.token,
                 Header.contentType.rawValue: Header.json.rawValue,
                 Header.sesac.rawValue: APIKey.secretkey
             ]
-        case .postImage:
+        case .postImage, .editMyProfile:
             return [
                 Header.authorization.rawValue: UserDefaultsManager.shared.token,
                 Header.contentType.rawValue: Header.mutipart.rawValue,
@@ -157,6 +165,8 @@ extension Router: TargetType {
             return try? encoder.encode(likeStatus)
         case let .postLike(_, likeStatus):
             return try? encoder.encode(likeStatus)
+        case let .editMyProfile(query):
+            return try? encoder.encode(query)
         default:
             return nil
         }
