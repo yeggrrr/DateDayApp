@@ -1,17 +1,18 @@
 //
-//  MyPageViewController.swift
+//  SettingViewController.swift
 //  DateDayApp
 //
-//  Created by YJ on 8/18/24.
+//  Created by YJ on 8/30/24.
 //
 
 import UIKit
 
-final class MyPageViewController: UIViewController {
-    
+final class SettingViewController: UIViewController {
+ 
     override func viewDidLoad() {
         super.viewDidLoad()
         
         view.backgroundColor = .white
+        
     }
 }

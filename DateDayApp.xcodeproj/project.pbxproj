@@ -17,6 +17,9 @@
 		681E9FDF2C7D941300E4A718 /* DetailWebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 681E9FDE2C7D941300E4A718 /* DetailWebViewController.swift */; };
 		681E9FEA2C7ED88F00E4A718 /* PostLike.swift in Sources */ = {isa = PBXBuildFile; fileRef = 681E9FE92C7ED88F00E4A718 /* PostLike.swift */; };
 		681E9FF52C80365500E4A718 /* SearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 681E9FF42C80365400E4A718 /* SearchViewModel.swift */; };
+		681E9FF72C81827300E4A718 /* MyPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 681E9FF62C81827300E4A718 /* MyPageView.swift */; };
+		681E9FF92C8182AF00E4A718 /* MyPageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 681E9FF82C8182AF00E4A718 /* MyPageViewModel.swift */; };
+		681E9FFE2C81A3C200E4A718 /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 681E9FFD2C81A3C200E4A718 /* SettingViewController.swift */; };
 		683477CE2C74F98300D0931B /* HTTPStatusCodes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683477CD2C74F98300D0931B /* HTTPStatusCodes.swift */; };
 		683477D02C74FDCD00D0931B /* TokenUpdate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683477CF2C74FDCD00D0931B /* TokenUpdate.swift */; };
 		683477D22C75099300D0931B /* MembershipVerification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683477D12C75099300D0931B /* MembershipVerification.swift */; };
@@ -97,6 +100,9 @@
 		681E9FDE2C7D941300E4A718 /* DetailWebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailWebViewController.swift; sourceTree = "<group>"; };
 		681E9FE92C7ED88F00E4A718 /* PostLike.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostLike.swift; sourceTree = "<group>"; };
 		681E9FF42C80365400E4A718 /* SearchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewModel.swift; sourceTree = "<group>"; };
+		681E9FF62C81827300E4A718 /* MyPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageView.swift; sourceTree = "<group>"; };
+		681E9FF82C8182AF00E4A718 /* MyPageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageViewModel.swift; sourceTree = "<group>"; };
+		681E9FFD2C81A3C200E4A718 /* SettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
 		683477CD2C74F98300D0931B /* HTTPStatusCodes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPStatusCodes.swift; sourceTree = "<group>"; };
 		683477CF2C74FDCD00D0931B /* TokenUpdate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenUpdate.swift; sourceTree = "<group>"; };
 		683477D12C75099300D0931B /* MembershipVerification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MembershipVerification.swift; sourceTree = "<group>"; };
@@ -196,6 +202,31 @@
 				681E9FDE2C7D941300E4A718 /* DetailWebViewController.swift */,
 			);
 			path = DetailWebView;
+			sourceTree = "<group>";
+		};
+		681E9FFA2C818D4400E4A718 /* Main */ = {
+			isa = PBXGroup;
+			children = (
+				68CED3B72C720F000043266A /* MyPageViewController.swift */,
+				681E9FF62C81827300E4A718 /* MyPageView.swift */,
+				681E9FF82C8182AF00E4A718 /* MyPageViewModel.swift */,
+			);
+			path = Main;
+			sourceTree = "<group>";
+		};
+		681E9FFB2C818D4B00E4A718 /* Edit */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Edit;
+			sourceTree = "<group>";
+		};
+		681E9FFC2C81A3AD00E4A718 /* Setting */ = {
+			isa = PBXGroup;
+			children = (
+				681E9FFD2C81A3C200E4A718 /* SettingViewController.swift */,
+			);
+			path = Setting;
 			sourceTree = "<group>";
 		};
 		686DBD352C7994A60023960B /* SearchLocation */ = {
@@ -412,7 +443,9 @@
 		68CED3B42C720ECC0043266A /* MyPage */ = {
 			isa = PBXGroup;
 			children = (
-				68CED3B72C720F000043266A /* MyPageViewController.swift */,
+				681E9FFA2C818D4400E4A718 /* Main */,
+				681E9FFB2C818D4B00E4A718 /* Edit */,
+				681E9FFC2C81A3AD00E4A718 /* Setting */,
 			);
 			path = MyPage;
 			sourceTree = "<group>";
@@ -549,7 +582,9 @@
 				683477F22C75ED1600D0931B /* ViewPost.swift in Sources */,
 				68CED36F2C6F2BD70043266A /* BaseViewModel.swift in Sources */,
 				68CED3B82C720F010043266A /* MyPageViewController.swift in Sources */,
+				681E9FF92C8182AF00E4A718 /* MyPageViewModel.swift in Sources */,
 				681E9FC82C7C7CB000E4A718 /* DetailViewController.swift in Sources */,
+				681E9FF72C81827300E4A718 /* MyPageView.swift in Sources */,
 				68CED39C2C71DBDD0043266A /* UIStackView+.swift in Sources */,
 				68CED3B62C720EE00043266A /* PickedListViewController.swift in Sources */,
 				686DBD372C7999FB0023960B /* writeViewModel.swift in Sources */,
@@ -600,6 +635,7 @@
 				68CED3662C6F20240043266A /* addSubviews+.swift in Sources */,
 				68CED33B2C6C8EF40043266A /* SceneDelegate.swift in Sources */,
 				68CED3812C6F4DC30043266A /* APIQuery.swift in Sources */,
+				681E9FFE2C81A3C200E4A718 /* SettingViewController.swift in Sources */,
 				681E9FCC2C7CD54A00E4A718 /* DetailCell.swift in Sources */,
 				686DBD392C79A1B30023960B /* UITextView+.swift in Sources */,
 				686DBD322C7796500023960B /* SelectPhotoViewModel.swift in Sources */,
