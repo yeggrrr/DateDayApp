@@ -142,13 +142,13 @@ final class MyPageView: BaseView {
         editProfileButton.setTitle("프로필 편집", for: .normal)
         editProfileButton.setTitleColor(.black, for: .normal)
         editProfileButton.layer.borderColor = UIColor.black.cgColor
-        editProfileButton.layer.borderWidth = 2
+        editProfileButton.layer.borderWidth = 1.5
         editProfileButton.layer.cornerRadius = 5
         
         logoutButton.setTitle("로그아웃", for: .normal)
         logoutButton.setTitleColor(.black, for: .normal)
         logoutButton.layer.borderColor = UIColor.black.cgColor
-        logoutButton.layer.borderWidth = 2
+        logoutButton.layer.borderWidth = 1.5
         logoutButton.layer.cornerRadius = 5
         
         dividerView.backgroundColor = .black

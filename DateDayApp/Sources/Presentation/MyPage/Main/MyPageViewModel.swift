@@ -14,13 +14,17 @@ final class MyPageViewModel: BaseViewModel {
 
     struct Input {
         let interestButtonTap: ControlEvent<Void>
+        let editProfileButtonTap: ControlEvent<Void>
     }
     
     struct Output {
         let interestButtonTap: ControlEvent<Void>
+        let editProfileButtonTap: ControlEvent<Void>
     }
     
     func transform(input: Input) -> Output {
-        return Output(interestButtonTap: input.interestButtonTap)
+        return Output(
+            interestButtonTap: input.interestButtonTap,
+            editProfileButtonTap: input.editProfileButtonTap)
     }
 }
