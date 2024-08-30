@@ -13,7 +13,7 @@ final class EditProfileView: BaseView {
     private let setProfileImageBgView = UIView()
     private let defaultImageView = UIImageView()
     private let setProfileImageTextLabel = UILabel()
-    let profileImageSettingImageView = UIImageView()
+    let profileImageView = UIImageView()
     let setProfileImageButton = UIButton(type: .system)
     let setDefaultImageButton = UIButton(type: .system)
     
@@ -32,7 +32,7 @@ final class EditProfileView: BaseView {
     
     override func addSubviews() {
         addSubviews([profileImageStackView, setProfileImageBgView, setProfileImageButton, setDefaultImageButton, setProfileImageTextLabel, elementsTextStackView, elementsStackView, editNicknameButton, editingCompleteButton])
-        profileImageStackView.addArrangedSubviews([profileImageSettingImageView, defaultImageView])
+        profileImageStackView.addArrangedSubviews([profileImageView, defaultImageView])
         elementsTextStackView.addArrangedSubviews([nicknameTextLabel, emailTextLabel, myIntroduceTextLabel])
         elementsStackView.addArrangedSubviews([nicknameLabel, emailLabel, myIntroduceLabel])
     }
@@ -46,16 +46,16 @@ final class EditProfileView: BaseView {
             $0.height.equalTo(90)
         }
         
-        profileImageSettingImageView.snp.makeConstraints {
-            $0.width.equalTo(profileImageSettingImageView.snp.height)
+        profileImageView.snp.makeConstraints {
+            $0.width.equalTo(profileImageView.snp.height)
         }
         
         setProfileImageBgView.snp.makeConstraints {
-            $0.edges.equalTo(profileImageSettingImageView.snp.edges)
+            $0.edges.equalTo(profileImageView.snp.edges)
         }
         
         setProfileImageButton.snp.makeConstraints {
-            $0.edges.equalTo(profileImageSettingImageView.snp.edges)
+            $0.edges.equalTo(profileImageView.snp.edges)
         }
         
         setDefaultImageButton.snp.makeConstraints {
@@ -109,10 +109,10 @@ final class EditProfileView: BaseView {
         elementsStackView.axis = .vertical
         elementsStackView.spacing = 16
         
-        profileImageSettingImageView.layer.borderWidth = 1.5
-        profileImageSettingImageView.layer.borderColor = UIColor.black.cgColor
-        profileImageSettingImageView.layer.cornerRadius = 45
-        profileImageSettingImageView.layer.masksToBounds = true
+        profileImageView.layer.borderWidth = 1.5
+        profileImageView.layer.borderColor = UIColor.black.cgColor
+        profileImageView.layer.cornerRadius = 45
+        profileImageView.layer.masksToBounds = true
         
         defaultImageView.image = UIImage(named: "defaultProfileImage")
         defaultImageView.layer.borderWidth = 1.5

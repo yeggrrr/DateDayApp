@@ -1,5 +1,5 @@
 //
-//  MyPageViewModel.swift
+//  EditProfileViewModel.swift
 //  DateDayApp
 //
 //  Created by YJ on 8/30/24.
@@ -9,36 +9,28 @@ import Foundation
 import RxSwift
 import RxCocoa
 
-final class MyPageViewModel: BaseViewModel {
+final class EditProfileViewModel: BaseViewModel {
+    
     private let disposeBag = DisposeBag()
-
+    
     struct Input {
-        let interestButtonTap: ControlEvent<Void>
-        let editProfileButtonTap: ControlEvent<Void>
-        let logoutButtonTap: ControlEvent<Void>
-        let myPostListButtonTap: ControlEvent<Void>
-        let myIntroduceButtonTap: ControlEvent<Void>
-        let tokenExpiredMessage = PublishSubject<String>()
         let profileData = PublishSubject<ViewMyProfileModel>()
+        let tokenExpiredMessage = PublishSubject<String>()
     }
     
     struct Output {
-        let interestButtonTap: ControlEvent<Void>
-        let editProfileButtonTap: ControlEvent<Void>
-        let logoutButtonTap: ControlEvent<Void>
-        let myPostListButtonTap: ControlEvent<Void>
-        let myIntroduceButtonTap: ControlEvent<Void>
-        let tokenExpiredMessage: PublishSubject<String>
         let profileData: PublishSubject<ViewMyProfileModel>
+        let tokenExpiredMessage: PublishSubject<String>
     }
     
     func transform(input: Input) -> Output {
-        // 네트워크 통신
+        
         NetworkManager.shared.viewMyProfile()
             .subscribe(with: self) { owner, result in
                 switch result {
                 case .success(let success):
                     input.profileData.onNext(success)
+                    print(success)
                 case .failure(let failure):
                     switch failure {
                     case .accessTokenExpiration:
@@ -53,14 +45,9 @@ final class MyPageViewModel: BaseViewModel {
                 print("NW viewMyProfile Disposed")
             }
             .disposed(by: disposeBag)
-
+        
         return Output(
-            interestButtonTap: input.interestButtonTap,
-            editProfileButtonTap: input.editProfileButtonTap,
-            logoutButtonTap: input.logoutButtonTap,
-            myPostListButtonTap: input.myPostListButtonTap,
-            myIntroduceButtonTap: input.myIntroduceButtonTap,
-            tokenExpiredMessage: input.tokenExpiredMessage,
-            profileData: input.profileData)
+            profileData: input.profileData,
+            tokenExpiredMessage: input.tokenExpiredMessage)
     }
 }

@@ -21,6 +21,8 @@
 		681E9FF92C8182AF00E4A718 /* MyPageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 681E9FF82C8182AF00E4A718 /* MyPageViewModel.swift */; };
 		681EA0002C81A81100E4A718 /* EditProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 681E9FFF2C81A81100E4A718 /* EditProfileViewController.swift */; };
 		681EA0022C81A83D00E4A718 /* EditProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 681EA0012C81A83D00E4A718 /* EditProfileView.swift */; };
+		681EA0042C81C58B00E4A718 /* Profile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 681EA0032C81C58B00E4A718 /* Profile.swift */; };
+		681EA0062C81CD8B00E4A718 /* EditProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 681EA0052C81CD8B00E4A718 /* EditProfileViewModel.swift */; };
 		683477CE2C74F98300D0931B /* HTTPStatusCodes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683477CD2C74F98300D0931B /* HTTPStatusCodes.swift */; };
 		683477D02C74FDCD00D0931B /* TokenUpdate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683477CF2C74FDCD00D0931B /* TokenUpdate.swift */; };
 		683477D22C75099300D0931B /* MembershipVerification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683477D12C75099300D0931B /* MembershipVerification.swift */; };
@@ -105,6 +107,8 @@
 		681E9FF82C8182AF00E4A718 /* MyPageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageViewModel.swift; sourceTree = "<group>"; };
 		681E9FFF2C81A81100E4A718 /* EditProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileViewController.swift; sourceTree = "<group>"; };
 		681EA0012C81A83D00E4A718 /* EditProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileView.swift; sourceTree = "<group>"; };
+		681EA0032C81C58B00E4A718 /* Profile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Profile.swift; sourceTree = "<group>"; };
+		681EA0052C81CD8B00E4A718 /* EditProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileViewModel.swift; sourceTree = "<group>"; };
 		683477CD2C74F98300D0931B /* HTTPStatusCodes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPStatusCodes.swift; sourceTree = "<group>"; };
 		683477CF2C74FDCD00D0931B /* TokenUpdate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenUpdate.swift; sourceTree = "<group>"; };
 		683477D12C75099300D0931B /* MembershipVerification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MembershipVerification.swift; sourceTree = "<group>"; };
@@ -221,6 +225,7 @@
 			children = (
 				681E9FFF2C81A81100E4A718 /* EditProfileViewController.swift */,
 				681EA0012C81A83D00E4A718 /* EditProfileView.swift */,
+				681EA0052C81CD8B00E4A718 /* EditProfileViewModel.swift */,
 			);
 			path = Edit;
 			sourceTree = "<group>";
@@ -347,13 +352,13 @@
 		68CED3702C6F2F800043266A /* Network */ = {
 			isa = PBXGroup;
 			children = (
-				68CED3822C6F4F380043266A /* Model */,
-				68CED37F2C6F4DB20043266A /* RequestQuery */,
 				68CED3712C6F2F8C0043266A /* NetworkManager.swift */,
 				68CED3792C6F35320043266A /* Router.swift */,
 				68CED37B2C6F357C0043266A /* TargetType.swift */,
 				68CED37D2C6F4BCA0043266A /* Header.swift */,
 				683477CD2C74F98300D0931B /* HTTPStatusCodes.swift */,
+				68CED37F2C6F4DB20043266A /* RequestQuery */,
+				68CED3822C6F4F380043266A /* Model */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -386,6 +391,7 @@
 				686DBD3F2C79B6280023960B /* HashTagModel.swift */,
 				686DBD4B2C7B3EF10023960B /* Upload.swift */,
 				681E9FE92C7ED88F00E4A718 /* PostLike.swift */,
+				681EA0032C81C58B00E4A718 /* Profile.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -628,8 +634,10 @@
 				686DBD422C79D0F90023960B /* SearchLocationViewController.swift in Sources */,
 				68CED3AB2C71E64C0043266A /* UIScrollView+.swift in Sources */,
 				686DBD402C79B6280023960B /* HashTagModel.swift in Sources */,
+				681EA0062C81CD8B00E4A718 /* EditProfileViewModel.swift in Sources */,
 				686DBD442C79D1BC0023960B /* SearchLocationView.swift in Sources */,
 				68CED3662C6F20240043266A /* addSubviews+.swift in Sources */,
+				681EA0042C81C58B00E4A718 /* Profile.swift in Sources */,
 				68CED33B2C6C8EF40043266A /* SceneDelegate.swift in Sources */,
 				68CED3812C6F4DC30043266A /* APIQuery.swift in Sources */,
 				681E9FCC2C7CD54A00E4A718 /* DetailCell.swift in Sources */,

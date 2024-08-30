@@ -39,9 +39,25 @@ final class MyPageViewController: UIViewController {
     private func bind() {
         let input = MyPageViewModel.Input(
             interestButtonTap: myPageView.myInterestListButton.rx.tap,
-            editProfileButtonTap: myPageView.editProfileButton.rx.tap)
+            editProfileButtonTap: myPageView.editProfileButton.rx.tap,
+            logoutButtonTap: myPageView.logoutButton.rx.tap,
+            myPostListButtonTap: myPageView.myPostListButton.rx.tap,
+            myIntroduceButtonTap: myPageView.myIntroduceButton.rx.tap)
         
         let output = viewModel.transform(input: input)
+        let a = output.profileData
+        output.profileData
+            .bind(with: self) { owner, profileData in
+                owner.myPageView.nicknameLabel.text = profileData.nickname
+
+                if let image = profileData.profileImage {
+                    NetworkManager.shared.viewPostImage(filePath: image) { data in
+                        owner.myPageView.profileImageView.image = UIImage(data: data)
+                    }
+                }
+            }
+            .disposed(by: disposeBag)
+
         
         output.interestButtonTap
             .bind(with: self) { owner, _ in
@@ -54,6 +70,30 @@ final class MyPageViewController: UIViewController {
             .bind(with: self) { owner, _ in
                 let vc = EditProfileViewController()
                 owner.navigationController?.pushViewController(vc, animated: true)
+            }
+            .disposed(by: disposeBag)
+        
+        output.logoutButtonTap
+            .bind(with: self) { owner, _ in
+                print("logoutButtonTap")
+            }
+            .disposed(by: disposeBag)
+        
+        output.myPostListButtonTap
+            .bind(with: self) { owner, _ in
+                print("myPostListButtonTap")
+            }
+            .disposed(by: disposeBag)
+        
+        output.myIntroduceButtonTap
+            .bind(with: self) { owner, _ in
+                print("myIntroduceButtonTap")
+            }
+            .disposed(by: disposeBag)
+        
+        output.tokenExpiredMessage
+            .bind(with: self) { owner, _ in
+                owner.updateToken()
             }
             .disposed(by: disposeBag)
     }

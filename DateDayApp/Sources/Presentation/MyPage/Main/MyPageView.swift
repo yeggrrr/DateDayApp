@@ -22,7 +22,6 @@ final class MyPageView: BaseView {
     private let myInterestListView = UIView()
     private let myInterestListIconImageView = UIImageView()
     private let myInterestListTextLabel = UILabel()
-    private let myInterestListCountLabel = UILabel()
     let myInterestListButton = UIButton()
     
     private let myPostListStackView = UIStackView()
@@ -30,14 +29,13 @@ final class MyPageView: BaseView {
     private let myPostListView = UIView()
     private let myPostListIconImageView = UIImageView()
     private let myPostListTextLabel = UILabel()
-    private let myPostListCountLabel = UILabel()
     let myPostListButton = UIButton()
     
     override func addSubviews() {
         addSubviews([profileImageView, nicknameLabel, myIntroduceButton, dividerView, myInterestBgView, myPostListBgView, topButtonStackView, myInterestListStackView, myInterestListButton, myPostListStackView, myPostListButton])
-        myInterestListStackView.addArrangedSubviews([myInterestListView, myInterestListTextLabel, myInterestListCountLabel])
+        myInterestListStackView.addArrangedSubviews([myInterestListView, myInterestListTextLabel])
         myInterestListView.addSubview(myInterestListIconImageView)
-        myPostListStackView.addArrangedSubviews([myPostListView, myPostListTextLabel, myPostListCountLabel])
+        myPostListStackView.addArrangedSubviews([myPostListView, myPostListTextLabel])
         myPostListView.addSubview(myPostListIconImageView)
         topButtonStackView.addArrangedSubviews([editProfileButton, logoutButton])
     }
@@ -129,8 +127,10 @@ final class MyPageView: BaseView {
     override func configureUI() {
         backgroundColor = .white
         
+        profileImageView.image = UIImage(named: "defaultProfileImage")
         profileImageView.contentMode = .scaleAspectFill
         profileImageView.layer.cornerRadius = 10
+        profileImageView.layer.masksToBounds = true
         
         myIntroduceButton.setImage(UIImage(systemName: "lasso.badge.sparkles"), for: .normal)
         myIntroduceButton.tintColor = .black
@@ -174,23 +174,7 @@ final class MyPageView: BaseView {
         myPostListTextLabel.text = "내 게시물"
         myPostListTextLabel.textAlignment = .left
         
-        myInterestListCountLabel.textAlignment = .left
-        myPostListCountLabel.textAlignment = .left
-        
-        myInterestListButton.layer.cornerRadius = 5
-        myInterestListButton.layer.borderColor = UIColor.black.cgColor
-        myInterestListButton.layer.borderWidth = 1
-        
-        myPostListButton.layer.cornerRadius = 5
-        myPostListButton.layer.borderColor = UIColor.black.cgColor
-        myPostListButton.layer.borderWidth = 1
-        
         // 임시
-        profileImageView.backgroundColor = .systemGray
-        profileImageView.image = UIImage(systemName: "person")
-        
         nicknameLabel.text = "yeggrrr"
-        myInterestListCountLabel.text = "(5)"
-        myPostListCountLabel.text = "(0)"
     }
 }
