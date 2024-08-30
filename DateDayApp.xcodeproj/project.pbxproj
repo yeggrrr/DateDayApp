@@ -41,7 +41,6 @@
 		68CED34D2C6C8F390043266A /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 68CED34C2C6C8F390043266A /* .gitignore */; };
 		68CED34F2C6C8F540043266A /* APIKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68CED34E2C6C8F540043266A /* APIKey.swift */; };
 		68CED3522C6C91470043266A /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 68CED3512C6C91470043266A /* Alamofire */; };
-		68CED3552C6C91500043266A /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 68CED3542C6C91500043266A /* Kingfisher */; };
 		68CED3582C6C915C0043266A /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 68CED3572C6C915C0043266A /* SnapKit */; };
 		68CED35B2C6C916C0043266A /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = 68CED35A2C6C916C0043266A /* RxCocoa */; };
 		68CED35D2C6C916C0043266A /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 68CED35C2C6C916C0043266A /* RxSwift */; };
@@ -171,7 +170,6 @@
 			files = (
 				68CED3CF2C7338710043266A /* Cosmos in Frameworks */,
 				68CED3582C6C915C0043266A /* SnapKit in Frameworks */,
-				68CED3552C6C91500043266A /* Kingfisher in Frameworks */,
 				68CED35D2C6C916C0043266A /* RxSwift in Frameworks */,
 				68CED35B2C6C916C0043266A /* RxCocoa in Frameworks */,
 				68CED3522C6C91470043266A /* Alamofire in Frameworks */,
@@ -479,7 +477,6 @@
 			name = DateDayApp;
 			packageProductDependencies = (
 				68CED3512C6C91470043266A /* Alamofire */,
-				68CED3542C6C91500043266A /* Kingfisher */,
 				68CED3572C6C915C0043266A /* SnapKit */,
 				68CED35A2C6C916C0043266A /* RxCocoa */,
 				68CED35C2C6C916C0043266A /* RxSwift */,
@@ -515,7 +512,6 @@
 			mainGroup = 68CED32C2C6C8EF40043266A;
 			packageReferences = (
 				68CED3502C6C91470043266A /* XCRemoteSwiftPackageReference "Alamofire" */,
-				68CED3532C6C91500043266A /* XCRemoteSwiftPackageReference "Kingfisher" */,
 				68CED3562C6C915C0043266A /* XCRemoteSwiftPackageReference "SnapKit" */,
 				68CED3592C6C916C0043266A /* XCRemoteSwiftPackageReference "RxSwift" */,
 				68CED3CD2C7338710043266A /* XCRemoteSwiftPackageReference "Cosmos" */,
@@ -848,14 +844,6 @@
 				minimumVersion = 5.9.1;
 			};
 		};
-		68CED3532C6C91500043266A /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/onevcat/Kingfisher.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 7.12.0;
-			};
-		};
 		68CED3562C6C915C0043266A /* XCRemoteSwiftPackageReference "SnapKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SnapKit/SnapKit.git";
@@ -887,11 +875,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 68CED3502C6C91470043266A /* XCRemoteSwiftPackageReference "Alamofire" */;
 			productName = Alamofire;
-		};
-		68CED3542C6C91500043266A /* Kingfisher */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 68CED3532C6C91500043266A /* XCRemoteSwiftPackageReference "Kingfisher" */;
-			productName = Kingfisher;
 		};
 		68CED3572C6C915C0043266A /* SnapKit */ = {
 			isa = XCSwiftPackageProductDependency;
