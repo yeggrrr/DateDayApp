@@ -43,10 +43,14 @@ final class EditProfileViewController: UIViewController {
     private func bind() {
         let input = EditProfileViewModel.Input(
             setProfileImageButtonTap: editProfileView.setProfileImageButton.rx.tap,
-            editingCompleteButtonTap: editProfileView.editingCompleteButton.rx.tap)
+            editingCompleteButtonTap: editProfileView.editingCompleteButton.rx.tap,
+            setDefaultImageButtonTap: editProfileView.setDefaultImageButton.rx.tap)
         
         let output = viewModel.transform(input: input)
         
+        var selectedProfileImage: UIImage?
+        
+        // 프로필 데이터 뷰에 업데이트
         output.profileData
             .bind(with: self) { owner, profileData in
                 owner.editProfileView.nicknameTextField.text = profileData.nickname
@@ -61,24 +65,39 @@ final class EditProfileViewController: UIViewController {
             }
             .disposed(by: disposeBag)
         
+        // 프로필 이미지 설정
         output.setProfileImageButtonTap
             .bind(with: self) { owner, _ in
                 owner.presentPicker()
             }
             .disposed(by: disposeBag)
         
+        // 기본 이미지 설정
+        output.setDefaultImageButtonTap
+            .bind(with: self) { owner, _ in
+                guard let defaultImage = UIImage(named: "defaultProfileImage") else { return }
+                owner.selectedImage.onNext(defaultImage)
+            }
+            .disposed(by: disposeBag)
+        
+        // 선택한 이미지 뷰에 업데이트
         selectedImage
             .bind(with: self) { owner, selectedImage in
                 owner.editProfileView.profileImageView.image = selectedImage
             }
             .disposed(by: disposeBag)
         
+        // 편집 완료 버튼 클릭
+        selectedImage
+            .bind(with: self) { onwer, image in
+                selectedProfileImage = image
+            }
+            .disposed(by: disposeBag)
+        
         output.editingCompleteButtonTap
-            .withLatestFrom(selectedImage)
-            .bind(with: self) { owner, value in
-                guard let selectedImage = value.jpegData(compressionQuality: 0.1), let editedNickname = owner.editProfileView.nicknameTextField.text
-                else { return }
-                
+            .bind(with: self) { owner, _ in
+                guard let selectedImage = selectedProfileImage?.jpegData(compressionQuality: 0.5) else { return }
+                guard let editedNickname = owner.editProfileView.nicknameTextField.text else { return }
                 NetworkManager.shared.editProfile(
                     nickname: editedNickname,
                     introduce: owner.editProfileView.editMyIntroduceTextView.text,
@@ -107,12 +126,14 @@ final class EditProfileViewController: UIViewController {
             }
             .disposed(by: disposeBag)
         
+        // 수정된 데이터 값전달
         output.editedProfileData
             .bind(with: self) { owner, value in
                 owner.delegate?.editedProfileData(editedData: value)
             }
             .disposed(by: disposeBag)
         
+        // 토큰 갱신
         output.tokenExpiredMessage
             .bind(with: self) { owner, _ in
                 owner.updateToken()

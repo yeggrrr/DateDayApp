@@ -47,6 +47,7 @@ final class MyPageViewController: UIViewController {
         
         let output = viewModel.transform(input: input)
         
+        // 프로필 정보 업데이트
         output.profileData
             .bind(with: self) { owner, profileData in
                 owner.myPageView.nicknameLabel.text = profileData.nickname
@@ -59,6 +60,7 @@ final class MyPageViewController: UIViewController {
             }
             .disposed(by: disposeBag)
         
+        // 프로필 수정 업데이트
         output.editedProfileData
             .bind(with: self) { owner, editedData in
                 if let image = editedData.profileImage {
@@ -70,6 +72,7 @@ final class MyPageViewController: UIViewController {
             }
             .disposed(by: disposeBag)
         
+        // 편집 화면으로 이동
         output.editProfileButtonTap
             .bind(with: self) { owner, _ in
                 let vc = EditProfileViewController()
@@ -78,6 +81,7 @@ final class MyPageViewController: UIViewController {
             }
             .disposed(by: disposeBag)
         
+        // 로그아웃
         output.logoutButtonTap
             .bind(with: self) { owner, _ in
                 owner.okShowAlert(title: "로그아웃 하시겠습니까?", message: "") { _ in
@@ -86,6 +90,7 @@ final class MyPageViewController: UIViewController {
             }
             .disposed(by: disposeBag)
 
+        // 내 관심 목록 이동
         output.interestButtonTap
             .bind(with: self) { owner, _ in
                 let vc = PickedListViewController()
@@ -93,12 +98,14 @@ final class MyPageViewController: UIViewController {
             }
             .disposed(by: disposeBag)
         
+        // 내 게시물 이동
         output.myPostListButtonTap
             .bind(with: self) { owner, _ in
                 print("myPostListButtonTap")
             }
             .disposed(by: disposeBag)
         
+        // 내 소개 보기
         output.myIntroduceButtonTap
             .withLatestFrom(output.profileData)
             .bind(with: self) { owner, editedModel in
@@ -110,6 +117,7 @@ final class MyPageViewController: UIViewController {
             }
             .disposed(by: disposeBag)
         
+        // 토큰 갱신
         output.tokenExpiredMessage
             .bind(with: self) { owner, _ in
                 owner.updateToken()

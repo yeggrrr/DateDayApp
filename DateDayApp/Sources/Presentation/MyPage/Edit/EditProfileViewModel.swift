@@ -17,6 +17,7 @@ final class EditProfileViewModel: BaseViewModel {
         let tokenExpiredMessage = PublishSubject<String>()
         let setProfileImageButtonTap: ControlEvent<Void>
         let editingCompleteButtonTap: ControlEvent<Void>
+        let setDefaultImageButtonTap: ControlEvent<Void>
         let editedProfileData = PublishSubject<EditProfileModel>()
     }
     
@@ -24,6 +25,7 @@ final class EditProfileViewModel: BaseViewModel {
         let profileData: PublishSubject<ProfileModel>
         let tokenExpiredMessage: PublishSubject<String>
         let setProfileImageButtonTap: ControlEvent<Void>
+        let setDefaultImageButtonTap: ControlEvent<Void>
         let editingCompleteButtonTap: ControlEvent<Void>
         let editedProfileData: PublishSubject<EditProfileModel>
     }
@@ -55,6 +57,7 @@ final class EditProfileViewModel: BaseViewModel {
             profileData: input.profileData,
             tokenExpiredMessage: input.tokenExpiredMessage,
             setProfileImageButtonTap: input.setProfileImageButtonTap,
+            setDefaultImageButtonTap: input.setDefaultImageButtonTap,
             editingCompleteButtonTap: input.editingCompleteButtonTap,
             editedProfileData: input.editedProfileData)
     }

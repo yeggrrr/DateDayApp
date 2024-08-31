@@ -14,7 +14,7 @@ final class MyIntroduceViewController: UIViewController {
     private let myIntroduceView = MyIntroduceView()
     
     // MARK: Properties
-    let introduceText = BehaviorSubject(value: "")
+    let introduceText = BehaviorSubject(value: "내 소개를 작성해주세요! :)")
     private let disposeBag = DisposeBag()
 
     // MARK: View Life Cycle
