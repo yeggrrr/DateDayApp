@@ -67,14 +67,6 @@ final class MyPageViewController: UIViewController {
                     }
                 }
                 owner.myPageView.nicknameLabel.text = editedData.nickname
-                // 자기소개 정보 활용
-            }
-            .disposed(by: disposeBag)
-
-        output.interestButtonTap
-            .bind(with: self) { owner, _ in
-                let vc = PickedListViewController()
-                owner.navigationController?.pushViewController(vc, animated: true)
             }
             .disposed(by: disposeBag)
         
@@ -88,7 +80,16 @@ final class MyPageViewController: UIViewController {
         
         output.logoutButtonTap
             .bind(with: self) { owner, _ in
-                print("logoutButtonTap")
+                owner.okShowAlert(title: "로그아웃 하시겠습니까?", message: "") { _ in
+                    owner.setRootViewController(LoginViewController())
+                }
+            }
+            .disposed(by: disposeBag)
+
+        output.interestButtonTap
+            .bind(with: self) { owner, _ in
+                let vc = PickedListViewController()
+                owner.navigationController?.pushViewController(vc, animated: true)
             }
             .disposed(by: disposeBag)
         
@@ -99,8 +100,14 @@ final class MyPageViewController: UIViewController {
             .disposed(by: disposeBag)
         
         output.myIntroduceButtonTap
-            .bind(with: self) { owner, _ in
-                print("myIntroduceButtonTap")
+            .withLatestFrom(output.profileData)
+            .bind(with: self) { owner, editedModel in
+                print("클릭됨")
+                let vc = MyIntroduceViewController()
+                if let myIntroduce = editedModel.myIntroduce {
+                    vc.introduceText.onNext(myIntroduce)
+                }
+                owner.present(vc, animated: true)
             }
             .disposed(by: disposeBag)
         
@@ -117,7 +124,9 @@ final class MyPageViewController: UIViewController {
                 title: "탈퇴하기",
                 image: UIImage(systemName: "minus.circle"),
                 handler: { _ in
-                print("클릭됨")
+                    self.okShowAlert(title: "탈퇴하기", message: "탈퇴를 하면 데이터가 모두 초기화됩니다. 탈퇴 하시겠습니까?") { _ in
+                        // 탈퇴 API
+                    }
                 })
             
             let item = [withdraw]
