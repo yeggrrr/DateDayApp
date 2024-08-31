@@ -24,6 +24,7 @@ enum Router {
     case searchHashTag(next: String, hashTag: String)
     case viewMyProfile
     case editMyProfile(query: EditProfileQuery)
+    case withdraw
 }
 
 extension Router: TargetType {
@@ -35,7 +36,7 @@ extension Router: TargetType {
         switch self {
         case .signUp, .validation, .login, .postImage, .uploadPost, .postInterest, .postLike:
             return .post
-        case .tokenRenewal, .viewPost, .viewPostImage, .viewSpecificPost, .viewInterestPost, .searchHashTag, .viewMyProfile:
+        case .tokenRenewal, .viewPost, .viewPostImage, .viewSpecificPost, .viewInterestPost, .searchHashTag, .viewMyProfile, .withdraw:
             return .get
         case .editMyProfile:
             return .put
@@ -74,6 +75,8 @@ extension Router: TargetType {
             return "/users/me/profile"
         case .editMyProfile:
             return "/users/me/profile"
+        case .withdraw:
+            return "/users/withdraw"
         }
     }
     
@@ -90,7 +93,7 @@ extension Router: TargetType {
                 Header.refresh.rawValue: UserDefaultsManager.shared.refresh,
                 Header.sesac.rawValue: APIKey.secretkey
             ]
-        case .viewPostImage, .viewPost, .viewSpecificPost, .postInterest, .uploadPost, .viewInterestPost, .postLike, .searchHashTag, .viewMyProfile:
+        case .viewPostImage, .viewPost, .viewSpecificPost, .postInterest, .uploadPost, .viewInterestPost, .postLike, .searchHashTag, .viewMyProfile, .withdraw:
             return [
                 Header.authorization.rawValue: UserDefaultsManager.shared.token,
                 Header.contentType.rawValue: Header.json.rawValue,

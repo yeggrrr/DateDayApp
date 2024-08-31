@@ -25,6 +25,7 @@
 		681EA0062C81CD8B00E4A718 /* EditProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 681EA0052C81CD8B00E4A718 /* EditProfileViewModel.swift */; };
 		681EA01B2C832F2600E4A718 /* MyIntroduceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 681EA01A2C832F2600E4A718 /* MyIntroduceViewController.swift */; };
 		681EA01D2C832F4800E4A718 /* MyIntroduceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 681EA01C2C832F4800E4A718 /* MyIntroduceView.swift */; };
+		681EA0212C833D6000E4A718 /* Withdraw.swift in Sources */ = {isa = PBXBuildFile; fileRef = 681EA0202C833D6000E4A718 /* Withdraw.swift */; };
 		683477CE2C74F98300D0931B /* HTTPStatusCodes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683477CD2C74F98300D0931B /* HTTPStatusCodes.swift */; };
 		683477D02C74FDCD00D0931B /* TokenUpdate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683477CF2C74FDCD00D0931B /* TokenUpdate.swift */; };
 		683477D22C75099300D0931B /* MembershipVerification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683477D12C75099300D0931B /* MembershipVerification.swift */; };
@@ -113,6 +114,7 @@
 		681EA0052C81CD8B00E4A718 /* EditProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileViewModel.swift; sourceTree = "<group>"; };
 		681EA01A2C832F2600E4A718 /* MyIntroduceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyIntroduceViewController.swift; sourceTree = "<group>"; };
 		681EA01C2C832F4800E4A718 /* MyIntroduceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyIntroduceView.swift; sourceTree = "<group>"; };
+		681EA0202C833D6000E4A718 /* Withdraw.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Withdraw.swift; sourceTree = "<group>"; };
 		683477CD2C74F98300D0931B /* HTTPStatusCodes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPStatusCodes.swift; sourceTree = "<group>"; };
 		683477CF2C74FDCD00D0931B /* TokenUpdate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenUpdate.swift; sourceTree = "<group>"; };
 		683477D12C75099300D0931B /* MembershipVerification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MembershipVerification.swift; sourceTree = "<group>"; };
@@ -405,6 +407,7 @@
 				686DBD4B2C7B3EF10023960B /* Upload.swift */,
 				681E9FE92C7ED88F00E4A718 /* PostLike.swift */,
 				681EA0032C81C58B00E4A718 /* Profile.swift */,
+				681EA0202C833D6000E4A718 /* Withdraw.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -632,6 +635,7 @@
 				681E9FCA2C7C7CCB00E4A718 /* DetailView.swift in Sources */,
 				681EA0002C81A81100E4A718 /* EditProfileViewController.swift in Sources */,
 				68CED3AD2C720AFA0043266A /* FeedCell.swift in Sources */,
+				681EA0212C833D6000E4A718 /* Withdraw.swift in Sources */,
 				686DBD482C79D70E0023960B /* Search.swift in Sources */,
 				683477D02C74FDCD00D0931B /* TokenUpdate.swift in Sources */,
 				681E9FC02C7C63D500E4A718 /* PickedListView.swift in Sources */,

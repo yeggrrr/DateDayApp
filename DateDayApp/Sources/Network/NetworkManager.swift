@@ -571,4 +571,36 @@ final class NetworkManager {
             return Disposables.create()
         }
     }
+    
+    func withdraw() -> Single<Result<WithdrawModel, HTTPStatusCodes>>{
+        return Single.create { observer -> Disposable in
+            
+            do {
+                let request = try Router.withdraw.asURLRequest()
+                AF.request(request)
+                    .responseDecodable(of: WithdrawModel.self) { response in
+                        switch response.result {
+                        case .success(let success):
+                            observer(.success(.success(success)))
+                        case .failure(_):
+                            let statusCode = response.response?.statusCode
+                            switch statusCode {
+                            case 401:
+                                observer(.success(.failure(.mismatchOrInvalid)))
+                            case 403:
+                                observer(.success(.failure(.forbidden)))
+                            case 419:
+                                observer(.success(.failure(.accessTokenExpiration)))
+                            default:
+                                break
+                            }
+                        }
+                    }
+            } catch {
+                print("error 발생!! - error:", error)
+            }
+            
+            return Disposables.create()
+        }
+    }
 }

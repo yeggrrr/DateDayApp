@@ -102,7 +102,6 @@ final class MyPageViewController: UIViewController {
         output.myIntroduceButtonTap
             .withLatestFrom(output.profileData)
             .bind(with: self) { owner, editedModel in
-                print("클릭됨")
                 let vc = MyIntroduceViewController()
                 if let myIntroduce = editedModel.myIntroduce {
                     vc.introduceText.onNext(myIntroduce)
@@ -125,7 +124,25 @@ final class MyPageViewController: UIViewController {
                 image: UIImage(systemName: "minus.circle"),
                 handler: { _ in
                     self.okShowAlert(title: "탈퇴하기", message: "탈퇴를 하면 데이터가 모두 초기화됩니다. 탈퇴 하시겠습니까?") { _ in
-                        // 탈퇴 API
+                        NetworkManager.shared.withdraw()
+                            .subscribe(with: self) { owner, result in
+                                switch result {
+                                case .success(_):
+                                    owner.setRootViewController(LoginViewController())
+                                case .failure(let failure):
+                                    switch failure {
+                                    case .accessTokenExpiration:
+                                        owner.updateToken()
+                                    default:
+                                        break
+                                    }
+                                }
+                            } onFailure: { owner, error in
+                                print("error: \(error)")
+                            } onDisposed: { owner in
+                                print("MyPageVC withdraw Disposed")
+                            }
+                            .disposed(by: self.disposeBag)
                     }
                 })
             
