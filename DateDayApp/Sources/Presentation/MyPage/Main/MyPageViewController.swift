@@ -32,6 +32,7 @@ final class MyPageViewController: UIViewController {
     private func configure() {
         // navigatation
         navigationItem.rightBarButtonItem = setupMenu()
+        navigationItem.title = "마이페이지"
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: self, action: nil)
         navigationItem.backBarButtonItem?.tintColor = .black
     }
@@ -45,7 +46,7 @@ final class MyPageViewController: UIViewController {
             myIntroduceButtonTap: myPageView.myIntroduceButton.rx.tap)
         
         let output = viewModel.transform(input: input)
-        let a = output.profileData
+        
         output.profileData
             .bind(with: self) { owner, profileData in
                 owner.myPageView.nicknameLabel.text = profileData.nickname
@@ -57,8 +58,19 @@ final class MyPageViewController: UIViewController {
                 }
             }
             .disposed(by: disposeBag)
-
         
+        output.editedProfileData
+            .bind(with: self) { owner, editedData in
+                if let image = editedData.profileImage {
+                    NetworkManager.shared.viewPostImage(filePath: image) { data in
+                        owner.myPageView.profileImageView.image = UIImage(data: data)
+                    }
+                }
+                owner.myPageView.nicknameLabel.text = editedData.nickname
+                // 자기소개 정보 활용
+            }
+            .disposed(by: disposeBag)
+
         output.interestButtonTap
             .bind(with: self) { owner, _ in
                 let vc = PickedListViewController()
@@ -69,6 +81,7 @@ final class MyPageViewController: UIViewController {
         output.editProfileButtonTap
             .bind(with: self) { owner, _ in
                 let vc = EditProfileViewController()
+                vc.delegate = self
                 owner.navigationController?.pushViewController(vc, animated: true)
             }
             .disposed(by: disposeBag)
@@ -117,5 +130,11 @@ final class MyPageViewController: UIViewController {
         barButton.tintColor = .black
 
         return barButton
+    }
+}
+
+extension MyPageViewController: EditedProfileDataDelegate {
+    func editedProfileData(editedData: EditProfileModel) {
+        viewModel.editedProfileData.onNext(editedData)
     }
 }

@@ -72,7 +72,7 @@ extension Router: TargetType {
             return "/posts/hashtags"
         case .viewMyProfile:
             return "/users/me/profile"
-        case .editMyProfile(query: let query):
+        case .editMyProfile:
             return "/users/me/profile"
         }
     }
@@ -165,8 +165,6 @@ extension Router: TargetType {
             return try? encoder.encode(likeStatus)
         case let .postLike(_, likeStatus):
             return try? encoder.encode(likeStatus)
-        case let .editMyProfile(query):
-            return try? encoder.encode(query)
         default:
             return nil
         }

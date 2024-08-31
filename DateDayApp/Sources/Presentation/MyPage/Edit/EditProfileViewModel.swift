@@ -10,17 +10,22 @@ import RxSwift
 import RxCocoa
 
 final class EditProfileViewModel: BaseViewModel {
-    
     private let disposeBag = DisposeBag()
     
     struct Input {
-        let profileData = PublishSubject<ViewMyProfileModel>()
+        let profileData = PublishSubject<ProfileModel>()
         let tokenExpiredMessage = PublishSubject<String>()
+        let setProfileImageButtonTap: ControlEvent<Void>
+        let editingCompleteButtonTap: ControlEvent<Void>
+        let editedProfileData = PublishSubject<EditProfileModel>()
     }
     
     struct Output {
-        let profileData: PublishSubject<ViewMyProfileModel>
+        let profileData: PublishSubject<ProfileModel>
         let tokenExpiredMessage: PublishSubject<String>
+        let setProfileImageButtonTap: ControlEvent<Void>
+        let editingCompleteButtonTap: ControlEvent<Void>
+        let editedProfileData: PublishSubject<EditProfileModel>
     }
     
     func transform(input: Input) -> Output {
@@ -48,6 +53,9 @@ final class EditProfileViewModel: BaseViewModel {
         
         return Output(
             profileData: input.profileData,
-            tokenExpiredMessage: input.tokenExpiredMessage)
+            tokenExpiredMessage: input.tokenExpiredMessage,
+            setProfileImageButtonTap: input.setProfileImageButtonTap,
+            editingCompleteButtonTap: input.editingCompleteButtonTap,
+            editedProfileData: input.editedProfileData)
     }
 }

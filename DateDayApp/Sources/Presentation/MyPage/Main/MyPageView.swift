@@ -131,6 +131,8 @@ final class MyPageView: BaseView {
         profileImageView.contentMode = .scaleAspectFill
         profileImageView.layer.cornerRadius = 10
         profileImageView.layer.masksToBounds = true
+        profileImageView.layer.borderWidth = 1.5
+        profileImageView.layer.borderColor = UIColor.black.cgColor
         
         myIntroduceButton.setImage(UIImage(systemName: "lasso.badge.sparkles"), for: .normal)
         myIntroduceButton.tintColor = .black
@@ -173,8 +175,5 @@ final class MyPageView: BaseView {
         myPostListIconImageView.tintColor = .white
         myPostListTextLabel.text = "내 게시물"
         myPostListTextLabel.textAlignment = .left
-        
-        // 임시
-        nicknameLabel.text = "yeggrrr"
     }
 }

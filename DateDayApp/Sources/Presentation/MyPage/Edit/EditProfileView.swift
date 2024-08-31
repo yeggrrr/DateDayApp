@@ -23,18 +23,20 @@ final class EditProfileView: BaseView {
     private let myIntroduceTextLabel = UILabel()
     
     private let elementsStackView = UIStackView()
-    let nicknameLabel = UILabel()
-    let editNicknameButton = UIButton()
+    let nicknameTextField = UITextField()
     let emailLabel = UILabel()
-    let myIntroduceLabel = UILabel()
+    
+    private let editMyIntroduceView = UIView()
+    let editMyIntroduceTextView = UITextView()
     
     let editingCompleteButton = UIButton()
     
     override func addSubviews() {
-        addSubviews([profileImageStackView, setProfileImageBgView, setProfileImageButton, setDefaultImageButton, setProfileImageTextLabel, elementsTextStackView, elementsStackView, editNicknameButton, editingCompleteButton])
+        addSubviews([profileImageStackView, setProfileImageBgView, setProfileImageButton, setDefaultImageButton, setProfileImageTextLabel, elementsTextStackView, elementsStackView, editMyIntroduceView, editingCompleteButton])
         profileImageStackView.addArrangedSubviews([profileImageView, defaultImageView])
         elementsTextStackView.addArrangedSubviews([nicknameTextLabel, emailTextLabel, myIntroduceTextLabel])
-        elementsStackView.addArrangedSubviews([nicknameLabel, emailLabel, myIntroduceLabel])
+        elementsStackView.addArrangedSubviews([nicknameTextField, emailLabel])
+        editMyIntroduceView.addSubview(editMyIntroduceTextView)
     }
     
     override func setConstraints() {
@@ -70,15 +72,16 @@ final class EditProfileView: BaseView {
         elementsTextStackView.snp.makeConstraints {
             $0.top.equalTo(setProfileImageTextLabel.snp.bottom).offset(30)
             $0.leading.equalTo(safeArea.snp.leading).offset(30)
+            $0.width.equalTo(55)
         }
         
         elementsStackView.snp.makeConstraints {
             $0.top.equalTo(setProfileImageTextLabel.snp.bottom).offset(30)
-            $0.leading.equalTo(elementsTextStackView.snp.trailing).offset(30)
+            $0.leading.equalTo(elementsTextStackView.snp.trailing).offset(20)
             $0.trailing.equalTo(safeArea.snp.trailing).offset(-30)
         }
         
-        nicknameLabel.snp.makeConstraints {
+        nicknameTextField.snp.makeConstraints {
             $0.height.equalTo(nicknameTextLabel.snp.height)
         }
         
@@ -86,8 +89,15 @@ final class EditProfileView: BaseView {
             $0.height.equalTo(emailTextLabel.snp.height)
         }
         
-        myIntroduceLabel.snp.makeConstraints {
-            $0.bottom.lessThanOrEqualTo(editingCompleteButton.snp.top).offset(-20)
+        editMyIntroduceView.snp.makeConstraints {
+            $0.top.equalTo(elementsStackView.snp.bottom).offset(11)
+            $0.leading.equalTo(elementsTextStackView.snp.trailing).offset(10)
+            $0.trailing.equalTo(safeArea.snp.trailing).offset(-30)
+            $0.height.equalTo(120)
+        }
+        
+        editMyIntroduceTextView.snp.makeConstraints {
+            $0.edges.equalTo(editMyIntroduceView.snp.edges).inset(5)
         }
         
         editingCompleteButton.snp.makeConstraints {
@@ -105,6 +115,7 @@ final class EditProfileView: BaseView {
         
         elementsTextStackView.axis = .vertical
         elementsTextStackView.spacing = 16
+        elementsTextStackView.distribution = .fillEqually
         
         elementsStackView.axis = .vertical
         elementsStackView.spacing = 16
@@ -125,11 +136,11 @@ final class EditProfileView: BaseView {
         setProfileImageBgView.layer.opacity = 0.3
         
         setProfileImageTextLabel.setUI(
-            txt: "사진 수정 또는 기본이미지 설정",
+            txt: "사진 변경 또는 기본이미지 설정",
             txtAlignment: .center,
             font: .systemFont(ofSize: 13, weight: .regular),
             numOfLines: 1,
-            txtColor: .systemBlue)
+            txtColor: .black)
         
         setProfileImageButton.setImage(UIImage(systemName: "photo.badge.plus"), for: .normal)
         setProfileImageButton.tintColor = .darkGray
@@ -158,32 +169,28 @@ final class EditProfileView: BaseView {
             numOfLines: 1,
             txtColor: .black)
         
-        nicknameLabel.setUI(
-            txtAlignment: .left,
-            font: .systemFont(ofSize: 15, weight: .regular),
-            numOfLines: 1,
-            txtColor: .black)
+        nicknameTextField.textColor = .darkGray
+        nicknameTextField.textAlignment = .left
+        nicknameTextField.font = .systemFont(ofSize: 15, weight: .regular)
+        
+        // nicknameLabel.setUI(
+        //     txtAlignment: .left,
+        //     font: .systemFont(ofSize: 15, weight: .regular),
+        //     numOfLines: 1,
+        //     txtColor: .darkGray)
         
         emailLabel.setUI(
             txtAlignment: .left,
-            font: .systemFont(ofSize: 15, weight: .regular),
+            font: .systemFont(ofSize: 15, weight: .semibold),
             numOfLines: 1,
             txtColor: .black)
         
-        myIntroduceLabel.setUI(
-            txtAlignment: .left,
-            font: .systemFont(ofSize: 15, weight: .regular),
-            numOfLines: 0,
-            txtColor: .black)
+        editMyIntroduceTextView.textAlignment = .left
+        editMyIntroduceTextView.font = .systemFont(ofSize: 15, weight: .regular)
+        editMyIntroduceTextView.textColor = .darkGray
         
         editingCompleteButton.setTitle("편집 완료", for: .normal)
-        editingCompleteButton.setTitleColor(.systemBlue, for: .normal)
+        editingCompleteButton.setTitleColor(.primaryDark, for: .normal)
         editingCompleteButton.setTitleColor(.white, for: .highlighted)
-        
-        myIntroduceLabel.text = "-"
-        
-        // 임시
-        nicknameLabel.text = "임시임시"
-        emailLabel.text = "임시@임시.com"
     }
 }

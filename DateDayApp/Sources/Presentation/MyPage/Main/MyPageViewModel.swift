@@ -10,6 +10,8 @@ import RxSwift
 import RxCocoa
 
 final class MyPageViewModel: BaseViewModel {
+    let editedProfileData = PublishSubject<EditProfileModel>()
+    
     private let disposeBag = DisposeBag()
 
     struct Input {
@@ -19,7 +21,7 @@ final class MyPageViewModel: BaseViewModel {
         let myPostListButtonTap: ControlEvent<Void>
         let myIntroduceButtonTap: ControlEvent<Void>
         let tokenExpiredMessage = PublishSubject<String>()
-        let profileData = PublishSubject<ViewMyProfileModel>()
+        let profileData = PublishSubject<ProfileModel>()
     }
     
     struct Output {
@@ -29,7 +31,8 @@ final class MyPageViewModel: BaseViewModel {
         let myPostListButtonTap: ControlEvent<Void>
         let myIntroduceButtonTap: ControlEvent<Void>
         let tokenExpiredMessage: PublishSubject<String>
-        let profileData: PublishSubject<ViewMyProfileModel>
+        let profileData: PublishSubject<ProfileModel>
+        let editedProfileData: PublishSubject<EditProfileModel>
     }
     
     func transform(input: Input) -> Output {
@@ -61,6 +64,7 @@ final class MyPageViewModel: BaseViewModel {
             myPostListButtonTap: input.myPostListButtonTap,
             myIntroduceButtonTap: input.myIntroduceButtonTap,
             tokenExpiredMessage: input.tokenExpiredMessage,
-            profileData: input.profileData)
+            profileData: input.profileData,
+            editedProfileData: editedProfileData)
     }
 }

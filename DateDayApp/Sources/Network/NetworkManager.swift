@@ -262,10 +262,10 @@ final class NetworkManager {
             do {
                 let request = try Router.postImage.asURLRequest()
                 
-                AF.upload(multipartFormData: { mulitpartFormData in
+                AF.upload(multipartFormData: { multipartFormData in
                     for image in images {
                         if let image = image.jpegData(compressionQuality: 0.5) {
-                            mulitpartFormData.append(image, withName: "files", fileName: "yegr.jpeg", mimeType: "image/jpeg")
+                            multipartFormData.append(image, withName: "files", fileName: "yegr.jpeg", mimeType: "image/jpeg")
                         }
                     }
                 }, with: request)
@@ -491,13 +491,13 @@ final class NetworkManager {
     }
     
     // MARK: 내 프로필 조회
-    func viewMyProfile() -> Single<Result<ViewMyProfileModel, HTTPStatusCodes>>{
+    func viewMyProfile() -> Single<Result<ProfileModel, HTTPStatusCodes>> {
         return Single.create { observer -> Disposable in
             
             do {
                 let request = try Router.viewMyProfile.asURLRequest()
                 AF.request(request)
-                    .responseDecodable(of: ViewMyProfileModel.self) { response in
+                    .responseDecodable(of: ProfileModel.self) { response in
                         switch response.result {
                         case .success(let success):
                             observer(.success(.success(success)))
@@ -515,6 +515,55 @@ final class NetworkManager {
                             }
                         }
                     }
+            } catch {
+                print("error 발생!! - error:", error)
+            }
+            
+            return Disposables.create()
+        }
+    }
+    
+    func editProfile(nickname: String, introduce: String, profile: Data) -> Single<Result<EditProfileModel, HTTPStatusCodes>> {
+        return Single.create { observer -> Disposable in
+            
+            do {
+                let query = EditProfileQuery(nick: nickname, phoneNum: introduce, profile: profile)
+                let request = try Router.editMyProfile(query: query).asURLRequest()
+                AF.upload(multipartFormData: { multipartFormData in
+                    let nick = query.nick.data(using: .utf8) ?? Data()
+                    let introduce = query.phoneNum.data(using: .utf8) ?? Data()
+                    multipartFormData.append(nick, withName: "nick")
+                    multipartFormData.append(introduce, withName: "phoneNum")
+                    multipartFormData.append(
+                        profile,
+                        withName: "profile",
+                        fileName: "yegr.jpeg",
+                        mimeType: "image/jpeg")
+                }, with: request)
+                .responseDecodable(of: EditProfileModel.self) { response in
+                    switch response.result {
+                    case .success(let success):
+                        observer(.success(.success(success)))
+                    case .failure(_):
+                        let statusCode = response.response?.statusCode
+                        switch statusCode {
+                        case 400:
+                            observer(.success(.failure(.missingRequiredValue)))
+                        case 401:
+                            observer(.success(.failure(.mismatchOrInvalid)))
+                        case 402:
+                            observer(.success(.failure(.noSpacesAllowed)))
+                        case 403:
+                            observer(.success(.failure(.forbidden)))
+                        case 409:
+                            observer(.success(.failure(.alreadySignedUp)))
+                        case 419:
+                            observer(.success(.failure(.accessTokenExpiration)))
+                        default:
+                            break
+                        }
+                    }
+                }
             } catch {
                 print("error 발생!! - error:", error)
             }
