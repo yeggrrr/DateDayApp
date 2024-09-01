@@ -14,4 +14,9 @@ extension UIStackView {
         self.alignment = alignment
         self.spacing = spacing
     }
+    
+    func basicUI(axis: NSLayoutConstraint.Axis = .horizontal, spacing: CGFloat = 5) {
+        self.axis = axis
+        self.spacing = spacing
+    }
 }

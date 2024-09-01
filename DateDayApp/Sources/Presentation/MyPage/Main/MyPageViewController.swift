@@ -14,6 +14,9 @@ final class MyPageViewController: UIViewController {
     private let myPageView = MyPageView()
     
     // MARK: Properties
+    var profileData: ProfileModel?
+    var editedProfileData: EditProfileModel?
+    
     private let viewModel = MyPageViewModel()
     private let disposeBag = DisposeBag()
     
@@ -51,6 +54,7 @@ final class MyPageViewController: UIViewController {
         output.profileData
             .bind(with: self) { owner, profileData in
                 owner.myPageView.nicknameLabel.text = profileData.nickname
+                owner.profileData = profileData
 
                 if let image = profileData.profileImage {
                     NetworkManager.shared.viewPostImage(filePath: image) { data in
@@ -63,6 +67,8 @@ final class MyPageViewController: UIViewController {
         // 프로필 수정 업데이트
         output.editedProfileData
             .bind(with: self) { owner, editedData in
+                owner.editedProfileData = editedData
+                
                 if let image = editedData.profileImage {
                     NetworkManager.shared.viewPostImage(filePath: image) { data in
                         owner.myPageView.profileImageView.image = UIImage(data: data)
@@ -102,6 +108,16 @@ final class MyPageViewController: UIViewController {
         output.myPostListButtonTap
             .bind(with: self) { owner, _ in
                 let vc = MyPostViewController()
+                if let profileData = owner.profileData {
+                    vc.viewModel.profileName.onNext(profileData.nickname)
+                    vc.viewModel.profileImage.onNext(profileData.profileImage ?? "")
+                    
+                }
+                
+                if let editedProfileData = owner.editedProfileData {
+                    vc.viewModel.profileName.onNext(editedProfileData.nickname)
+                    vc.viewModel.profileImage.onNext(editedProfileData.profileImage ?? "")
+                }
                 owner.navigationController?.pushViewController(vc, animated: true)
             }
             .disposed(by: disposeBag)
@@ -112,7 +128,6 @@ final class MyPageViewController: UIViewController {
             .bind(with: self) { owner, editedModel in
                 let vc = MyIntroduceViewController()
                 if let myIntroduce = editedModel.myIntroduce {
-                    print("myIntroduce: \(myIntroduce)")
                     vc.introduceText.onNext(myIntroduce)
                 }
                 owner.present(vc, animated: true)
