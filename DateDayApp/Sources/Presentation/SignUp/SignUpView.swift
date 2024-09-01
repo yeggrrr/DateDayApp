@@ -122,8 +122,8 @@ final class SignUpView: BaseView {
     override func configureUI() {
         super.configureUI()
         
-        logoImageView.image = UIImage(named: "MainLogo")
- 
+        logoImageView.image = UIImage(resource: .mainLogo)
+        
         inputStackView.setUI(
             axis: .vertical,
             distribution: .fillEqually,

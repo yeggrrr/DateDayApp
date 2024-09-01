@@ -27,22 +27,6 @@ final class MyPageViewController: UIViewController {
         
         configure()
         bind()
-        
-        NetworkManager.shared.viewSpecificUsersPost(userID: UserDefaultsManager.shared.saveLoginUserID, next: "")
-            .subscribe(with: self) { owner, result in
-                switch result {
-                case .success(let success):
-                    print(success)
-                case .failure(let failure):
-                    print(failure)
-                }
-            } onFailure: { owner, error in
-                print("error: \(error)")
-            } onDisposed: { owner in
-                print("NW viewSpecificUsersPost Disposed")
-            }
-            .disposed(by: disposeBag)
-
     }
     
     private func configure() {
@@ -88,7 +72,7 @@ final class MyPageViewController: UIViewController {
             }
             .disposed(by: disposeBag)
         
-        // 편집 화면으로 이동
+        // 프로필 편집
         output.editProfileButtonTap
             .bind(with: self) { owner, _ in
                 let vc = EditProfileViewController()
@@ -106,7 +90,7 @@ final class MyPageViewController: UIViewController {
             }
             .disposed(by: disposeBag)
 
-        // 내 관심 목록 이동
+        // 내 관심 목록
         output.interestButtonTap
             .bind(with: self) { owner, _ in
                 let vc = PickedListViewController()
@@ -114,14 +98,15 @@ final class MyPageViewController: UIViewController {
             }
             .disposed(by: disposeBag)
         
-        // 내 게시물 이동
+        // 내 게시물
         output.myPostListButtonTap
             .bind(with: self) { owner, _ in
-                print("myPostListButtonTap")
+                let vc = MyPostViewController()
+                owner.navigationController?.pushViewController(vc, animated: true)
             }
             .disposed(by: disposeBag)
         
-        // 내 소개 보기
+        // 내 소개
         output.myIntroduceButtonTap
             .withLatestFrom(output.profileData)
             .bind(with: self) { owner, editedModel in

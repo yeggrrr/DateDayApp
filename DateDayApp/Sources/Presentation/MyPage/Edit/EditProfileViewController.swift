@@ -75,7 +75,7 @@ final class EditProfileViewController: UIViewController {
         // 기본 이미지 설정
         output.setDefaultImageButtonTap
             .bind(with: self) { owner, _ in
-                guard let defaultImage = UIImage(named: "defaultProfileImage") else { return }
+                let defaultImage = UIImage(resource: .defaultProfile)
                 owner.selectedImage.onNext(defaultImage)
             }
             .disposed(by: disposeBag)

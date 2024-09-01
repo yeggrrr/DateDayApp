@@ -40,7 +40,7 @@ final class SearchView: BaseView {
     override func configureUI() {
         super.configureUI()
         
-        backgroundImageView.image = UIImage(named: "seaBackground")
+        backgroundImageView.image = UIImage(resource: .seaBackground)
         backgroundImageView.layer.opacity = 0.8
         collectionView.backgroundColor = .clear
         searchBar.setUI(placeholder: "해시태그 검색")

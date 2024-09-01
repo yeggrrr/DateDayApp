@@ -163,7 +163,7 @@ final class DetailView: BaseView {
     override func configureUI() {
         super.configureUI()
         
-        backgroundImageView.image = UIImage(named: "seaBackground")
+        backgroundImageView.image = UIImage(resource: .seaBackground)
         collectionView.backgroundColor = .primaryCustomLight
         detailBgview.backgroundColor = .primaryCustomLight
         detailBgview.layer.opacity = 0.5

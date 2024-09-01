@@ -49,7 +49,7 @@ final class FeedViewController: UIViewController {
     }
     
     private func configureNavigation() {
-        let logoImage = UIImage(named: "DateDayBlackText")
+        let logoImage = UIImage(resource: .dateDayBlueText)
         let imageView = UIImageView()
         let logoWidth = imageView.widthAnchor.constraint(equalToConstant: 140)
         let logoHeight = imageView.heightAnchor.constraint(equalToConstant: 70)

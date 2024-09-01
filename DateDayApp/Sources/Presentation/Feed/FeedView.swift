@@ -51,7 +51,7 @@ final class FeedView: BaseView {
     override func configureUI() {
         super.configureUI()
         
-        backgroundImageView.image = UIImage(named: "seaBackground")
+        backgroundImageView.image = UIImage(resource: .seaBackground)
         backgroundImageView.layer.opacity = 0.8
         collectionView.backgroundColor = .clear
         writeView.backgroundColor = .primaryButtonBg

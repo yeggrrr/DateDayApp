@@ -126,7 +126,7 @@ final class EditProfileView: BaseView {
         profileImageView.layer.masksToBounds = true
         profileImageView.contentMode = .scaleAspectFill
         
-        defaultImageView.image = UIImage(named: "defaultProfileImage")
+        defaultImageView.image = UIImage(resource: .defaultProfile)
         defaultImageView.layer.borderWidth = 1.5
         defaultImageView.layer.borderColor = UIColor.black.cgColor
         defaultImageView.layer.cornerRadius = 45

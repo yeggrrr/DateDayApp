@@ -37,7 +37,6 @@ final class EditProfileViewModel: BaseViewModel {
                 switch result {
                 case .success(let success):
                     input.profileData.onNext(success)
-                    print(success)
                 case .failure(let failure):
                     switch failure {
                     case .accessTokenExpiration:

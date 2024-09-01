@@ -127,7 +127,7 @@ final class MyPageView: BaseView {
     override func configureUI() {
         backgroundColor = .white
         
-        profileImageView.image = UIImage(named: "defaultProfileImage")
+        profileImageView.image = UIImage(resource: .defaultProfile)
         profileImageView.contentMode = .scaleAspectFill
         profileImageView.layer.cornerRadius = 50
         profileImageView.layer.masksToBounds = true

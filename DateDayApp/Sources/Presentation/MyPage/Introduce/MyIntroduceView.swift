@@ -46,7 +46,7 @@ final class MyIntroduceView: BaseView {
     override func configureUI() {
         backgroundColor = .clear
         
-        speechBubbleImageView.image = UIImage(named: "speechBubble")
+        speechBubbleImageView.image = UIImage(resource: .speechBubble)
         speechBubbleImageView.contentMode = .scaleAspectFit
 
         introduceLabel.setUI(
