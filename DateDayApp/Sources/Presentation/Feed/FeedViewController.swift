@@ -120,7 +120,6 @@ final class FeedViewController: UIViewController {
     }
     
     private func updateData() {
-        print(">>> FeedVC - updateData!")
         NetworkManager.shared.viewPost()
             .subscribe(with: self) { owner, result in
                 switch result {

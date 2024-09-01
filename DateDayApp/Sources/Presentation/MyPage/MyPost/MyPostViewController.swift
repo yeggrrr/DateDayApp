@@ -42,7 +42,8 @@ final class MyPostViewController: UIViewController {
     
     private func bind() {
         let input = MyPostViewModel.Input(
-            tableViewItemSelected: myPostView.myPostTableView.rx.itemSelected)
+            tableViewItemSelected: myPostView.myPostTableView.rx.itemSelected,
+            tableViewPrefetchRows: myPostView.myPostTableView.rx.prefetchRows)
         
         let output = viewModel.transform(input: input)
         

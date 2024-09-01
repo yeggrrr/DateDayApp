@@ -210,8 +210,8 @@
 			children = (
 				6816903E2C8380A20062C50F /* MyPostViewController.swift */,
 				681690402C83840A0062C50F /* MyPostView.swift */,
-				681690422C8384430062C50F /* MyPostViewModel.swift */,
 				681690442C8451290062C50F /* MyPostCell.swift */,
+				681690422C8384430062C50F /* MyPostViewModel.swift */,
 			);
 			path = MyPost;
 			sourceTree = "<group>";
