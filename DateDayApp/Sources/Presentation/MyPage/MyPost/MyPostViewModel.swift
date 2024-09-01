@@ -40,7 +40,6 @@ final class MyPostViewModel: BaseViewModel {
             .subscribe(with: self) { owner, result in
                 switch result {
                 case .success(let success):
-                    print(success)
                     owner.myPostDataList.removeAll()
                     owner.myPostDataList.append(contentsOf: success.data)
                     owner.myPostData.onNext(success.data)

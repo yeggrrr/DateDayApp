@@ -96,5 +96,11 @@ final class MyPostViewController: UIViewController {
                 owner.navigationController?.pushViewController(vc, animated: true)
             }
             .disposed(by: disposeBag)
+        
+        output.tokenExpiredMessage
+            .bind(with: self) { owner, _ in
+                owner.updateToken()
+            }
+            .disposed(by: disposeBag)
     }
 }
