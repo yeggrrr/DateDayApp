@@ -27,6 +27,7 @@ enum Router {
     case withdraw
     case viewSpecificUsersPost(userID: String, next: String)
     case deletePost(postID: String)
+    case paymentValidation(query: PaymentValidationQuery)
 }
 
 extension Router: TargetType {
@@ -36,7 +37,7 @@ extension Router: TargetType {
     
     var method: HTTPMethod {
         switch self {
-        case .signUp, .validation, .login, .postImage, .uploadPost, .postInterest, .postLike:
+        case .signUp, .validation, .login, .postImage, .uploadPost, .postInterest, .postLike, .paymentValidation:
             return .post
         case .tokenRenewal, .viewPost, .viewPostImage, .viewSpecificPost, .viewInterestPost, .searchHashTag, .viewMyProfile, .withdraw, .viewSpecificUsersPost:
             return .get
@@ -85,6 +86,8 @@ extension Router: TargetType {
             return "/posts/users/\(userID)"
         case let .deletePost(postID):
             return "/posts/\(postID)"
+        case .paymentValidation:
+            return "/payments/validation"
         }
     }
     
@@ -101,7 +104,7 @@ extension Router: TargetType {
                 Header.refresh.rawValue: UserDefaultsManager.shared.refresh,
                 Header.sesac.rawValue: APIKey.secretkey
             ]
-        case .viewPostImage, .viewPost, .viewSpecificPost, .postInterest, .uploadPost, .viewInterestPost, .postLike, .searchHashTag, .viewMyProfile, .withdraw, .viewSpecificUsersPost, .deletePost:
+        case .viewPostImage, .viewPost, .viewSpecificPost, .postInterest, .uploadPost, .viewInterestPost, .postLike, .searchHashTag, .viewMyProfile, .withdraw, .viewSpecificUsersPost, .deletePost, .paymentValidation:
             return [
                 Header.authorization.rawValue: UserDefaultsManager.shared.token,
                 Header.contentType.rawValue: Header.json.rawValue,
@@ -187,6 +190,8 @@ extension Router: TargetType {
             return try? encoder.encode(likeStatus)
         case let .postLike(_, likeStatus):
             return try? encoder.encode(likeStatus)
+        case let .paymentValidation(query):
+            return try? encoder.encode(query)
         default:
             return nil
         }

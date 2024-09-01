@@ -9,6 +9,7 @@ import UIKit
 import Alamofire
 import RxSwift
 import RxCocoa
+import iamport_ios
 
 final class NetworkManager {
     static let shared = NetworkManager()
@@ -666,6 +667,48 @@ final class NetworkManager {
                 }
         } catch {
             print("error 발생!! - error:", error)
+        }
+    }
+    
+    // MARK: 결제 영수증 검증
+    func paymentValidation(postID: String, impUID: String) -> Single<Result<ValidationModel, HTTPStatusCodes>>{
+        return Single.create { observer -> Disposable in
+            
+            do {
+                let query = PaymentValidationQuery(impUID: impUID, postID: postID)
+                let request = try Router.paymentValidation(query: query).asURLRequest()
+                
+                AF.request(request)
+                    .responseDecodable(of: ValidationModel.self) { response in
+                        switch response.result {
+                        case .success(let success):
+                            observer(.success(.success(success)))
+                        case .failure(_):
+                            let statusCode = response.response?.statusCode
+                            print(">>> statusCode :\(statusCode))")
+                            switch statusCode {
+                            case 400:
+                                observer(.success(.failure(.missingRequiredValue)))
+                            case 401:
+                                observer(.success(.failure(.mismatchOrInvalid)))
+                            case 403:
+                                observer(.success(.failure(.forbidden)))
+                            case 409:
+                                observer(.success(.failure(.alreadySignedUp)))
+                            case 410:
+                                observer(.success(.failure(.serverErrorNotSavedOrCannotSearch)))
+                            case 419:
+                                observer(.success(.failure(.accessTokenExpiration)))
+                            default:
+                                break
+                            }
+                        }
+                    }
+            } catch {
+                print("error 발생!! - error:", error)
+            }
+            
+            return Disposables.create()
         }
     }
 }

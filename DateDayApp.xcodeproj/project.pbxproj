@@ -11,6 +11,8 @@
 		681690412C83840A0062C50F /* MyPostView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 681690402C83840A0062C50F /* MyPostView.swift */; };
 		681690432C8384430062C50F /* MyPostViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 681690422C8384430062C50F /* MyPostViewModel.swift */; };
 		681690452C8451290062C50F /* MyPostCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 681690442C8451290062C50F /* MyPostCell.swift */; };
+		681690482C84A5BD0062C50F /* iamport-ios in Frameworks */ = {isa = PBXBuildFile; productRef = 681690472C84A5BD0062C50F /* iamport-ios */; };
+		6816904A2C84DAEF0062C50F /* Payment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 681690492C84DAEF0062C50F /* Payment.swift */; };
 		681E9FC02C7C63D500E4A718 /* PickedListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 681E9FBF2C7C63D500E4A718 /* PickedListView.swift */; };
 		681E9FC32C7C67D000E4A718 /* PickedListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 681E9FC22C7C67D000E4A718 /* PickedListViewModel.swift */; };
 		681E9FC52C7C6AA800E4A718 /* PickedListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 681E9FC42C7C6AA800E4A718 /* PickedListCell.swift */; };
@@ -104,6 +106,7 @@
 		681690402C83840A0062C50F /* MyPostView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPostView.swift; sourceTree = "<group>"; };
 		681690422C8384430062C50F /* MyPostViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPostViewModel.swift; sourceTree = "<group>"; };
 		681690442C8451290062C50F /* MyPostCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPostCell.swift; sourceTree = "<group>"; };
+		681690492C84DAEF0062C50F /* Payment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Payment.swift; sourceTree = "<group>"; };
 		681E9FBF2C7C63D500E4A718 /* PickedListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickedListView.swift; sourceTree = "<group>"; };
 		681E9FC22C7C67D000E4A718 /* PickedListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickedListViewModel.swift; sourceTree = "<group>"; };
 		681E9FC42C7C6AA800E4A718 /* PickedListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickedListCell.swift; sourceTree = "<group>"; };
@@ -197,6 +200,7 @@
 				68CED3CF2C7338710043266A /* Cosmos in Frameworks */,
 				68CED3582C6C915C0043266A /* SnapKit in Frameworks */,
 				68CED35D2C6C916C0043266A /* RxSwift in Frameworks */,
+				681690482C84A5BD0062C50F /* iamport-ios in Frameworks */,
 				68CED35B2C6C916C0043266A /* RxCocoa in Frameworks */,
 				68CED3522C6C91470043266A /* Alamofire in Frameworks */,
 			);
@@ -427,6 +431,7 @@
 				681E9FE92C7ED88F00E4A718 /* PostLike.swift */,
 				681EA0032C81C58B00E4A718 /* Profile.swift */,
 				681EA0202C833D6000E4A718 /* Withdraw.swift */,
+				681690492C84DAEF0062C50F /* Payment.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -552,6 +557,7 @@
 				68CED35A2C6C916C0043266A /* RxCocoa */,
 				68CED35C2C6C916C0043266A /* RxSwift */,
 				68CED3CE2C7338710043266A /* Cosmos */,
+				681690472C84A5BD0062C50F /* iamport-ios */,
 			);
 			productName = DateDayApp;
 			productReference = 68CED3352C6C8EF40043266A /* DateDayApp.app */;
@@ -586,6 +592,7 @@
 				68CED3562C6C915C0043266A /* XCRemoteSwiftPackageReference "SnapKit" */,
 				68CED3592C6C916C0043266A /* XCRemoteSwiftPackageReference "RxSwift" */,
 				68CED3CD2C7338710043266A /* XCRemoteSwiftPackageReference "Cosmos" */,
+				681690462C84A5BD0062C50F /* XCRemoteSwiftPackageReference "iamport-ios" */,
 			);
 			productRefGroup = 68CED3362C6C8EF40043266A /* Products */;
 			projectDirPath = "";
@@ -656,6 +663,7 @@
 				681E9FDF2C7D941300E4A718 /* DetailWebViewController.swift in Sources */,
 				68CED3A22C71DE950043266A /* UIButton+.swift in Sources */,
 				681E9FCA2C7C7CCB00E4A718 /* DetailView.swift in Sources */,
+				6816904A2C84DAEF0062C50F /* Payment.swift in Sources */,
 				681EA0002C81A81100E4A718 /* EditProfileViewController.swift in Sources */,
 				68CED3AD2C720AFA0043266A /* FeedCell.swift in Sources */,
 				681EA0212C833D6000E4A718 /* Withdraw.swift in Sources */,
@@ -846,6 +854,7 @@
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -878,6 +887,7 @@
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -920,6 +930,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		681690462C84A5BD0062C50F /* XCRemoteSwiftPackageReference "iamport-ios" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/iamport/iamport-ios.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.4.2;
+			};
+		};
 		68CED3502C6C91470043266A /* XCRemoteSwiftPackageReference "Alamofire" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/Alamofire/Alamofire.git";
@@ -955,6 +973,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		681690472C84A5BD0062C50F /* iamport-ios */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 681690462C84A5BD0062C50F /* XCRemoteSwiftPackageReference "iamport-ios" */;
+			productName = "iamport-ios";
+		};
 		68CED3512C6C91470043266A /* Alamofire */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 68CED3502C6C91470043266A /* XCRemoteSwiftPackageReference "Alamofire" */;

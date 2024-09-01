@@ -14,6 +14,8 @@ final class DetailViewModel: BaseViewModel {
     let detailData = PublishSubject<UploadPostModel>()
     let isInterestIdList = PublishSubject<[String]>()
     let isLikeIdList = PublishSubject<[String]>()
+    let postID = PublishSubject<String>()
+    let impUID = PublishSubject<String?>()
     
     let disposeBag = DisposeBag()
     
@@ -24,17 +26,24 @@ final class DetailViewModel: BaseViewModel {
         let likeButtonTap: ControlEvent<Void>
         let interestStatus = PublishSubject<Bool>()
         let likeStatus = PublishSubject<Bool>()
+        let paymentSuccessfulMessage = PublishSubject<String>()
+        let tokenExpiredMessage = PublishSubject<String>()
+        let paymentResultMessage = PublishSubject<String>()
     }
     
     struct Output {
         let imageDatas: PublishSubject<[Data]>
         let moveToDetailButtonTap: ControlEvent<Void>
+        let reservationButtonTap: ControlEvent<Void>
         let interestButtonTap: ControlEvent<Void>
         let likeButtonTap: ControlEvent<Void>
         let isInterestIdList: PublishSubject<[String]>
         let isLikeIdList: PublishSubject<[String]>
         let interestStatus: PublishSubject<Bool>
         let likdStatus: PublishSubject<Bool>
+        let paymentSuccessfulMessage: PublishSubject<String>
+        let tokenExpiredMessage: PublishSubject<String>
+        let paymentResultMessage: PublishSubject<String>
     }
     
     func transform(input: Input) -> Output {
@@ -65,20 +74,47 @@ final class DetailViewModel: BaseViewModel {
             }
             .disposed(by: disposeBag)
         
-        input.reservationButtonTap
-            .bind(with: self) { owner, _ in
-                print("예약하기 버튼 클릭")
+        Observable.combineLatest(postID, impUID)
+            .bind(with: self) { owner, value in
+                guard let impUID = value.1 else { return }
+                NetworkManager.shared.paymentValidation(postID: value.0, impUID: impUID)
+                    .subscribe(with: self) { owner, result in
+                        switch result {
+                        case .success(let success):
+                            input.paymentSuccessfulMessage.onNext("결제가 완료되었습니다 :)")
+                        case .failure(let failure):
+                            print(failure)
+                            switch failure {
+                            case .accessTokenExpiration:
+                                input.tokenExpiredMessage.onNext("엑세스 토큰이 만료되었습니다.")
+                            case .alreadySignedUp:
+                                input.paymentResultMessage.onNext("이미 검증처리가 완료된 결제건입니다.")
+                            default:
+                                break
+                            }
+                        }
+                    } onFailure: { owner, error in
+                        print("error: \(error)")
+                    } onDisposed: { owner in
+                        print("NW paymentValidation Disposed")
+                    }
+                    .disposed(by: owner.disposeBag)
+
             }
             .disposed(by: disposeBag)
         
         return Output(
             imageDatas: imageDatas,
             moveToDetailButtonTap: input.moveToDetailButtonTap,
+            reservationButtonTap: input.reservationButtonTap,
             interestButtonTap: input.interestButtonTap,
             likeButtonTap: input.likeButtonTap,
             isInterestIdList: isInterestIdList,
             isLikeIdList: isLikeIdList,
             interestStatus: input.interestStatus,
-            likdStatus: input.likeStatus)
+            likdStatus: input.likeStatus,
+            paymentSuccessfulMessage: input.paymentSuccessfulMessage,
+            tokenExpiredMessage: input.tokenExpiredMessage,
+            paymentResultMessage: input.paymentResultMessage)
     }
 }

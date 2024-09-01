@@ -48,3 +48,13 @@ struct EditProfileQuery: Encodable {
     let phoneNum: String
     let profile: Data
 }
+
+struct PaymentValidationQuery: Encodable {
+    let impUID: String
+    let postID: String
+    
+    enum CodingKeys: String, CodingKey {
+        case impUID = "imp_uid"
+        case postID = "post_id"
+    }
+}

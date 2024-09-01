@@ -9,6 +9,7 @@ import UIKit
 import RxSwift
 import RxCocoa
 import MapKit
+import iamport_ios
 
 final class DetailViewController: UIViewController {
     // MARK: UI
@@ -74,6 +75,7 @@ final class DetailViewController: UIViewController {
         // Detail 정보
         postID
             .bind(with: self) { owner, value in
+                owner.viewModel.postID.onNext(value)
                 NetworkManager.shared.viewSpecificPost(postID: value)
                     .subscribe(with: self) { owner, result in
                         switch result {
@@ -211,6 +213,35 @@ final class DetailViewController: UIViewController {
             }
             .disposed(by: disposeBag)
         
+        // 페이원 결제 요청
+        output.reservationButtonTap
+            .withLatestFrom(viewModel.detailData)
+            .bind(with: self) { owner, value in
+                owner.requestPayment(itemName: value.title)
+            }
+            .disposed(by: disposeBag)
+        
+        // 결제 완료 메세지
+        output.paymentSuccessfulMessage
+            .bind(with: self) { owner, value in
+                owner.showToast(message: value)
+            }
+            .disposed(by: disposeBag)
+        
+        // 결제 실패 시, 메세지
+        output.paymentResultMessage
+            .bind(with: self) { owner, value in
+                owner.showToast(message: value)
+            }
+            .disposed(by: disposeBag)
+        
+        // 토큰 업데이트
+        output.tokenExpiredMessage
+            .bind(with: self) { owner, value in
+                owner.showToast(message: value)
+            }
+            .disposed(by: disposeBag)
+        
         // WebView 이동
         Observable.combineLatest(output.moveToDetailButtonTap, viewModel.detailData)
             .bind(with: self) { owner, value in
@@ -219,6 +250,30 @@ final class DetailViewController: UIViewController {
                 owner.present(vc, animated: true)
             }
             .disposed(by: disposeBag)
+    }
+    
+    // 페이원 결제 메서드
+    func requestPayment(itemName: String) {
+        let payment = IamportPayment(
+            pg: PG.html5_inicis.makePgRawName(pgId: "INIpayTest"),
+            merchant_uid: "ios_\(APIKey.secretkey)_\(Int(Date().timeIntervalSince1970))",
+            amount: "100").then {
+                $0.pay_method = PayMethod.card.rawValue
+                $0.name = itemName
+                $0.buyer_name = "김예진"
+                $0.app_scheme = "sesac"
+            }
+        
+        guard let navigationController = navigationController else { return }
+        
+        Iamport.shared.payment(
+            navController: navigationController,
+            userCode: APIKey.userCode,
+            payment: payment)
+        { [weak self] iamportResponse in
+            print("결제가 완료됨.")
+            self?.viewModel.impUID.onNext(iamportResponse?.imp_uid)
+        }
     }
 }
 
