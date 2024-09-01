@@ -572,6 +572,7 @@ final class NetworkManager {
         }
     }
     
+    // MARK: 탈퇴
     func withdraw() -> Single<Result<WithdrawModel, HTTPStatusCodes>>{
         return Single.create { observer -> Disposable in
             
@@ -585,6 +586,41 @@ final class NetworkManager {
                         case .failure(_):
                             let statusCode = response.response?.statusCode
                             switch statusCode {
+                            case 401:
+                                observer(.success(.failure(.mismatchOrInvalid)))
+                            case 403:
+                                observer(.success(.failure(.forbidden)))
+                            case 419:
+                                observer(.success(.failure(.accessTokenExpiration)))
+                            default:
+                                break
+                            }
+                        }
+                    }
+            } catch {
+                print("error 발생!! - error:", error)
+            }
+            
+            return Disposables.create()
+        }
+    }
+    
+    // MARK: 유저별 작성한 포스터 조회(내 포스터 조회)
+    func viewSpecificUsersPost(userID: String, next: String = "") -> Single<Result<ViewPost, HTTPStatusCodes>> {
+        return Single.create { observer -> Disposable in
+            
+            do {
+                let request = try Router.viewSpecificUsersPost(userID: userID, next: next).asURLRequest()
+                AF.request(request)
+                    .responseDecodable(of: ViewPost.self) { response in
+                        switch response.result {
+                        case .success(let success):
+                            observer(.success(.success(success)))
+                        case .failure(_):
+                            let statusCode = response.response?.statusCode
+                            switch statusCode {
+                            case 400:
+                                observer(.success(.failure(.missingRequiredValue)))
                             case 401:
                                 observer(.success(.failure(.mismatchOrInvalid)))
                             case 403:

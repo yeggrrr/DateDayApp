@@ -25,6 +25,7 @@ enum Router {
     case viewMyProfile
     case editMyProfile(query: EditProfileQuery)
     case withdraw
+    case viewSpecificUsersPost(userID: String, next: String)
 }
 
 extension Router: TargetType {
@@ -36,7 +37,7 @@ extension Router: TargetType {
         switch self {
         case .signUp, .validation, .login, .postImage, .uploadPost, .postInterest, .postLike:
             return .post
-        case .tokenRenewal, .viewPost, .viewPostImage, .viewSpecificPost, .viewInterestPost, .searchHashTag, .viewMyProfile, .withdraw:
+        case .tokenRenewal, .viewPost, .viewPostImage, .viewSpecificPost, .viewInterestPost, .searchHashTag, .viewMyProfile, .withdraw, .viewSpecificUsersPost:
             return .get
         case .editMyProfile:
             return .put
@@ -77,6 +78,8 @@ extension Router: TargetType {
             return "/users/me/profile"
         case .withdraw:
             return "/users/withdraw"
+        case let .viewSpecificUsersPost(userID, _):
+            return "/posts/users/\(userID)"
         }
     }
     
@@ -93,7 +96,7 @@ extension Router: TargetType {
                 Header.refresh.rawValue: UserDefaultsManager.shared.refresh,
                 Header.sesac.rawValue: APIKey.secretkey
             ]
-        case .viewPostImage, .viewPost, .viewSpecificPost, .postInterest, .uploadPost, .viewInterestPost, .postLike, .searchHashTag, .viewMyProfile, .withdraw:
+        case .viewPostImage, .viewPost, .viewSpecificPost, .postInterest, .uploadPost, .viewInterestPost, .postLike, .searchHashTag, .viewMyProfile, .withdraw, .viewSpecificUsersPost:
             return [
                 Header.authorization.rawValue: UserDefaultsManager.shared.token,
                 Header.contentType.rawValue: Header.json.rawValue,
@@ -129,6 +132,13 @@ extension Router: TargetType {
                 "product_id" : "yegrDateDay",
                 "hashTag" : hashTag
             ]
+            
+        case .viewSpecificUsersPost(_, let next):
+            return [
+                "next": next,
+                "limit": "10",
+                "product_id" : "yegrDateDay"
+            ]
         default:
             return nil
         }
@@ -145,6 +155,10 @@ extension Router: TargetType {
                 URLQueryItem(name: $0.key, value: $0.value)
             }
         case .searchHashTag:
+            return parameters?.map {
+                URLQueryItem(name: $0.key, value: $0.value)
+            }
+        case .viewSpecificUsersPost:
             return parameters?.map {
                 URLQueryItem(name: $0.key, value: $0.value)
             }
