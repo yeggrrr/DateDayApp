@@ -26,6 +26,7 @@ enum Router {
     case editMyProfile(query: EditProfileQuery)
     case withdraw
     case viewSpecificUsersPost(userID: String, next: String)
+    case deletePost(postID: String)
 }
 
 extension Router: TargetType {
@@ -41,6 +42,8 @@ extension Router: TargetType {
             return .get
         case .editMyProfile:
             return .put
+        case .deletePost:
+            return .delete
         }
     }
     
@@ -80,6 +83,8 @@ extension Router: TargetType {
             return "/users/withdraw"
         case let .viewSpecificUsersPost(userID, _):
             return "/posts/users/\(userID)"
+        case let .deletePost(postID):
+            return "/posts/\(postID)"
         }
     }
     
@@ -96,7 +101,7 @@ extension Router: TargetType {
                 Header.refresh.rawValue: UserDefaultsManager.shared.refresh,
                 Header.sesac.rawValue: APIKey.secretkey
             ]
-        case .viewPostImage, .viewPost, .viewSpecificPost, .postInterest, .uploadPost, .viewInterestPost, .postLike, .searchHashTag, .viewMyProfile, .withdraw, .viewSpecificUsersPost:
+        case .viewPostImage, .viewPost, .viewSpecificPost, .postInterest, .uploadPost, .viewInterestPost, .postLike, .searchHashTag, .viewMyProfile, .withdraw, .viewSpecificUsersPost, .deletePost:
             return [
                 Header.authorization.rawValue: UserDefaultsManager.shared.token,
                 Header.contentType.rawValue: Header.json.rawValue,
@@ -137,7 +142,7 @@ extension Router: TargetType {
             return [
                 "next": next,
                 "limit": "10",
-                "product_id" : "yegrDateDay"
+                "product_id" : "TestProcutID" // TestProcutID // yegrDateDay // <- 이걸로 바꾸기
             ]
         default:
             return nil

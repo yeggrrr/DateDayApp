@@ -639,4 +639,33 @@ final class NetworkManager {
             return Disposables.create()
         }
     }
+    
+    // MARK: 포스트 삭제
+    func deletePost(postID: String, completion: @escaping (HTTPStatusCodes) -> Void) { // completion: @escaping
+        do {
+            let request = try Router.deletePost(postID: postID).asURLRequest()
+            AF.request(request)
+                .responseString { response in
+                    let statusCode = response.response?.statusCode
+                    switch statusCode {
+                    case 200:
+                        completion(.success)
+                    case 401:
+                        completion(.mismatchOrInvalid)
+                    case 403:
+                        completion(.mismatchOrInvalid)
+                    case 410:
+                        completion(.mismatchOrInvalid)
+                    case 419:
+                        completion(.mismatchOrInvalid)
+                    case 445:
+                        completion(.mismatchOrInvalid)
+                    default:
+                        break
+                    }
+                }
+        } catch {
+            print("error 발생!! - error:", error)
+        }
+    }
 }

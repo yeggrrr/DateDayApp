@@ -8,6 +8,8 @@
 import Foundation
 
 enum HTTPStatusCodes: Error {
+    /// 200 
+    case success
     /// 400 - 잘못된 요청 & 필수값 필요
     case missingRequiredValue
     /// 401 - 계정 확인 & 유효하지 않음

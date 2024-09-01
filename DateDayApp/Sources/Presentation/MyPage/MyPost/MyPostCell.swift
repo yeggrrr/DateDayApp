@@ -7,8 +7,11 @@
 
 import UIKit
 import SnapKit
+import RxSwift
+import RxCocoa
 
-final class MyPostCell: UITableViewCell, ViewRepresentable {    
+final class MyPostCell: UITableViewCell, ViewRepresentable {   
+    let menuBarView = UIView()
     let menuButton = UIButton(type: .system)
     
     let posterImageView = UIImageView()
@@ -28,6 +31,15 @@ final class MyPostCell: UITableViewCell, ViewRepresentable {
     let contentLabel = UILabel()
     let createdAtLabel = UILabel()
     
+    // MARK: Properties
+    var disposeBag = DisposeBag()
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        
+        disposeBag = DisposeBag()
+    }
+    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
@@ -39,7 +51,7 @@ final class MyPostCell: UITableViewCell, ViewRepresentable {
     required init?(coder: NSCoder) { fatalError("init(coder:) has not been implemented") }
     
     func addSubviews() {
-        contentView.addSubviews([menuButton, posterImageView, etcStackView, createdAtLabel, titleStackView, contentLabel])
+        contentView.addSubviews([menuBarView, menuButton, posterImageView, etcStackView, createdAtLabel, titleStackView, contentLabel])
         etcStackView.addArrangedSubviews([likeImageView, likeCountLabel, interestImageView, interestCountLabel, starImageView, starRatingLabel])
         titleStackView.addArrangedSubviews([titleLabel, hashTagLabel])
     }
@@ -47,14 +59,20 @@ final class MyPostCell: UITableViewCell, ViewRepresentable {
     func setConstraints() {
         let safeArea = contentView.safeAreaLayoutGuide
         
+        menuBarView.snp.makeConstraints {
+            $0.top.equalTo(safeArea)
+            $0.horizontalEdges.equalTo(safeArea.snp.horizontalEdges)
+            $0.height.width.equalTo(40)
+        }
+        
         menuButton.snp.makeConstraints {
-            $0.top.equalTo(safeArea.snp.top).offset(10)
-            $0.trailing.equalTo(safeArea.snp.trailing).offset(-16)
-            $0.height.width.equalTo(20)
+            $0.verticalEdges.equalTo(menuBarView.snp.verticalEdges)
+            $0.trailing.equalTo(menuBarView.snp.trailing).offset(-10)
+            $0.width.equalTo(menuButton.snp.height)
         }
         
         posterImageView.snp.makeConstraints {
-            $0.top.equalTo(menuButton.snp.bottom).offset(10)
+            $0.top.equalTo(menuButton.snp.bottom)
             $0.horizontalEdges.equalTo(safeArea.snp.horizontalEdges)
             $0.height.equalTo(posterImageView.snp.width)
         }
@@ -93,12 +111,14 @@ final class MyPostCell: UITableViewCell, ViewRepresentable {
     }
     
     func configureUI() {
-        
         etcStackView.basicUI()
         titleStackView.basicUI()
         
         menuButton.setImage(UIImage(systemName: "ellipsis"), for: .normal)
         menuButton.tintColor = .black
+        
+        posterImageView.contentMode = .scaleAspectFill
+        posterImageView.layer.masksToBounds = true
         
         likeImageView.image = UIImage(systemName: "heart.fill")
         likeImageView.tintColor = .systemPink

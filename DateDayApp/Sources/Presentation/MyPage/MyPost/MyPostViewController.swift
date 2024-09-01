@@ -82,8 +82,12 @@ final class MyPostViewController: UIViewController {
                 cell.titleLabel.text = element.title
                 cell.contentLabel.text = element.content
                 cell.createdAtLabel.text = DateFormatter.dateToContainLetter(dateString: element.createdAt)
-                
                 cell.selectionStyle = .none
+                cell.menuButton.rx.tap
+                    .bind(with: self) { owner, _ in
+                        input.menuButtonTap.onNext(row)
+                    }
+                    .disposed(by: cell.disposeBag)
             }
             .disposed(by: disposeBag)
         
@@ -94,6 +98,24 @@ final class MyPostViewController: UIViewController {
                 vc.postID.onNext(postID)
                 vc.hidesBottomBarWhenPushed = true
                 owner.navigationController?.pushViewController(vc, animated: true)
+            }
+            .disposed(by: disposeBag)
+        
+        output.menuButtonTap
+            .bind(with: self) { owner, index in
+                owner.okCanelShowAlert(title: "해당 게시물을 삭제하시겠습니까?") { _ in
+                    NetworkManager.shared.deletePost(postID: owner.viewModel.myPostDataList[index].postId) { result in
+                        switch result {
+                        case .success:
+                            owner.showToast(message: "해당 게시물이 삭제되었습니다.")
+                            input.deleteComplete.onNext(())
+                        case .accessTokenExpiration:
+                            owner.updateToken()
+                        default:
+                            break
+                        }
+                    }
+                }
             }
             .disposed(by: disposeBag)
         

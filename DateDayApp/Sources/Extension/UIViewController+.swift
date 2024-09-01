@@ -79,6 +79,15 @@ extension UIViewController {
         present(alert, animated: true)
     }
     
+    func okCanelShowAlert(title: String, message: String = "", completion: @escaping (UIAlertAction) -> Void) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        let okButton = UIAlertAction(title: "예", style: .default, handler: completion)
+        let cancelButton = UIAlertAction(title: "아니오", style: .cancel)
+        alert.addAction(okButton)
+        alert.addAction(cancelButton)
+        present(alert, animated: true)
+    }
+    
     func updateToken() {
         // 로그인 시, 저장한 시간
         let stringSaveTime = UserDefaultsManager.shared.saveTime
