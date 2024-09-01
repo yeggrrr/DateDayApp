@@ -18,12 +18,16 @@ final class MyPostViewModel: BaseViewModel {
     struct Input {
         let myPostData = PublishSubject<[ViewPost.PostData]>()
         let nextCursor = PublishSubject<String>()
+        let tableViewItemSelected: ControlEvent<IndexPath>
+        let selectedPostID = BehaviorSubject(value: "")
     }
     
     struct Output {
         let myPostData: PublishSubject<[ViewPost.PostData]>
         let profileName: BehaviorSubject<String>
         let profileImage: BehaviorSubject<String>
+        let tableViewItemSelected: ControlEvent<IndexPath>
+        let selectedPostID: BehaviorSubject<String>
     }
     
     func transform(input: Input) -> Output {
@@ -50,9 +54,19 @@ final class MyPostViewModel: BaseViewModel {
             }
             .disposed(by: disposeBag)
         
+        Observable.combineLatest(input.myPostData, input.tableViewItemSelected)
+            .bind(with: self) { owner, value in
+                guard value.1.row < value.0.count else { return }
+                let selectedPostID = value.0[value.1.row].postId
+                input.selectedPostID.onNext(selectedPostID)
+            }
+            .disposed(by: disposeBag)
+        
         return Output(
             myPostData: input.myPostData,
             profileName: profileName,
-            profileImage: profileImage)
+            profileImage: profileImage,
+            tableViewItemSelected: input.tableViewItemSelected,
+            selectedPostID: input.selectedPostID)
     }
 }

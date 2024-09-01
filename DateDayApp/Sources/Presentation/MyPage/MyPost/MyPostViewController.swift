@@ -41,7 +41,9 @@ final class MyPostViewController: UIViewController {
     }
     
     private func bind() {
-        let input = MyPostViewModel.Input()
+        let input = MyPostViewModel.Input(
+            tableViewItemSelected: myPostView.myPostTableView.rx.itemSelected)
+        
         let output = viewModel.transform(input: input)
         
         output.profileName
@@ -81,6 +83,16 @@ final class MyPostViewController: UIViewController {
                 cell.createdAtLabel.text = DateFormatter.dateToContainLetter(dateString: element.createdAt)
                 
                 cell.selectionStyle = .none
+            }
+            .disposed(by: disposeBag)
+        
+        output.tableViewItemSelected
+            .withLatestFrom(output.selectedPostID)
+            .bind(with: self) { owner, postID in
+                let vc = DetailViewController()
+                vc.postID.onNext(postID)
+                vc.hidesBottomBarWhenPushed = true
+                owner.navigationController?.pushViewController(vc, animated: true)
             }
             .disposed(by: disposeBag)
     }
