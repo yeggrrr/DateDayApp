@@ -1,7 +1,7 @@
 {
   "images" : [
     {
-      "filename" : "bubbleImage.png",
+      "filename" : "speechBubble.png",
       "idiom" : "universal",
       "scale" : "1x"
     },

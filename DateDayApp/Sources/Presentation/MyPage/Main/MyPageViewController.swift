@@ -27,6 +27,22 @@ final class MyPageViewController: UIViewController {
         
         configure()
         bind()
+        
+        NetworkManager.shared.viewSpecificUsersPost(userID: UserDefaultsManager.shared.saveLoginUserID, next: "")
+            .subscribe(with: self) { owner, result in
+                switch result {
+                case .success(let success):
+                    print(success)
+                case .failure(let failure):
+                    print(failure)
+                }
+            } onFailure: { owner, error in
+                print("error: \(error)")
+            } onDisposed: { owner in
+                print("NW viewSpecificUsersPost Disposed")
+            }
+            .disposed(by: disposeBag)
+
     }
     
     private func configure() {
@@ -111,6 +127,7 @@ final class MyPageViewController: UIViewController {
             .bind(with: self) { owner, editedModel in
                 let vc = MyIntroduceViewController()
                 if let myIntroduce = editedModel.myIntroduce {
+                    print("myIntroduce: \(myIntroduce)")
                     vc.introduceText.onNext(myIntroduce)
                 }
                 owner.present(vc, animated: true)

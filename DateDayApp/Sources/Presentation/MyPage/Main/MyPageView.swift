@@ -129,10 +129,16 @@ final class MyPageView: BaseView {
         
         profileImageView.image = UIImage(named: "defaultProfileImage")
         profileImageView.contentMode = .scaleAspectFill
-        profileImageView.layer.cornerRadius = 10
+        profileImageView.layer.cornerRadius = 50
         profileImageView.layer.masksToBounds = true
         profileImageView.layer.borderWidth = 1.5
         profileImageView.layer.borderColor = UIColor.black.cgColor
+        
+        nicknameLabel.setUI(
+            txtAlignment: .center,
+            font: .systemFont(ofSize: 17, weight: .semibold),
+            numOfLines: 1,
+            txtColor: .black)
         
         myIntroduceButton.setImage(UIImage(systemName: "lasso.badge.sparkles"), for: .normal)
         myIntroduceButton.tintColor = .black

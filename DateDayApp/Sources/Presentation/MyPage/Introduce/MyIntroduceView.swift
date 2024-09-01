@@ -22,9 +22,9 @@ final class MyIntroduceView: BaseView {
         let safeArea = safeAreaLayoutGuide
         
         bgView.snp.makeConstraints {
-            $0.centerY.equalTo(safeArea.snp.centerY).offset(-80)
-            $0.leading.equalTo(safeArea.snp.leading).offset(20)
-            $0.height.width.equalTo(280)
+            $0.centerY.equalTo(safeArea.snp.centerY).offset(-70)
+            $0.leading.equalTo(safeArea.snp.leading).offset(40)
+            $0.height.width.equalTo(290)
         }
         
         speechBubbleImageView.snp.makeConstraints {
@@ -33,9 +33,9 @@ final class MyIntroduceView: BaseView {
         
         introduceBgView.snp.makeConstraints {
             $0.top.equalTo(speechBubbleImageView.snp.top).offset(115)
-            $0.leading.equalTo(speechBubbleImageView.snp.leading).offset(40)
-            $0.trailing.equalTo(speechBubbleImageView.snp.trailing).offset(-30)
-            $0.bottom.equalTo(speechBubbleImageView.snp.bottom).offset(-65)
+            $0.leading.equalTo(speechBubbleImageView.snp.leading).offset(45)
+            $0.trailing.equalTo(speechBubbleImageView.snp.trailing).offset(-40)
+            $0.bottom.equalTo(speechBubbleImageView.snp.bottom).offset(-55)
         }
         
         introduceLabel.snp.makeConstraints {
@@ -46,8 +46,9 @@ final class MyIntroduceView: BaseView {
     override func configureUI() {
         backgroundColor = .clear
         
-        speechBubbleImageView.image = UIImage(named: "bubbleImage")
+        speechBubbleImageView.image = UIImage(named: "speechBubble")
         speechBubbleImageView.contentMode = .scaleAspectFit
+
         introduceLabel.setUI(
             txtAlignment: .center,
             font: .systemFont(ofSize: 13, weight: .semibold),

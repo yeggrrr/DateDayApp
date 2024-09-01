@@ -16,7 +16,7 @@ final class MyIntroduceViewController: UIViewController {
     // MARK: Properties
     let introduceText = BehaviorSubject(value: "내 소개를 작성해주세요! :)")
     private let disposeBag = DisposeBag()
-
+    
     // MARK: View Life Cycle
     override func loadView() {
         view = myIntroduceView
@@ -34,5 +34,9 @@ final class MyIntroduceViewController: UIViewController {
                 owner.myIntroduceView.introduceLabel.text = value
             }
             .disposed(by: disposeBag)
+    }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        dismiss(animated: true)
     }
 }

@@ -90,7 +90,7 @@ final class EditProfileView: BaseView {
         }
         
         editMyIntroduceView.snp.makeConstraints {
-            $0.top.equalTo(elementsStackView.snp.bottom).offset(11)
+            $0.top.equalTo(elementsStackView.snp.bottom).offset(8)
             $0.leading.equalTo(elementsTextStackView.snp.trailing).offset(10)
             $0.trailing.equalTo(safeArea.snp.trailing).offset(-30)
             $0.height.equalTo(120)
@@ -124,6 +124,7 @@ final class EditProfileView: BaseView {
         profileImageView.layer.borderColor = UIColor.black.cgColor
         profileImageView.layer.cornerRadius = 45
         profileImageView.layer.masksToBounds = true
+        profileImageView.contentMode = .scaleAspectFill
         
         defaultImageView.image = UIImage(named: "defaultProfileImage")
         defaultImageView.layer.borderWidth = 1.5
@@ -172,12 +173,6 @@ final class EditProfileView: BaseView {
         nicknameTextField.textColor = .darkGray
         nicknameTextField.textAlignment = .left
         nicknameTextField.font = .systemFont(ofSize: 15, weight: .regular)
-        
-        // nicknameLabel.setUI(
-        //     txtAlignment: .left,
-        //     font: .systemFont(ofSize: 15, weight: .regular),
-        //     numOfLines: 1,
-        //     txtColor: .darkGray)
         
         emailLabel.setUI(
             txtAlignment: .left,
