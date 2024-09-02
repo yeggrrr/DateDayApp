@@ -90,7 +90,7 @@ final class MyPageViewController: UIViewController {
         // 로그아웃
         output.logoutButtonTap
             .bind(with: self) { owner, _ in
-                owner.okShowAlert(title: "로그아웃 하시겠습니까?", message: "") { _ in
+                owner.okCanelShowAlert(title: "로그아웃 하시겠습니까?", message: "") { _ in
                     owner.setRootViewController(LoginViewController())
                 }
             }
