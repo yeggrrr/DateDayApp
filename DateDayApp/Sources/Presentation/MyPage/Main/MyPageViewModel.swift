@@ -11,6 +11,7 @@ import RxCocoa
 
 final class MyPageViewModel: BaseViewModel {
     let editedProfileData = PublishSubject<EditProfileModel>()
+    let editedIntroduce = PublishSubject<String?>()
     
     private let disposeBag = DisposeBag()
 
@@ -33,6 +34,7 @@ final class MyPageViewModel: BaseViewModel {
         let tokenExpiredMessage: PublishSubject<String>
         let profileData: PublishSubject<ProfileModel>
         let editedProfileData: PublishSubject<EditProfileModel>
+        let editedIntroduce: PublishSubject<String?>
     }
     
     func transform(input: Input) -> Output {
@@ -42,6 +44,7 @@ final class MyPageViewModel: BaseViewModel {
                 switch result {
                 case .success(let success):
                     input.profileData.onNext(success)
+                    owner.editedIntroduce.onNext(success.myIntroduce)
                 case .failure(let failure):
                     switch failure {
                     case .accessTokenExpiration:
@@ -65,6 +68,7 @@ final class MyPageViewModel: BaseViewModel {
             myIntroduceButtonTap: input.myIntroduceButtonTap,
             tokenExpiredMessage: input.tokenExpiredMessage,
             profileData: input.profileData,
-            editedProfileData: editedProfileData)
+            editedProfileData: editedProfileData,
+            editedIntroduce: editedIntroduce)
     }
 }

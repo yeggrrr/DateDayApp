@@ -55,7 +55,6 @@ final class MyPageViewController: UIViewController {
             .bind(with: self) { owner, profileData in
                 owner.myPageView.nicknameLabel.text = profileData.nickname
                 owner.profileData = profileData
-
                 if let image = profileData.profileImage {
                     NetworkManager.shared.viewPostImage(filePath: image) { data in
                         owner.myPageView.profileImageView.image = UIImage(data: data)
@@ -124,12 +123,13 @@ final class MyPageViewController: UIViewController {
         
         // 내 소개
         output.myIntroduceButtonTap
-            .withLatestFrom(output.profileData)
-            .bind(with: self) { owner, editedModel in
+            .withLatestFrom(output.editedIntroduce)
+            .bind(with: self) { owner, introduce in
                 let vc = MyIntroduceViewController()
-                if let myIntroduce = editedModel.myIntroduce {
-                    vc.introduceText.onNext(myIntroduce)
+                if let introduce = introduce {
+                    vc.introduceText.onNext(introduce)
                 }
+
                 owner.present(vc, animated: true)
             }
             .disposed(by: disposeBag)
@@ -148,7 +148,7 @@ final class MyPageViewController: UIViewController {
                 title: "탈퇴하기",
                 image: UIImage(systemName: "minus.circle"),
                 handler: { _ in
-                    self.okShowAlert(title: "탈퇴하기", message: "탈퇴를 하면 데이터가 모두 초기화됩니다. 탈퇴 하시겠습니까?") { _ in
+                    self.okCanelShowAlert(title: "탈퇴하기", message: "탈퇴를 하면 데이터가 모두 초기화됩니다. 탈퇴 하시겠습니까?") { _ in
                         NetworkManager.shared.withdraw()
                             .subscribe(with: self) { owner, result in
                                 switch result {
@@ -187,5 +187,6 @@ final class MyPageViewController: UIViewController {
 extension MyPageViewController: EditedProfileDataDelegate {
     func editedProfileData(editedData: EditProfileModel) {
         viewModel.editedProfileData.onNext(editedData)
+        viewModel.editedIntroduce.onNext(editedData.myIntroduce)
     }
 }
