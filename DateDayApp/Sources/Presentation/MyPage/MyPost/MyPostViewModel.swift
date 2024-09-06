@@ -39,7 +39,6 @@ final class MyPostViewModel: BaseViewModel {
     }
     
     func transform(input: Input) -> Output {
-        
         NetworkManager.shared.viewSpecificUsersPost(userID: UserDefaultsManager.shared.saveLoginUserID, next: "")
             .subscribe(with: self) { owner, result in
                 switch result {
@@ -73,6 +72,7 @@ final class MyPostViewModel: BaseViewModel {
                             owner.myPostDataList.append(contentsOf: success.data)
                             owner.myPostData.onNext(success.data)
                             owner.nextCursor.onNext(success.nextCursor)
+                            UserDefaultsManager.shared.isChangedPostData = true
                         case .failure(let failure):
                             switch failure {
                             case .accessTokenExpiration:

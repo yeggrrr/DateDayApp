@@ -106,6 +106,7 @@ final class WriteViewController: UIViewController {
                         case .success(_):
                             owner.okShowAlert(title: "업로드 성공!", message: "") { _ in
                                 let vc = DateDayTabBarController(showLoginAlert: false)
+                                UserDefaultsManager.shared.isChangedPostData = true
                                 owner.setRootViewController(vc)
                             }
                         case .failure(let failure):

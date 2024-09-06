@@ -140,7 +140,6 @@ final class DetailViewController: UIViewController {
         // 관심 목록 추가 버튼
         Observable.combineLatest(output.interestButtonTap, postID)
             .bind(with: self) { owner, value in
-                
                 owner.detailView.interestButton.isSelected.toggle()
                 let buttonStatus = owner.detailView.interestButton.isSelected
                 

@@ -529,8 +529,8 @@
 			children = (
 				68CED3C92C732DF40043266A /* WriteViewController.swift */,
 				68CED3CB2C732E180043266A /* WriteView.swift */,
-				686DBD362C7999FB0023960B /* writeViewModel.swift */,
 				686DBD3A2C79B0A10023960B /* WriteCell.swift */,
+				686DBD362C7999FB0023960B /* writeViewModel.swift */,
 			);
 			path = Write;
 			sourceTree = "<group>";

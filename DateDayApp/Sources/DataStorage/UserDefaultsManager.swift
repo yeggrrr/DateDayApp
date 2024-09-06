@@ -13,6 +13,7 @@ final class UserDefaultsManager {
         case refresh
         case saveTime
         case saveUserID
+        case isChangedPostData
     }
     
     static let shared = UserDefaultsManager()
@@ -56,6 +57,16 @@ final class UserDefaultsManager {
         
         set {
             UserDefaults.standard.setValue(newValue, forKey: UserDefaultKey.saveUserID.rawValue)
+        }
+    }
+    
+    var isChangedPostData: Bool {
+        get {
+            UserDefaults.standard.bool(forKey: UserDefaultKey.isChangedPostData.rawValue)
+        }
+        
+        set {
+            UserDefaults.standard.setValue(newValue, forKey: UserDefaultKey.isChangedPostData.rawValue)
         }
     }
 }

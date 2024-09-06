@@ -40,6 +40,10 @@ final class FeedViewController: UIViewController {
             showToast(message: "로그인 성공! :)", heightY: 500, delayTime: 0.5)
             self.showLoginAlert = false
         }
+        
+        if UserDefaultsManager.shared.isChangedPostData {
+            updateData()
+        }
     }
     
     // MARK: Functions
@@ -129,6 +133,7 @@ final class FeedViewController: UIViewController {
                     owner.viewModel.feedDataList.append(contentsOf: success.data)
                     owner.viewModel.postData.onNext(success.data)
                     owner.viewModel.nextCursor.onNext(success.nextCursor)
+                    UserDefaultsManager.shared.isChangedPostData = false
                 case .failure(let failure):
                     switch failure {
                     case .accessTokenExpiration:
