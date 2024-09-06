@@ -19,6 +19,7 @@ final class PickedListViewModel: BaseViewModel {
     
     struct Input {
         let itemSelected: ControlEvent<IndexPath>
+        let tableViewModelSelected: ControlEvent<ViewPost.PostData>
         let selectedCellIndex = PublishSubject<ControlEvent<IndexPath>.Element>()
         let selectedPostID = BehaviorSubject(value: "")
         let tableViewPrefetchRows: ControlEvent<[IndexPath]>
@@ -57,11 +58,10 @@ final class PickedListViewModel: BaseViewModel {
             }
             .disposed(by: disposeBag)
         
-        // 선택한 셀 postID 전달
-        Observable.combineLatest(pickedListData, input.selectedCellIndex)
-            .bind(with: self) { owner, value in
-                guard value.1.row < value.0.count else { return }
-                let selectedPostID = value.0[value.1.row].postId
+        // postID 전달
+        input.tableViewModelSelected
+            .bind(with: self) { owner, data in
+                let selectedPostID = data.postId
                 input.selectedPostID.onNext(selectedPostID)
             }
             .disposed(by: disposeBag)

@@ -57,6 +57,7 @@ final class PickedListViewController: UIViewController {
     private func bind() {
         let input = PickedListViewModel.Input(
             itemSelected: pickedListView.tableView.rx.itemSelected,
+            tableViewModelSelected: pickedListView.tableView.rx.modelSelected(ViewPost.PostData.self),
             tableViewPrefetchRows: pickedListView.tableView.rx.prefetchRows)
         
         let output = viewModel.transform(input: input)

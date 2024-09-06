@@ -43,6 +43,7 @@ final class SearchViewController: UIViewController {
         let input = SearchViewModel.Input(
             searchButtonClicked: searchView.searchBar.rx.searchButtonClicked,
             searchText: searchView.searchBar.rx.text.orEmpty,
+            collectionviewModelSelected: searchView.collectionView.rx.modelSelected(SearchHashTag.PostData.self),
             collectionViewItemSelected: searchView.collectionView.rx.itemSelected)
         
         let output = viewModel.transform(input: input)

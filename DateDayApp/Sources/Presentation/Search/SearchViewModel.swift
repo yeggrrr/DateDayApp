@@ -17,6 +17,7 @@ final class SearchViewModel: BaseViewModel {
     struct Input {
         let searchButtonClicked: ControlEvent<Void>
         let searchText: ControlProperty<String>
+        let collectionviewModelSelected: ControlEvent<SearchHashTag.PostData>
         let collectionViewItemSelected:  ControlEvent<IndexPath>
         let selectedPostID = PublishSubject<String>()
     }
@@ -55,10 +56,9 @@ final class SearchViewModel: BaseViewModel {
             }
             .disposed(by: disposeBag)
         
-        Observable.combineLatest(searchResultList, input.collectionViewItemSelected)
-            .bind(with: self) { owner, value in
-                guard value.1.row < value.0.count else { return }
-                let selectedPostID = value.0[value.1.row].postId
+        input.collectionviewModelSelected
+            .bind(with: self) { owner, postData in
+                let selectedPostID = postData.postId
                 input.selectedPostID.onNext(selectedPostID)
             }
             .disposed(by: disposeBag)

@@ -66,6 +66,7 @@ final class FeedViewController: UIViewController {
     private func bind() {
         let input = FeedViewModel.Input(
             collectionViewItemSelected: feedView.collectionView.rx.itemSelected,
+            collectionViewModelSelected: feedView.collectionView.rx.modelSelected(ViewPost.PostData.self),
             collectionViewPrefetchItems: feedView.collectionView.rx.prefetchItems,
             writeButtonTap: feedView.writeButton.rx.tap)
         

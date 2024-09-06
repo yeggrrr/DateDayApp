@@ -20,6 +20,7 @@ final class MyPostViewModel: BaseViewModel {
     
     struct Input {
         let tableViewItemSelected: ControlEvent<IndexPath>
+        let tableViewModelSelected: ControlEvent<ViewPost.PostData>
         let selectedPostID = BehaviorSubject(value: "")
         let tableViewPrefetchRows: ControlEvent<[IndexPath]>
         let tokenExpiredMessage = PublishSubject<String>()
@@ -89,11 +90,9 @@ final class MyPostViewModel: BaseViewModel {
             }
             .disposed(by: disposeBag)
         
-        
-        Observable.combineLatest(myPostData, input.tableViewItemSelected)
+        input.tableViewModelSelected
             .bind(with: self) { owner, value in
-                guard value.1.row < value.0.count else { return }
-                let selectedPostID = value.0[value.1.row].postId
+                let selectedPostID = value.postId
                 input.selectedPostID.onNext(selectedPostID)
             }
             .disposed(by: disposeBag)

@@ -18,6 +18,7 @@ final class FeedViewModel: BaseViewModel {
     
     struct Input {
         let collectionViewItemSelected: ControlEvent<IndexPath>
+        let collectionViewModelSelected: ControlEvent<ViewPost.PostData>
         let collectionViewPrefetchItems: ControlEvent<[IndexPath]>
         let writeButtonTap: ControlEvent<Void>
         let selectedPostID = BehaviorSubject(value: "")
@@ -66,10 +67,9 @@ final class FeedViewModel: BaseViewModel {
             }
             .disposed(by: disposeBag)
         
-        Observable.combineLatest(postData, input.collectionViewItemSelected)
-            .bind(with: self) { owner, value in
-                guard value.1.row < value.0.count else { return }
-                let selectedPostID = value.0[value.1.row].postId
+        input.collectionViewModelSelected
+            .bind(with: self) { owner, postData in
+                let selectedPostID = postData.postId
                 input.selectedPostID.onNext(selectedPostID)
             }
             .disposed(by: disposeBag)
