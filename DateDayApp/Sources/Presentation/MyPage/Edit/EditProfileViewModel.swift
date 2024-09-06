@@ -10,6 +10,7 @@ import RxSwift
 import RxCocoa
 
 final class EditProfileViewModel: BaseViewModel {
+    let profileImageData = BehaviorSubject(value: Data())
     private let disposeBag = DisposeBag()
     
     struct Input {
@@ -23,6 +24,7 @@ final class EditProfileViewModel: BaseViewModel {
     
     struct Output {
         let profileData: PublishSubject<ProfileModel>
+        let profileImageData: BehaviorSubject<Data>
         let tokenExpiredMessage: PublishSubject<String>
         let setProfileImageButtonTap: ControlEvent<Void>
         let setDefaultImageButtonTap: ControlEvent<Void>
@@ -54,6 +56,7 @@ final class EditProfileViewModel: BaseViewModel {
         
         return Output(
             profileData: input.profileData,
+            profileImageData: profileImageData,
             tokenExpiredMessage: input.tokenExpiredMessage,
             setProfileImageButtonTap: input.setProfileImageButtonTap,
             setDefaultImageButtonTap: input.setDefaultImageButtonTap,

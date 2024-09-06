@@ -60,6 +60,7 @@ final class EditProfileViewController: UIViewController {
                 if let image = profileData.profileImage {
                     NetworkManager.shared.viewPostImage(filePath: image) { data in
                         owner.editProfileView.profileImageView.image = UIImage(data: data)
+                        owner.viewModel.profileImageData.onNext(data)
                     }
                 }
             }
@@ -127,30 +128,34 @@ final class EditProfileViewController: UIViewController {
                         }
                         .disposed(by: owner.disposeBag)
                 } else {
-                    NetworkManager.shared.editProfile(
-                        nickname: editedNickname,
-                        introduce: owner.editProfileView.editMyIntroduceTextView.text,
-                        profile: Data())
-                        .subscribe(with: self) { owner, result in
-                            switch result {
-                            case .success(let success):
-                                input.editedProfileData.onNext(success)
-                                owner.okShowAlert(title: "프로필 정보가 변경되었습니다! :)", message: "") { _ in
-                                    owner.delegate?.editedProfileData(editedData: success)
-                                    owner.navigationController?.popViewController(animated: true)
+                    output.profileImageData
+                        .bind(with: self) { owner, currentiImageData in
+                            NetworkManager.shared.editProfile(
+                                nickname: editedNickname,
+                                introduce: owner.editProfileView.editMyIntroduceTextView.text,
+                                profile: currentiImageData)
+                                .subscribe(with: self) { owner, result in
+                                    switch result {
+                                    case .success(let success):
+                                        input.editedProfileData.onNext(success)
+                                        owner.okShowAlert(title: "프로필 정보가 변경되었습니다! :)", message: "") { _ in
+                                            owner.delegate?.editedProfileData(editedData: success)
+                                            owner.navigationController?.popViewController(animated: true)
+                                        }
+                                    case .failure(let failure):
+                                        switch failure {
+                                        case .accessTokenExpiration:
+                                            owner.updateToken()
+                                        default:
+                                            break
+                                        }
+                                    }
+                                } onFailure: { owner, error in
+                                    print("error: \(error)")
+                                } onDisposed: { owner in
+                                    print("EditProfileVC NW Disposed")
                                 }
-                            case .failure(let failure):
-                                switch failure {
-                                case .accessTokenExpiration:
-                                    owner.updateToken()
-                                default:
-                                    break
-                                }
-                            }
-                        } onFailure: { owner, error in
-                            print("error: \(error)")
-                        } onDisposed: { owner in
-                            print("EditProfileVC NW Disposed")
+                                .disposed(by: owner.disposeBag)
                         }
                         .disposed(by: owner.disposeBag)
                 }
