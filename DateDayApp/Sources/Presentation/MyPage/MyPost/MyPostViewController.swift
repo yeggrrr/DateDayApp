@@ -29,6 +29,7 @@ final class MyPostViewController: UIViewController {
         bind()
     }
     
+    // MARK: Function
     private func configure() {
         // navigation
         navigationItem.title = "내 게시글"
@@ -37,12 +38,13 @@ final class MyPostViewController: UIViewController {
         
         // tableView
         myPostView.myPostTableView.register(MyPostCell.self, forCellReuseIdentifier: MyPostCell.id)
-        myPostView.myPostTableView.rowHeight = 610
+        myPostView.myPostTableView.rowHeight = 580
     }
     
     private func bind() {
         let input = MyPostViewModel.Input(
             tableViewItemSelected: myPostView.myPostTableView.rx.itemSelected,
+            tableViewModelSelected: myPostView.myPostTableView.rx.modelSelected(ViewPost.PostData.self),
             tableViewPrefetchRows: myPostView.myPostTableView.rx.prefetchRows)
         
         let output = viewModel.transform(input: input)
