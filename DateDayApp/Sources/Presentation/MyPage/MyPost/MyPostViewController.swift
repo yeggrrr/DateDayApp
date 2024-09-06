@@ -121,6 +121,16 @@ final class MyPostViewController: UIViewController {
             }
             .disposed(by: disposeBag)
         
+        output.myPostData
+            .bind(with: self) { owner, postData in
+                if postData.count == 0 {
+                    owner.myPostView.noticeLabel.isHidden = false
+                } else {
+                    owner.myPostView.noticeLabel.isHidden = true
+                }
+            }
+            .disposed(by: disposeBag)
+        
         output.tokenExpiredMessage
             .bind(with: self) { owner, _ in
                 owner.updateToken()

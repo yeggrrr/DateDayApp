@@ -14,13 +14,14 @@ final class MyPostView: BaseView {
     let userNameLabel = UILabel()
     private let dividerView = UIView()
     let myPostTableView = UITableView()
+    let noticeLabel = UILabel()
     
     override func draw(_ rect: CGRect) {
         userProfileImageView.layer.cornerRadius = userProfileImageView.frame.width / 2
     }
     
     override func addSubviews() {
-        addSubviews([userInfoView, userProfileImageView, userNameLabel, dividerView, myPostTableView])
+        addSubviews([userInfoView, userProfileImageView, userNameLabel, dividerView, myPostTableView, noticeLabel])
     }
     
     override func setConstraints() {
@@ -53,6 +54,10 @@ final class MyPostView: BaseView {
             $0.top.equalTo(dividerView.snp.bottom)
             $0.horizontalEdges.bottom.equalTo(safeArea)
         }
+        
+        noticeLabel.snp.makeConstraints {
+            $0.center.equalTo(safeArea.snp.center)
+        }
     }
     
     override func configureUI() {
@@ -70,5 +75,12 @@ final class MyPostView: BaseView {
             txtColor: .black)
         
         dividerView.backgroundColor = .lightGray
+        
+        noticeLabel.setUI(
+            txt: "작성한 게시물이 없습니다.",
+            txtAlignment: .center,
+            font: .systemFont(ofSize: 17, weight: .semibold),
+            numOfLines: 1,
+            txtColor: .black)
     }
 }
