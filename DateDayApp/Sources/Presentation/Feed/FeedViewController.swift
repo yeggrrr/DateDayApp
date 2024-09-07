@@ -119,7 +119,10 @@ final class FeedViewController: UIViewController {
         
         output.tokenExpiredMessage
             .bind(with: self) { owner, value in
-                owner.updateToken()
+                owner.updateToken { newToken in
+                    UserDefaultsManager.shared.token = newToken
+                    owner.viewModel.updateData()
+                }
             }
             .disposed(by: disposeBag)
     }
@@ -137,7 +140,10 @@ final class FeedViewController: UIViewController {
                 case .failure(let failure):
                     switch failure {
                     case .accessTokenExpiration:
-                        owner.updateToken()
+                        owner.updateToken { newToken in
+                            UserDefaultsManager.shared.token = newToken
+                            owner.viewModel.updateData()
+                        }
                     default:
                         break
                     }

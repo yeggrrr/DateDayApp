@@ -106,4 +106,29 @@ final class PickedListViewModel: BaseViewModel {
             itemSelected: input.itemSelected,
             selectedPostID: input.selectedPostID)
     }
+    
+    func updateData() {
+        NetworkManager.shared.viewInterestList()
+            .subscribe(with: self) { owner, result in
+                switch result {
+                case .success(let success):
+                    owner.pickedList.removeAll()
+                    owner.pickedList.append(contentsOf: success.data)
+                    owner.pickedListData.onNext(success.data)
+                    owner.nextCursor.onNext(success.nextCursor)
+                case .failure(let failure):
+                    switch failure {
+                    case .accessTokenExpiration:
+                        print("토큰 만료!!")
+                    default:
+                        break
+                    }
+                }
+            } onFailure: { owner, error in
+                print("error: \(error)")
+            } onDisposed: { owner in
+                print("PickedListVC Disposed")
+            }
+            .disposed(by: disposeBag)
+    }
 }

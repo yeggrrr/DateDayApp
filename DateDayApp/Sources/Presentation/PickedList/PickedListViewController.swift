@@ -99,7 +99,10 @@ final class PickedListViewController: UIViewController {
         // 토큰 만료 - 업데이트
         output.tokenExpiredMessage
             .bind(with: self) { owner, value in
-                owner.updateToken()
+                owner.updateToken { newToken in
+                    UserDefaultsManager.shared.token = newToken
+                    owner.viewModel.updateData()
+                }
             }
             .disposed(by: disposeBag)
     }

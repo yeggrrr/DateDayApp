@@ -116,4 +116,29 @@ final class FeedViewModel: BaseViewModel {
             tokenExpiredMessage: input.tokenExpiredMessage,
             nextCursor: nextCursor)
     }
+    
+    func updateData() {
+        NetworkManager.shared.viewPost()
+            .subscribe(with: self) { owner, result in
+                switch result {
+                case .success(let success):
+                    owner.feedDataList.removeAll()
+                    owner.feedDataList.append(contentsOf: success.data)
+                    owner.postData.onNext(success.data)
+                    owner.nextCursor.onNext(success.nextCursor)
+                case .failure(let failure):
+                    switch failure {
+                    case .accessTokenExpiration:
+                        print("토큰 만료")
+                    default:
+                        break
+                    }
+                }
+            } onFailure: { owner, error in
+                print("error: \(error)")
+            } onDisposed: { owner in
+                print("FeedVC viewPost - Disposed")
+            }
+            .disposed(by: disposeBag)
+    }
 }

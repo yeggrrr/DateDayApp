@@ -12,9 +12,10 @@ import RxCocoa
 final class MyPageViewModel: BaseViewModel {
     let editedProfileData = PublishSubject<EditProfileModel>()
     let editedIntroduce = PublishSubject<String?>()
+    let profileData = PublishSubject<ProfileModel>()
     
     private let disposeBag = DisposeBag()
-
+    
     struct Input {
         let interestButtonTap: ControlEvent<Void>
         let editProfileButtonTap: ControlEvent<Void>
@@ -23,7 +24,6 @@ final class MyPageViewModel: BaseViewModel {
         let myIntroduceButtonTap: ControlEvent<Void>
         let myPaymentListButtonTap: ControlEvent<Void>
         let tokenExpiredMessage = PublishSubject<String>()
-        let profileData = PublishSubject<ProfileModel>()
     }
     
     struct Output {
@@ -45,7 +45,7 @@ final class MyPageViewModel: BaseViewModel {
             .subscribe(with: self) { owner, result in
                 switch result {
                 case .success(let success):
-                    input.profileData.onNext(success)
+                    owner.profileData.onNext(success)
                     owner.editedIntroduce.onNext(success.myIntroduce)
                 case .failure(let failure):
                     switch failure {
@@ -61,7 +61,7 @@ final class MyPageViewModel: BaseViewModel {
                 print("NW viewMyProfile Disposed")
             }
             .disposed(by: disposeBag)
-
+        
         return Output(
             interestButtonTap: input.interestButtonTap,
             editProfileButtonTap: input.editProfileButtonTap,
@@ -70,8 +70,54 @@ final class MyPageViewModel: BaseViewModel {
             myIntroduceButtonTap: input.myIntroduceButtonTap,
             myPaymentListButtonTap: input.myPaymentListButtonTap,
             tokenExpiredMessage: input.tokenExpiredMessage,
-            profileData: input.profileData,
+            profileData: profileData,
             editedProfileData: editedProfileData,
             editedIntroduce: editedIntroduce)
+    }
+    
+    func updateData() {
+        NetworkManager.shared.viewMyProfile()
+            .subscribe(with: self) { owner, result in
+                switch result {
+                case .success(let success):
+                    owner.profileData.onNext(success)
+                    owner.editedIntroduce.onNext(success.myIntroduce)
+                case .failure(let failure):
+                    switch failure {
+                    case .accessTokenExpiration:
+                        print("토큰 만료")
+                    default:
+                        break
+                    }
+                }
+            } onFailure: { owner, error in
+                print("error: \(error)")
+            } onDisposed: { owner in
+                print("NW viewMyProfile Disposed")
+            }
+            .disposed(by: disposeBag)
+    }
+    
+    func withdraw(completion: @escaping (WithdrawModel) -> Void) {
+        NetworkManager.shared.withdraw()
+            .subscribe(with: self) { owner, result in
+                switch result {
+                case .success(let success):
+                    let a = success
+                    completion(success)
+                case .failure(let failure):
+                    switch failure {
+                    case .accessTokenExpiration:
+                        print("토큰 만료")
+                    default:
+                        break
+                    }
+                }
+            } onFailure: { owner, error in
+                print("error: \(error)")
+            } onDisposed: { owner in
+                print("MyPageVC withdraw Disposed")
+            }
+            .disposed(by: self.disposeBag)
     }
 }

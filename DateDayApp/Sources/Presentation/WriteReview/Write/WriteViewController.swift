@@ -120,7 +120,27 @@ final class WriteViewController: UIViewController {
                             case .serverErrorNotSavedOrCannotSearch:
                                 owner.showToast(message: "생성된 게시글이 없습니다.")
                             case .accessTokenExpiration:
-                                owner.updateToken()
+                                owner.updateToken { newToken in
+                                    UserDefaultsManager.shared.token = newToken
+                                    NetworkManager.shared.uploadPost(uploadQuery: uploadPostQuery)
+                                        .subscribe(with: self) { owner, result in
+                                            switch result {
+                                            case .success(_):
+                                                owner.okShowAlert(title: "업로드 성공!", message: "") { _ in
+                                                    let vc = DateDayTabBarController(showLoginAlert: false)
+                                                    UserDefaultsManager.shared.isChangedPostData = true
+                                                    owner.setRootViewController(vc)
+                                                }
+                                            case .failure(let failure):
+                                                print("Failed!: \(failure)")
+                                            }
+                                        } onFailure: { owner, error in
+                                            print("error:\(error)")
+                                        } onDisposed: { owner in
+                                            print("토큰 갱신 후, 다시 업로드 통신 Disposed")
+                                        }
+                                        .disposed(by: owner.disposeBag)
+                                }
                             default:
                                 break
                             }
@@ -162,7 +182,9 @@ final class WriteViewController: UIViewController {
                             case .forbidden:
                                 owner.showToast(message: "접근권한이 없습니다.")
                             case .accessTokenExpiration:
-                                owner.updateToken()
+                                owner.updateToken { newToken in
+                                    UserDefaultsManager.shared.token = newToken
+                                }
                             default:
                                 break
                             }

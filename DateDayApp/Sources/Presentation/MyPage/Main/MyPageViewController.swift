@@ -146,7 +146,9 @@ final class MyPageViewController: UIViewController {
         // 토큰 갱신
         output.tokenExpiredMessage
             .bind(with: self) { owner, _ in
-                owner.updateToken()
+                owner.updateToken { newToken in
+                    UserDefaultsManager.shared.token = newToken
+                }
             }
             .disposed(by: disposeBag)
     }
@@ -166,7 +168,12 @@ final class MyPageViewController: UIViewController {
                                 case .failure(let failure):
                                     switch failure {
                                     case .accessTokenExpiration:
-                                        owner.updateToken()
+                                        owner.updateToken { newToken in
+                                            UserDefaultsManager.shared.token = newToken
+                                            owner.viewModel.withdraw { _ in
+                                                owner.setRootViewController(LoginViewController())
+                                            }
+                                        }
                                     default:
                                         break
                                     }
@@ -191,6 +198,8 @@ final class MyPageViewController: UIViewController {
 
         return barButton
     }
+    
+    
 }
 
 extension MyPageViewController: EditedProfileDataDelegate {

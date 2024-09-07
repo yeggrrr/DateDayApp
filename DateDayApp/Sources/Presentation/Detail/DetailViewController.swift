@@ -96,7 +96,10 @@ final class DetailViewController: UIViewController {
                         case .failure(let failure):
                             switch failure {
                             case .accessTokenExpiration:
-                                owner.updateToken()
+                                owner.updateToken { newToken in
+                                    UserDefaultsManager.shared.token = newToken
+                                    owner.postID.onNext(value)
+                                }
                             default:
                                 break
                             }
@@ -152,7 +155,9 @@ final class DetailViewController: UIViewController {
                         case .failure(let failure):
                             switch failure {
                             case .accessTokenExpiration:
-                                owner.updateToken()
+                                owner.updateToken { newToken in
+                                    UserDefaultsManager.shared.token = newToken
+                                }
                             default:
                                 break
                             }
@@ -189,7 +194,9 @@ final class DetailViewController: UIViewController {
                         case .failure(let failure):
                             switch failure {
                             case .accessTokenExpiration:
-                                owner.updateToken()
+                                owner.updateToken { newToken in
+                                    UserDefaultsManager.shared.token = newToken
+                                }
                             default:
                                 break
                             }

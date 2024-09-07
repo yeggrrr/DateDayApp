@@ -139,4 +139,29 @@ final class MyPostViewModel: BaseViewModel {
             tokenExpiredMessage: input.tokenExpiredMessage,
             menuButtonTap: input.menuButtonTap)
     }
+    
+    func updateData() {
+        NetworkManager.shared.viewSpecificUsersPost(userID: UserDefaultsManager.shared.saveLoginUserID, next: "")
+            .subscribe(with: self) { owner, result in
+                switch result {
+                case .success(let success):
+                    owner.myPostDataList.removeAll()
+                    owner.myPostDataList.append(contentsOf: success.data)
+                    owner.myPostData.onNext(success.data)
+                    owner.nextCursor.onNext(success.nextCursor)
+                case .failure(let failure):
+                    switch failure {
+                    case .accessTokenExpiration:
+                        print("토큰 만료")
+                    default:
+                        break
+                    }
+                }
+            } onFailure: { owner, error in
+                print("error: \(error)")
+            } onDisposed: { owner in
+                print("NW viewSpecificUsersPost Disposed")
+            }
+            .disposed(by: disposeBag)
+    }
 }

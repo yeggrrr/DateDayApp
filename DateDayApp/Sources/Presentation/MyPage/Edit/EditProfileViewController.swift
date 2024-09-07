@@ -116,7 +116,10 @@ final class EditProfileViewController: UIViewController {
                             case .failure(let failure):
                                 switch failure {
                                 case .accessTokenExpiration:
-                                    owner.updateToken()
+                                    owner.updateToken { newToken in
+                                        UserDefaultsManager.shared.token = newToken
+                                        owner.showToast(message: "문제가 발생했습니다. 다시 시도해주세요.")
+                                    }
                                 default:
                                     break
                                 }
@@ -145,7 +148,10 @@ final class EditProfileViewController: UIViewController {
                                     case .failure(let failure):
                                         switch failure {
                                         case .accessTokenExpiration:
-                                            owner.updateToken()
+                                            owner.updateToken { newToken in
+                                                UserDefaultsManager.shared.token = newToken
+                                                owner.showToast(message: "문제가 발생했습니다. 다시 시도해주세요.")
+                                            }
                                         default:
                                             break
                                         }
@@ -172,7 +178,10 @@ final class EditProfileViewController: UIViewController {
         // 토큰 갱신
         output.tokenExpiredMessage
             .bind(with: self) { owner, _ in
-                owner.updateToken()
+                owner.updateToken { newToken in
+                    UserDefaultsManager.shared.token = newToken
+                    owner.viewModel.updateData()
+                }
             }
             .disposed(by: disposeBag)
     }
