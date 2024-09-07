@@ -21,6 +21,7 @@ final class MyPageViewModel: BaseViewModel {
         let logoutButtonTap: ControlEvent<Void>
         let myPostListButtonTap: ControlEvent<Void>
         let myIntroduceButtonTap: ControlEvent<Void>
+        let myPaymentListButtonTap: ControlEvent<Void>
         let tokenExpiredMessage = PublishSubject<String>()
         let profileData = PublishSubject<ProfileModel>()
     }
@@ -31,6 +32,7 @@ final class MyPageViewModel: BaseViewModel {
         let logoutButtonTap: ControlEvent<Void>
         let myPostListButtonTap: ControlEvent<Void>
         let myIntroduceButtonTap: ControlEvent<Void>
+        let myPaymentListButtonTap: ControlEvent<Void>
         let tokenExpiredMessage: PublishSubject<String>
         let profileData: PublishSubject<ProfileModel>
         let editedProfileData: PublishSubject<EditProfileModel>
@@ -66,6 +68,7 @@ final class MyPageViewModel: BaseViewModel {
             logoutButtonTap: input.logoutButtonTap,
             myPostListButtonTap: input.myPostListButtonTap,
             myIntroduceButtonTap: input.myIntroduceButtonTap,
+            myPaymentListButtonTap: input.myPaymentListButtonTap,
             tokenExpiredMessage: input.tokenExpiredMessage,
             profileData: input.profileData,
             editedProfileData: editedProfileData,

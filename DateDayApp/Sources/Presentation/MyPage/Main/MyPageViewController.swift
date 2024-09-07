@@ -46,7 +46,8 @@ final class MyPageViewController: UIViewController {
             editProfileButtonTap: myPageView.editProfileButton.rx.tap,
             logoutButtonTap: myPageView.logoutButton.rx.tap,
             myPostListButtonTap: myPageView.myPostListButton.rx.tap,
-            myIntroduceButtonTap: myPageView.myIntroduceButton.rx.tap)
+            myIntroduceButtonTap: myPageView.myIntroduceButton.rx.tap,
+            myPaymentListButtonTap: myPageView.myPaymentListButton.rx.tap)
         
         let output = viewModel.transform(input: input)
         
@@ -117,6 +118,14 @@ final class MyPageViewController: UIViewController {
                     vc.viewModel.profileName.onNext(editedProfileData.nickname)
                     vc.viewModel.profileImage.onNext(editedProfileData.profileImage ?? "")
                 }
+                owner.navigationController?.pushViewController(vc, animated: true)
+            }
+            .disposed(by: disposeBag)
+        
+        // 결제 내역 리스트
+        output.myPaymentListButtonTap
+            .bind(with: self) { owner, _ in
+                let vc = MyPaymentListViewController()
                 owner.navigationController?.pushViewController(vc, animated: true)
             }
             .disposed(by: disposeBag)
