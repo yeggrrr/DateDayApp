@@ -52,7 +52,10 @@ final class MyPaymentListViewController: UIViewController {
         
         output.tokenExpiredMessage
             .bind(with: self) { owner, _ in
-                owner.updateToken()
+                owner.updateToken { newToken in
+                    UserDefaultsManager.shared.token = newToken
+                    owner.viewModel.updateData()
+                }
             }
             .disposed(by: disposeBag)
     }

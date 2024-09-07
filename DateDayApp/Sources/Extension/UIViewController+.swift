@@ -88,7 +88,7 @@ extension UIViewController {
         present(alert, animated: true)
     }
     
-    func updateToken() {
+    func updateToken(completion: @escaping (String) -> Void) {
         // 로그인 시, 저장한 시간
         let stringSaveTime = UserDefaultsManager.shared.saveTime
         // 저장한 시간 Date로 변환
@@ -101,7 +101,7 @@ extension UIViewController {
             NetworkManager.shared.tokenUpdate { result in
                 switch result {
                 case .success(let success):
-                    UserDefaultsManager.shared.token = success.accessToken
+                    completion(success.accessToken)
                 case .failure(let failure):
                     switch failure {
                     case .refreshTokenExpiration:
