@@ -31,12 +31,32 @@ final class MyPageView: BaseView {
     private let myPostListTextLabel = UILabel()
     let myPostListButton = UIButton()
     
+    private let myPaymentListStackView = UIStackView()
+    private let myPaymentListBgView = UIView()
+    private let myPaymentListView = UIView()
+    private let myPaymentListIconImageView = UIImageView()
+    private let myPaymentListTextLabel = UILabel()
+    let myPaymentListButton = UIButton()
+    
     override func addSubviews() {
-        addSubviews([profileImageView, nicknameLabel, myIntroduceButton, dividerView, myInterestBgView, myPostListBgView, topButtonStackView, myInterestListStackView, myInterestListButton, myPostListStackView, myPostListButton])
+        addSubviews([
+            profileImageView, nicknameLabel, myIntroduceButton, dividerView,
+            myInterestBgView, myPostListBgView, myPaymentListBgView,
+            topButtonStackView,
+            myInterestListStackView, myInterestListButton,
+            myPostListStackView, myPostListButton,
+            myPaymentListStackView, myPaymentListButton
+        ])
+        
         myInterestListStackView.addArrangedSubviews([myInterestListView, myInterestListTextLabel])
         myInterestListView.addSubview(myInterestListIconImageView)
+        
         myPostListStackView.addArrangedSubviews([myPostListView, myPostListTextLabel])
         myPostListView.addSubview(myPostListIconImageView)
+        
+        myPaymentListStackView.addArrangedSubviews([myPaymentListView, myPaymentListTextLabel])
+        myPaymentListView.addSubview(myPaymentListIconImageView)
+        
         topButtonStackView.addArrangedSubviews([editProfileButton, logoutButton])
     }
     
@@ -122,6 +142,31 @@ final class MyPageView: BaseView {
         myPostListBgView.snp.makeConstraints {
             $0.edges.equalTo(myPostListButton.snp.edges)
         }
+        
+        myPaymentListStackView.snp.makeConstraints {
+            $0.top.equalTo(myPostListButton.snp.bottom).offset(16)
+            $0.leading.equalTo(safeArea.snp.leading).offset(20)
+            $0.trailing.lessThanOrEqualTo(safeArea.snp.trailing).offset(-20)
+            $0.height.equalTo(50)
+        }
+        
+        myPaymentListView.snp.makeConstraints {
+            $0.width.equalTo(myPaymentListView.snp.height)
+        }
+        
+        myPaymentListIconImageView.snp.makeConstraints {
+            $0.edges.equalTo(myPaymentListView.snp.edges).inset(10)
+        }
+        
+        myPaymentListButton.snp.makeConstraints {
+            $0.leading.equalTo(myPaymentListStackView.snp.leading)
+            $0.verticalEdges.equalTo(myPaymentListStackView.snp.verticalEdges)
+            $0.trailing.equalTo(safeArea.snp.trailing).offset(-20)
+        }
+        
+        myPaymentListBgView.snp.makeConstraints {
+            $0.edges.equalTo(myPaymentListButton.snp.edges)
+        }
     }
 
     override func configureUI() {
@@ -162,15 +207,20 @@ final class MyPageView: BaseView {
         dividerView.backgroundColor = .black
         
         myInterestListStackView.axis = .horizontal
-        myInterestListStackView.spacing = 5
-        
         myPostListStackView.axis = .horizontal
+        myPaymentListStackView.axis = .horizontal
+        
+        myInterestListStackView.spacing = 5
         myPostListStackView.spacing = 5
+        myPaymentListStackView.spacing = 5
         
         myInterestBgView.backgroundColor = .primaryCustomLight
         myPostListBgView.backgroundColor = .primaryCustomLight
+        myPaymentListBgView.backgroundColor = .primaryCustomLight
+        
         myInterestBgView.layer.cornerRadius = 5
         myPostListBgView.layer.cornerRadius = 5
+        myPaymentListBgView.layer.cornerRadius = 5
         
         myInterestListIconImageView.image = UIImage(systemName: "bookmark.fill")
         myInterestListIconImageView.tintColor = .white
@@ -181,5 +231,10 @@ final class MyPageView: BaseView {
         myPostListIconImageView.tintColor = .white
         myPostListTextLabel.text = "내 게시물"
         myPostListTextLabel.textAlignment = .left
+        
+        myPaymentListIconImageView.image = UIImage(systemName: "list.clipboard.fill")
+        myPaymentListIconImageView.tintColor = .white
+        myPaymentListTextLabel.text = "공방 결제 내역 리스트"
+        myPaymentListTextLabel.textAlignment = .left
     }
 }
