@@ -35,4 +35,9 @@ extension DateFormatter {
         guard let date = DateFormatter.stringToDateFormatter.date(from: dateString) else { return "-" }
         return DateFormatter.koreanDateFormatter.string(from: date)
     }
+    
+    static func dateToContainHour(dateString: String) -> String {
+        guard let date = DateFormatter.stringToDateFormatter.date(from: dateString) else { return "-" }
+        return DateFormatter.containTimeDateFormatter.string(from: date)
+    }
 }
