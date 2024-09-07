@@ -49,6 +49,10 @@
 		686DBD482C79D70E0023960B /* Search.swift in Sources */ = {isa = PBXBuildFile; fileRef = 686DBD472C79D70E0023960B /* Search.swift */; };
 		686DBD4A2C79FAE10023960B /* SearchLocationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 686DBD492C79FAE10023960B /* SearchLocationCell.swift */; };
 		686DBD4C2C7B3EF10023960B /* Upload.swift in Sources */ = {isa = PBXBuildFile; fileRef = 686DBD4B2C7B3EF10023960B /* Upload.swift */; };
+		6886A7F22C8C86830060D4EE /* MyPaymentListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6886A7F12C8C86830060D4EE /* MyPaymentListViewController.swift */; };
+		6886A7F42C8C86C90060D4EE /* MyPaymentListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6886A7F32C8C86C90060D4EE /* MyPaymentListView.swift */; };
+		6886A7F62C8C87140060D4EE /* MyPaymentListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6886A7F52C8C87140060D4EE /* MyPaymentListViewModel.swift */; };
+		6886A7F82C8C899D0060D4EE /* PaymentListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6886A7F72C8C899D0060D4EE /* PaymentListCell.swift */; };
 		68CED3392C6C8EF40043266A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68CED3382C6C8EF40043266A /* AppDelegate.swift */; };
 		68CED33B2C6C8EF40043266A /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68CED33A2C6C8EF40043266A /* SceneDelegate.swift */; };
 		68CED3422C6C8EF50043266A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 68CED3412C6C8EF50043266A /* Assets.xcassets */; };
@@ -143,6 +147,10 @@
 		686DBD472C79D70E0023960B /* Search.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Search.swift; sourceTree = "<group>"; };
 		686DBD492C79FAE10023960B /* SearchLocationCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchLocationCell.swift; sourceTree = "<group>"; };
 		686DBD4B2C7B3EF10023960B /* Upload.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Upload.swift; sourceTree = "<group>"; };
+		6886A7F12C8C86830060D4EE /* MyPaymentListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPaymentListViewController.swift; sourceTree = "<group>"; };
+		6886A7F32C8C86C90060D4EE /* MyPaymentListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPaymentListView.swift; sourceTree = "<group>"; };
+		6886A7F52C8C87140060D4EE /* MyPaymentListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPaymentListViewModel.swift; sourceTree = "<group>"; };
+		6886A7F72C8C899D0060D4EE /* PaymentListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentListCell.swift; sourceTree = "<group>"; };
 		68CED3352C6C8EF40043266A /* DateDayApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DateDayApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		68CED3382C6C8EF40043266A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		68CED33A2C6C8EF40043266A /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -277,6 +285,17 @@
 				686DBD492C79FAE10023960B /* SearchLocationCell.swift */,
 			);
 			path = SearchLocation;
+			sourceTree = "<group>";
+		};
+		6886A7F02C8C86610060D4EE /* MyPaymentList */ = {
+			isa = PBXGroup;
+			children = (
+				6886A7F12C8C86830060D4EE /* MyPaymentListViewController.swift */,
+				6886A7F32C8C86C90060D4EE /* MyPaymentListView.swift */,
+				6886A7F52C8C87140060D4EE /* MyPaymentListViewModel.swift */,
+				6886A7F72C8C899D0060D4EE /* PaymentListCell.swift */,
+			);
+			path = MyPaymentList;
 			sourceTree = "<group>";
 		};
 		68CED32C2C6C8EF40043266A = {
@@ -489,6 +508,7 @@
 				681E9FFB2C818D4B00E4A718 /* Edit */,
 				681EA0192C832F0800E4A718 /* Introduce */,
 				6816903D2C83808A0062C50F /* MyPost */,
+				6886A7F02C8C86610060D4EE /* MyPaymentList */,
 			);
 			path = MyPage;
 			sourceTree = "<group>";
@@ -658,7 +678,9 @@
 				68CED3752C6F2FEC0043266A /* SignUpViewController.swift in Sources */,
 				686DBD3B2C79B0A10023960B /* WriteCell.swift in Sources */,
 				68CED34F2C6C8F540043266A /* APIKey.swift in Sources */,
+				6886A7F22C8C86830060D4EE /* MyPaymentListViewController.swift in Sources */,
 				68CED3772C6F300A0043266A /* SignUpView.swift in Sources */,
+				6886A7F62C8C87140060D4EE /* MyPaymentListViewModel.swift in Sources */,
 				68CED39A2C71D9A60043266A /* FeedViewModel.swift in Sources */,
 				681E9FDF2C7D941300E4A718 /* DetailWebViewController.swift in Sources */,
 				68CED3A22C71DE950043266A /* UIButton+.swift in Sources */,
@@ -680,6 +702,7 @@
 				68CED3962C70D7C60043266A /* UILabel+.swift in Sources */,
 				68CED3642C6F1FF80043266A /* LoginViewController.swift in Sources */,
 				68CED3AF2C720B5B0043266A /* ReusableProtocol.swift in Sources */,
+				6886A7F42C8C86C90060D4EE /* MyPaymentListView.swift in Sources */,
 				68CED37A2C6F35320043266A /* Router.swift in Sources */,
 				68CED3A02C71DDED0043266A /* UIView+.swift in Sources */,
 				686DBD422C79D0F90023960B /* SearchLocationViewController.swift in Sources */,
@@ -702,6 +725,7 @@
 				681E9FCE2C7CD61700E4A718 /* DetailViewModel.swift in Sources */,
 				68CED3942C70BC4C0043266A /* FeedViewController.swift in Sources */,
 				68CED36D2C6F2AA20043266A /* LoginViewModel.swift in Sources */,
+				6886A7F82C8C899D0060D4EE /* PaymentListCell.swift in Sources */,
 				68CED3A72C71E4C40043266A /* UITextField+.swift in Sources */,
 				681690452C8451290062C50F /* MyPostCell.swift in Sources */,
 			);

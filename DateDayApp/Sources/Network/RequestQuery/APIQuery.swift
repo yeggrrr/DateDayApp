@@ -31,7 +31,7 @@ struct UploadPostQuery: Encodable {
     let content3: String
     let content4: String
     let content5: String
-    let product_id: String = "TestProcutID" // yegrDateDay: DummyID
+    let product_id: String = "yegrDateDay" // yegrDateDay: DummyID // text: TestProcutID
     let files: [String]
 }
 

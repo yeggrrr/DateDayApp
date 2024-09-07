@@ -28,6 +28,7 @@ enum Router {
     case viewSpecificUsersPost(userID: String, next: String)
     case deletePost(postID: String)
     case paymentValidation(query: PaymentValidationQuery)
+    case paymentList
 }
 
 extension Router: TargetType {
@@ -39,7 +40,7 @@ extension Router: TargetType {
         switch self {
         case .signUp, .validation, .login, .postImage, .uploadPost, .postInterest, .postLike, .paymentValidation:
             return .post
-        case .tokenRenewal, .viewPost, .viewPostImage, .viewSpecificPost, .viewInterestPost, .searchHashTag, .viewMyProfile, .withdraw, .viewSpecificUsersPost:
+        case .tokenRenewal, .viewPost, .viewPostImage, .viewSpecificPost, .viewInterestPost, .searchHashTag, .viewMyProfile, .withdraw, .viewSpecificUsersPost, .paymentList:
             return .get
         case .editMyProfile:
             return .put
@@ -88,6 +89,8 @@ extension Router: TargetType {
             return "/posts/\(postID)"
         case .paymentValidation:
             return "/payments/validation"
+        case .paymentList:
+            return "/payments/me"
         }
     }
     
@@ -104,7 +107,7 @@ extension Router: TargetType {
                 Header.refresh.rawValue: UserDefaultsManager.shared.refresh,
                 Header.sesac.rawValue: APIKey.secretkey
             ]
-        case .viewPostImage, .viewPost, .viewSpecificPost, .postInterest, .uploadPost, .viewInterestPost, .postLike, .searchHashTag, .viewMyProfile, .withdraw, .viewSpecificUsersPost, .deletePost, .paymentValidation:
+        case .viewPostImage, .viewPost, .viewSpecificPost, .postInterest, .uploadPost, .viewInterestPost, .postLike, .searchHashTag, .viewMyProfile, .withdraw, .viewSpecificUsersPost, .deletePost, .paymentValidation, .paymentList:
             return [
                 Header.authorization.rawValue: UserDefaultsManager.shared.token,
                 Header.contentType.rawValue: Header.json.rawValue,
@@ -145,7 +148,7 @@ extension Router: TargetType {
             return [
                 "next": next,
                 "limit": "10",
-                "product_id" : "TestProcutID" // TestProcutID // yegrDateDay // <- 이걸로 바꾸기
+                "product_id" : "yegrDateDay" // TestProcutID // yegrDateDay // <- 이걸로 바꾸기
             ]
         default:
             return nil

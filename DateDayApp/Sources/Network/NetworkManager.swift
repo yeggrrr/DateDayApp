@@ -685,7 +685,6 @@ final class NetworkManager {
                             observer(.success(.success(success)))
                         case .failure(_):
                             let statusCode = response.response?.statusCode
-                            print(">>> statusCode :\(statusCode))")
                             switch statusCode {
                             case 400:
                                 observer(.success(.failure(.missingRequiredValue)))
@@ -697,6 +696,39 @@ final class NetworkManager {
                                 observer(.success(.failure(.alreadySignedUp)))
                             case 410:
                                 observer(.success(.failure(.serverErrorNotSavedOrCannotSearch)))
+                            case 419:
+                                observer(.success(.failure(.accessTokenExpiration)))
+                            default:
+                                break
+                            }
+                        }
+                    }
+            } catch {
+                print("error 발생!! - error:", error)
+            }
+            
+            return Disposables.create()
+        }
+    }
+    
+    // MARK: 결제 내역 리스트 조회
+    func viewPaymentList() -> Single<Result<PaymentListModel, HTTPStatusCodes>> {
+        return Single.create { observer -> Disposable in
+            
+            do {
+                let request = try Router.paymentList.asURLRequest()
+                AF.request(request)
+                    .responseDecodable(of: PaymentListModel.self) { response in
+                        switch response.result {
+                        case .success(let success):
+                            observer(.success(.success(success)))
+                        case .failure(_):
+                            let statusCode = response.response?.statusCode
+                            switch statusCode {
+                            case 401:
+                                observer(.success(.failure(.mismatchOrInvalid)))
+                            case 403:
+                                observer(.success(.failure(.forbidden)))
                             case 419:
                                 observer(.success(.failure(.accessTokenExpiration)))
                             default:
