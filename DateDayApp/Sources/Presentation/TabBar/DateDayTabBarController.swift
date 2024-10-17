@@ -30,11 +30,14 @@ final class DateDayTabBarController: UITabBarController {
         tabBar.unselectedItemTintColor = .darkGray
         
         let feedVC = FeedViewController()
+        
         feedVC.showLoginAlert = showLoginAlert
         let feedNav = UINavigationController(rootViewController: feedVC)
+        
         feedNav.tabBarItem = UITabBarItem(title: "", image: UIImage(systemName: "scribble"), selectedImage: UIImage(systemName: "scribble.variable"))
         
         let myPageVC = MyPageViewController()
+        
         let myPageNav = UINavigationController(rootViewController: myPageVC)
         myPageNav.tabBarItem = UITabBarItem(title: "", image: UIImage(systemName: "person"), selectedImage: UIImage(systemName: "person.fill"))
         

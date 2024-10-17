@@ -38,7 +38,6 @@ final class MyPostViewController: UIViewController {
         
         // tableView
         myPostView.myPostTableView.register(MyPostCell.self, forCellReuseIdentifier: MyPostCell.id)
-        myPostView.myPostTableView.rowHeight = 580
     }
     
     private func bind() {
