@@ -91,7 +91,9 @@ final class MyPageViewController: UIViewController {
         output.logoutButtonTap
             .bind(with: self) { owner, _ in
                 owner.okCanelShowAlert(title: "로그아웃 하시겠습니까?", message: "") { _ in
-                    owner.setRootViewController(LoginViewController())
+                    let vc = LoginViewController()
+                    let nav = UINavigationController(rootViewController: vc)
+                    owner.setRootViewController(nav)
                 }
             }
             .disposed(by: disposeBag)

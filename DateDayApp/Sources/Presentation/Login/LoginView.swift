@@ -88,6 +88,7 @@ final class LoginView: BaseView {
         passwordTextFieldView.basicUI()
         emailTextField.placeholder = "이메일을 입력해주세요"
         passwordTextField.placeholder = "비밀번호를 입력해주세요"
+        passwordTextField.isSecureTextEntry = true
         
         signUpLabel.setUI(
             txt: "처음 방문하시나요?",
