@@ -105,6 +105,17 @@ final class SignUpViewController: UIViewController {
         }
         .disposed(by: disposeBag)
         
+        signUpView.isSecureTextEntryButton.rx.tap
+            .bind(with: self) { owner, _ in
+                owner.signUpView.isSecureTextEntryButton.isSelected.toggle()
+                if owner.signUpView.isSecureTextEntryButton.isSelected {
+                    owner.signUpView.passwordTextField.isSecureTextEntry = false
+                } else {
+                    owner.signUpView.passwordTextField.isSecureTextEntry = true
+                }
+            }
+            .disposed(by: disposeBag)
+        
         output.signUpButtonTap
             .bind(with: self) { owner, _ in
                 guard let nickname = owner.signUpView.nicknameTextField.text,

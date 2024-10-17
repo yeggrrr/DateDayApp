@@ -26,6 +26,7 @@ final class SignUpView: BaseView {
     let nicknameValidImageView = UIImageView()
     let emailValidImageView = UIImageView()
     let passwordValidImageView = UIImageView()
+    let isSecureTextEntryButton = UIButton()
     let signUpButton = UIButton()
     
     override func addSubviews() {
@@ -35,7 +36,7 @@ final class SignUpView: BaseView {
         inputStackView.addArrangedSubviews([nicknameTextFieldView, emailTextFieldView, passwordTextFieldView])
         nicknameTextFieldView.addSubview(nicknameTextField)
         emailTextFieldView.addSubview(emailTextField)
-        passwordTextFieldView.addSubview(passwordTextField)
+        passwordTextFieldView.addSubviews([passwordTextField, isSecureTextEntryButton])
     }
     
     override func setConstraints() {
@@ -69,7 +70,15 @@ final class SignUpView: BaseView {
         
         passwordTextField.snp.makeConstraints {
             $0.verticalEdges.equalTo(passwordTextFieldView.snp.verticalEdges).inset(5)
-            $0.horizontalEdges.equalTo(passwordTextFieldView.snp.horizontalEdges).inset(10)
+            $0.leading.equalTo(passwordTextFieldView.snp.leading).offset(10)
+            $0.trailing.equalTo(isSecureTextEntryButton.snp.leading).offset(-10)
+        }
+        
+        isSecureTextEntryButton.snp.makeConstraints {
+            $0.trailing.equalTo(passwordTextFieldView.snp.trailing).offset(-10)
+            $0.centerY.equalTo(passwordTextFieldView.snp.centerY)
+            $0.height.equalTo(20)
+            $0.width.equalTo(30)
         }
         
         nicknameValidImageView.snp.makeConstraints {
@@ -138,6 +147,10 @@ final class SignUpView: BaseView {
         emailTextField.setUI(placeholder: "이메일을 입력해주세요", keyboardType: .emailAddress)
         passwordTextField.setUI(placeholder: "비밀번호를 입력해주세요", keyboardType: .asciiCapable)
         passwordTextField.isSecureTextEntry = true
+        
+        isSecureTextEntryButton.setImage(UIImage(systemName: "eye.slash.fill"), for: .selected)
+        isSecureTextEntryButton.setImage(UIImage(systemName: "eye.fill"), for: .normal)
+        isSecureTextEntryButton.tintColor = .black
         
         signUpButton.roundUI(
             title: "회원가입",
