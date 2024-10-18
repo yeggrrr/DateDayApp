@@ -80,7 +80,7 @@ final class DetailViewModel: BaseViewModel {
                 NetworkManager.shared.paymentValidation(postID: value.0, impUID: impUID)
                     .subscribe(with: self) { owner, result in
                         switch result {
-                        case .success(let success):
+                        case .success(_):
                             input.paymentSuccessfulMessage.onNext("결제가 완료되었습니다 :)")
                         case .failure(let failure):
                             print(failure)
