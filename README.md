@@ -52,7 +52,7 @@
 <br>
 
 ## 🔥 구현 🔥
-- Confluence 기획서를 바탕으로 서버 통신 프로젝트
+- 각 기능별 정리된 기획서를 바탕으로 진행한 서버 통신 프로젝트
 - Alamofire를 추상화한 TargetType을 활용하여 Router 패턴으로 네트워크 통신
 - Portone 통합 결제 API를 통한 결제 시스템 로직 구현
 - 공통 Toast를 CustomUI로 구현
