@@ -61,23 +61,23 @@
 <br>
 
 ## ⚽️ 트러블 슈팅 ⚽️
-- RxSwift - CombineLatest 사용으로 인한 out of range error
+- RxSwift - CombineLatest 사용으로 인한 out of range error🤨
     - 셀을 클릭하여 데이터 배열에서 해당 목록을 삭제하는 로직에서 새로운 데이터 배열이 업데이트 되면서 삭제된 인덱스가 호출되어 생긴 문제
     - 데이터 배열과 인덱스를 CombineLatest로 관리하던 코드를 ModelSelected를 사용하여 리팩토링
 
 <br>
  
-- Single를 활용한 네트워크 통신
+- Single를 활용한 네트워크 통신🤨
     - Observable로 구현했던 네트워크 통신 코드에서 요청을 보낼때마다 disposed되지 않고 스트림이 유지되었던 문제
     - Single<Result>를 활용하여 Stream 종료 처리를 통한 메모리 누수 관리 및 Enum을 활용해 API별로 StatusCode에 따른 Error 핸들링
 <br>
 
-- RxSwift 이중 Subscribe
+- RxSwift 이중 Subscribe🤨
     - RxSwift의 flatMap Operator를 활용해 이중 삼중 구독문을 리팩토링해서 메모리 누수와 스트림 안정성 확보
  
 <br>
 
-- Router 패턴 활용
+- Router 패턴 활용🤨
     - 20개의 API 통신을 위해 Router 패턴을 활용해서 코드 간결화 및 보일러 플레이트 감소로 유지보수성 증가
 
 <br>
