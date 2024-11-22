@@ -7,66 +7,39 @@
 
 import Foundation
 
-final class UserDefaultsManager {
-    private enum UserDefaultKey: String {
-        case access
-        case refresh
-        case saveTime
-        case saveUserID
-        case isChangedPostData
+@propertyWrapper
+struct UserDefault<T> {
+    let key: String
+    let defaultValue: T
+    var wrappedValue: T {
+        get {
+            guard let wrappedValue = UserDefaults.standard.object(forKey: key) as? T else { return defaultValue }
+            return wrappedValue
+        }
+        
+        set {
+            UserDefaults.standard.set(newValue, forKey: key)
+        }
     }
-    
+}
+
+final class UserDefaultsManager {
     static let shared = UserDefaultsManager()
     
     private init() { }
     
-    var token: String {
-        get {
-            UserDefaults.standard.string(forKey: UserDefaultKey.access.rawValue) ?? ""
-        }
-        
-        set {
-            UserDefaults.standard.setValue(newValue, forKey: UserDefaultKey.access.rawValue)
-        }
-    }
+    @UserDefault(key: "accessToken", defaultValue: "")
+    var token: String
     
-    var refresh: String {
-        get {
-            UserDefaults.standard.string(forKey: UserDefaultKey.refresh.rawValue) ?? ""
-        }
-        
-        set {
-            UserDefaults.standard.setValue(newValue, forKey: UserDefaultKey.refresh.rawValue)
-        }
-    }
+    @UserDefault(key: "refreshToken", defaultValue: "")
+    var refresh: String
     
-    var saveTime: String {
-        get {
-            UserDefaults.standard.string(forKey: UserDefaultKey.saveTime.rawValue) ?? ""
-        }
-        
-        set {
-            UserDefaults.standard.setValue(newValue, forKey: UserDefaultKey.saveTime.rawValue)
-        }
-    }
+    @UserDefault(key: "saveTime", defaultValue: "")
+    var saveTime: String
     
-    var saveLoginUserID: String {
-        get {
-            UserDefaults.standard.string(forKey: UserDefaultKey.saveUserID.rawValue) ?? ""
-        }
-        
-        set {
-            UserDefaults.standard.setValue(newValue, forKey: UserDefaultKey.saveUserID.rawValue)
-        }
-    }
+    @UserDefault(key: "saveUserID", defaultValue: "")
+    var saveLoginUserID: String
     
-    var isChangedPostData: Bool {
-        get {
-            UserDefaults.standard.bool(forKey: UserDefaultKey.isChangedPostData.rawValue)
-        }
-        
-        set {
-            UserDefaults.standard.setValue(newValue, forKey: UserDefaultKey.isChangedPostData.rawValue)
-        }
-    }
+    @UserDefault(key: "isChangedPostData", defaultValue: false)
+    var isChangedPostData: Bool
 }
