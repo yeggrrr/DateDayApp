@@ -48,6 +48,12 @@ final class SearchViewController: UIViewController {
         
         let output = viewModel.transform(input: input)
         
+        output.refreshTokenExpiration
+            .bind(with: self) { owner, _ in
+                owner.setRootViewController(LoginViewController())
+            }
+            .disposed(by: disposeBag)
+        
         output.searchResultList
             .bind(to: searchView.collectionView.rx.items(cellIdentifier: FeedCell.id, cellType: FeedCell.self)) { (row, element, cell) in
                 cell.titleLabel.text = element.title

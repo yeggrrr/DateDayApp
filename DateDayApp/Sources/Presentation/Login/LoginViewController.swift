@@ -38,41 +38,36 @@ final class LoginViewController: UIViewController {
     
     private func bind() {
         let input = LoginViewModel.Input(loginButtonTap: loginView.loginButton.rx.tap,
-                                         signUpButtonTap: loginView.signUpButton.rx.tap)
+                                         signUpButtonTap: loginView.signUpButton.rx.tap,
+                                         emailText: loginView.emailTextField.rx.text.orEmpty,
+                                         passwordText: loginView.passwordTextField.rx.text.orEmpty)
         let output = viewModel.transform(input: input)
         
         output.loginButtonTap
-            .bind(with: self) { owner, _ in
-                guard let email = owner.loginView.emailTextField.text,
-                      let password = owner.loginView.passwordTextField.text else { return }
-                
-                NetworkManager.shared.createLogin(email: email, password: password)
-                    .subscribe(with: self) { owner, result in
-                        switch result {
-                        case .success(let success):
-                            UserDefaultsManager.shared.refresh = success.refreshToken
-                            UserDefaultsManager.shared.token = success.accessToken
-                            UserDefaultsManager.shared.saveTime = DateFormatter.containTimeDateFormatter.string(from: Date())
-                            UserDefaultsManager.shared.saveLoginUserID = success.userId
-                            
-                            let vc = DateDayTabBarController(showLoginAlert: true)
-                            self.setRootViewController(vc)
-                        case .failure(let failure):
-                            switch failure {
-                            case .missingRequiredValue:
-                                owner.showToast(message: "필수값을 채워주세요! :)")
-                            case .mismatchOrInvalid:
-                                owner.showToast(message: "계정을 확인해주세요! :)")
-                            default:
-                                break
-                            }
-                        }
-                    } onFailure: { owner, error in
-                        print("error: \(error)")
-                    } onDisposed: { owner in
-                        print("Disposed")
+            .withLatestFrom(Observable.combineLatest(input.emailText, input.passwordText))
+            .flatMap { value in
+                let (email, password) = value
+                return NetworkManager.shared.requestUserVerification(api: Router.login(query: LoginQuery(email: email, password: password)), type: LoginModel.self)
+            }
+            .bind(with: self) { owner, result in
+                switch result {
+                case .success(let success):
+                    UserDefaultsManager.shared.refresh = success.refreshToken
+                    UserDefaultsManager.shared.token = success.accessToken
+                    UserDefaultsManager.shared.saveTime = DateFormatter.containTimeDateFormatter.string(from: Date())
+                    UserDefaultsManager.shared.saveLoginUserID = success.userId
+                    let vc = DateDayTabBarController(showLoginAlert: true)
+                    self.setRootViewController(vc)
+                case .failure(let failure):
+                    switch failure {
+                    case .missingRequiredValue:
+                        owner.showToast(message: "필수값을 채워주세요! :)")
+                    case .mismatchOrInvalid:
+                        owner.showToast(message: "계정을 확인해주세요! :)")
+                    default:
+                        break
                     }
-                    .disposed(by: owner.disposeBag)
+                }
             }
             .disposed(by: disposeBag)
         

@@ -44,11 +44,16 @@ final class EditProfileViewController: UIViewController {
         let input = EditProfileViewModel.Input(
             setProfileImageButtonTap: editProfileView.setProfileImageButton.rx.tap,
             editingCompleteButtonTap: editProfileView.editingCompleteButton.rx.tap,
-            setDefaultImageButtonTap: editProfileView.setDefaultImageButton.rx.tap)
+            setDefaultImageButtonTap: editProfileView.setDefaultImageButton.rx.tap,
+            nicknameText: editProfileView.nicknameTextField.rx.text.orEmpty,
+            introduceText: editProfileView.editMyIntroduceTextView.rx.text.orEmpty)
         
         let output = viewModel.transform(input: input)
         
         var selectedProfileImage: UIImage?
+        
+        // viewDidLoadTrigger
+        input.viewDidLoadTrigger.onNext(())
         
         // 프로필 데이터 뷰에 업데이트
         output.profileData
@@ -97,13 +102,13 @@ final class EditProfileViewController: UIViewController {
             .disposed(by: disposeBag)
         
         output.editingCompleteButtonTap
-            .bind(with: self) { owner, _ in
-                guard let editedNickname = owner.editProfileView.nicknameTextField.text else { return }
-                
+            .withLatestFrom(Observable.combineLatest(input.nicknameText, input.introduceText))
+            .bind(with: self) { owner, value in
+                let (editedNickname, introduce) = value
                 if let selectedImage = selectedProfileImage?.jpegData(compressionQuality: 0.5) {
                     NetworkManager.shared.editProfile(
                         nickname: editedNickname,
-                        introduce: owner.editProfileView.editMyIntroduceTextView.text,
+                        introduce: introduce,
                         profile: selectedImage)
                         .subscribe(with: self) { owner, result in
                             switch result {
@@ -175,15 +180,15 @@ final class EditProfileViewController: UIViewController {
             }
             .disposed(by: disposeBag)
         
-        // 토큰 갱신
-        output.tokenExpiredMessage
-            .bind(with: self) { owner, _ in
-                owner.updateToken { newToken in
-                    UserDefaultsManager.shared.token = newToken
-                    owner.viewModel.updateData()
-                }
-            }
-            .disposed(by: disposeBag)
+        // // 토큰 갱신
+        // output.tokenExpiredMessage
+        //     .bind(with: self) { owner, _ in
+        //         owner.updateToken { newToken in
+        //             UserDefaultsManager.shared.token = newToken
+        //             owner.viewModel.updateData()
+        //         }
+        //     }
+        //     .disposed(by: disposeBag)
     }
     
     private func presentPicker() {

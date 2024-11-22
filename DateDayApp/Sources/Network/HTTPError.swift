@@ -1,5 +1,5 @@
 //
-//  HTTPStatusCodes.swift
+//  HTTPError.swift
 //  DateDayApp
 //
 //  Created by YJ on 8/21/24.
@@ -7,8 +7,8 @@
 
 import Foundation
 
-enum HTTPStatusCodes: Error {
-    /// 200 
+enum HTTPError: Error {
+    /// 200
     case success
     /// 400 - 잘못된 요청 & 필수값 필요
     case missingRequiredValue

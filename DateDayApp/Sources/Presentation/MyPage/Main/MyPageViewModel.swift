@@ -41,7 +41,7 @@ final class MyPageViewModel: BaseViewModel {
     
     func transform(input: Input) -> Output {
         // 네트워크 통신
-        NetworkManager.shared.viewMyProfile()
+        NetworkManager.shared.callRequest(api: Router.viewMyProfile, type: ProfileModel.self)
             .subscribe(with: self) { owner, result in
                 switch result {
                 case .success(let success):
@@ -49,8 +49,8 @@ final class MyPageViewModel: BaseViewModel {
                     owner.editedIntroduce.onNext(success.myIntroduce)
                 case .failure(let failure):
                     switch failure {
-                    case .accessTokenExpiration:
-                        input.tokenExpiredMessage.onNext("엑세스 토큰이 만료되었습니다.")
+                    case .refreshTokenExpiration:
+                        print(">>> refreshToken 만료")
                     default:
                         break
                     }
@@ -76,7 +76,7 @@ final class MyPageViewModel: BaseViewModel {
     }
     
     func updateData() {
-        NetworkManager.shared.viewMyProfile()
+        NetworkManager.shared.callRequest(api: Router.viewMyProfile, type: ProfileModel.self)
             .subscribe(with: self) { owner, result in
                 switch result {
                 case .success(let success):
@@ -99,16 +99,15 @@ final class MyPageViewModel: BaseViewModel {
     }
     
     func withdraw(completion: @escaping (WithdrawModel) -> Void) {
-        NetworkManager.shared.withdraw()
+        NetworkManager.shared.callRequest(api: Router.withdraw, type: WithdrawModel.self)
             .subscribe(with: self) { owner, result in
                 switch result {
                 case .success(let success):
-                    let a = success
                     completion(success)
                 case .failure(let failure):
                     switch failure {
-                    case .accessTokenExpiration:
-                        print("토큰 만료")
+                    case .refreshTokenExpiration:
+                        print("refreshToken 만료")
                     default:
                         break
                     }

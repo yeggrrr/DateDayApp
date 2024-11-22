@@ -16,130 +16,61 @@ final class NetworkManager {
     
     private init() { }
     
-    // MARK: 회원가입
-    func createSignUp(nickname: String, email: String, password: String) -> Single<Result<SignUpModel, HTTPStatusCodes>> {
+    // MARK: 회원인증 - Token 필요X
+    func requestUserVerification<T: Decodable>(api: Router, type: T.Type) -> Single<Result<T, HTTPError>> {
         return Single.create { observer -> Disposable in
-            do {
-                let query = SignUpQuery(nick: nickname, email: email, password: password)
-                let request = try Router.signUp(query: query).asURLRequest()
-                
-                AF.request(request)
-                    .validate(statusCode: 200..<300)
-                    .responseDecodable(of: SignUpModel.self) { response in
-                        switch response.result {
-                        case .success(let success):
-                            observer(.success(.success(success)))
-                        case .failure(_):
-                            let statusCode = response.response?.statusCode
-                            switch statusCode {
-                            case 400:
-                                observer(.success(.failure(.missingRequiredValue)))
-                            case 402:
-                                observer(.success(.failure(.noSpacesAllowed)))
-                            case 409:
-                                observer(.success(.failure(.alreadySignedUp)))
-                            default:
-                                break
+                do {
+                    let request = try api.asURLRequest()
+                    AF.request(request)
+                        .responseDecodable(of: T.self) { response in
+                            switch response.result {
+                            case .success(let success):
+                                observer(.success(.success(success)))
+                            case .failure(_):
+                                let statusCode = response.response?.statusCode
+                                switch statusCode {
+                                case 418:
+                                    observer(.success(.failure(.refreshTokenExpiration)))
+                                default:
+                                        break
+                                }
                             }
                         }
-                    }
-            } catch {
-                print("error 발생!! - error:", error)
-            }
-            
-            return Disposables.create()
-        }
-    }
-    
-    // MARK: 이메일 중복 확인
-    func validationEmail(email: String) -> Single<Result<ValidationEmailModel, HTTPStatusCodes>> {
-        return Single.create { observer -> Disposable in
-            do {
-                let query = validEmailQuery(email: email)
-                let request = try Router.validation(query: query).asURLRequest()
-                
-                AF.request(request)
-                    .validate(statusCode: 200..<300)
-                    .responseDecodable(of: ValidationEmailModel.self) { response in
-                        switch response.result {
-                        case .success(let success):
-                            observer(.success(.success(success)))
-                        case .failure(_):
-                            let statusCode = response.response?.statusCode
-                            switch statusCode {
-                            case 400:
-                                observer(.success(.failure(.missingRequiredValue)))
-                            case 409:
-                                observer(.success(.failure(.alreadySignedUp)))
-                            default:
-                                break
-                            }
-                        }
-                    }
-            } catch {
-                print("error 발생!! - error:", error)
-            }
-            
-            return Disposables.create()
-        }
-    }
-    
-    // MARK: 로그인
-    func createLogin(email: String, password: String) -> Single<Result<LoginModel, HTTPStatusCodes>> {
-        return Single.create { observer -> Disposable in
-            do {
-                let query = LoginQuery(email: email, password: password)
-                let request = try Router.login(query: query).asURLRequest()
-                
-                AF.request(request)
-                    .validate(statusCode: 200..<300)
-                    .responseDecodable(of: LoginModel.self) { response in
-                        switch response.result {
-                        case .success(let success):
-                            observer(.success(.success(success)))
-                        case .failure(_):
-                            let statusCode = response.response?.statusCode
-                            switch statusCode {
-                            case 400:
-                                observer(.success(.failure(.missingRequiredValue)))
-                            case 401:
-                                observer(.success(.failure(.mismatchOrInvalid)))
-                            default:
-                                break
-                            }
-                        }
-                    }
-            } catch {
-                print("error 발생!! - error:", error)
-            }
-            
-            return Disposables.create()
-        }
-    }
-    
-    // MARK: Token 갱신
-    func tokenUpdate(completion: @escaping (Result<TokenUpdateModel, HTTPStatusCodes>) -> Void) {
-        do {
-            let request = try Router.tokenRenewal.asURLRequest()
-            
-            AF.request(request)
-                .validate(statusCode: 200..<300)
-                .responseDecodable(of: TokenUpdateModel.self) { response in
-                    switch response.result {
-                    case .success(let success):
-                        completion(.success(success))
-                    case .failure(_):
-                        let statusCode = response.response?.statusCode
-                        switch statusCode {
-                        case 401:
-                            completion(.failure(.mismatchOrInvalid))
-                        default:
-                            break
-                        }
-                    }
+                } catch {
+                    print("error 발생!! - error:", error)
                 }
-        } catch {
-            print("error 발생!! - error:", error)
+            
+            return Disposables.create()
+        }
+    }
+    
+    // MARK: CallRequest 메서드 - multipart 제외
+    func callRequest<T: Decodable>(api: Router, type: T.Type) -> Single<Result<T, HTTPError>> {
+        return Single.create { observer -> Disposable in
+            self.updateToken { _ in
+                do {
+                    let request = try api.asURLRequest()
+                    AF.request(request)
+                        .responseDecodable(of: T.self) { response in
+                            switch response.result {
+                            case .success(let success):
+                                observer(.success(.success(success)))
+                            case .failure(_):
+                                let statusCode = response.response?.statusCode
+                                switch statusCode {
+                                case 418:
+                                    observer(.success(.failure(.refreshTokenExpiration)))
+                                default:
+                                        break
+                                }
+                            }
+                        }
+                } catch {
+                    print("error 발생!! - error:", error)
+                }
+            }
+            
+            return Disposables.create()
         }
     }
     
@@ -157,107 +88,8 @@ final class NetworkManager {
         }
     }
     
-    // MARK: 게시글 조회
-    func viewPost(next: String = "") -> Single<Result<ViewPost, HTTPStatusCodes>> {
-        return Single.create { observer -> Disposable in
-            do {
-                let request = try Router.viewPost(next: next).asURLRequest()
-                
-                AF.request(request)
-                    .validate(statusCode: 200..<300)
-                    .responseDecodable(of: ViewPost.self) { response in
-                        switch response.result {
-                        case .success(let success):
-                            observer(.success(.success(success)))
-                        case .failure(_):
-                            let statusCode = response.response?.statusCode
-                            switch statusCode {
-                            case 400:
-                                observer(.success(.failure(.missingRequiredValue)))
-                            case 401:
-                                observer(.success(.failure(.mismatchOrInvalid)))
-                            case 403:
-                                observer(.success(.failure(.forbidden)))
-                            case 419:
-                                observer(.success(.failure(.accessTokenExpiration)))
-                            default:
-                                break
-                            }
-                        }
-                    }
-            } catch {
-                print("error 발생!! - error:", error)
-            }
-            
-            return Disposables.create()
-        }
-    }
-    
-    // MARK: 특정 포스트 조회
-    func viewSpecificPost(postID: String) -> Single<Result<UploadPostModel, HTTPStatusCodes>> {
-        return Single.create { observer -> Disposable in
-            
-            do {
-                let request = try Router.viewSpecificPost(postID: postID).asURLRequest()
-                AF.request(request)
-                    .responseDecodable(of: UploadPostModel.self) { response in
-                        switch response.result {
-                        case .success(let success):
-                            observer(.success(.success(success)))
-                        case .failure(_):
-                            let statusCode = response.response?.statusCode
-                            switch statusCode {
-                            case 400:
-                                observer(.success(.failure(.missingRequiredValue)))
-                            case 401:
-                                observer(.success(.failure(.mismatchOrInvalid)))
-                            case 403:
-                                observer(.success(.failure(.forbidden)))
-                            case 419:
-                                observer(.success(.failure(.accessTokenExpiration)))
-                            default:
-                                break
-                            }
-                        }
-                    }
-            } catch {
-                print("error 발생!! - error:", error)
-            }
-            
-            return Disposables.create()
-        }
-    }
-    
-    // MARK: 위치 검색
-    func searchLocation(query: String) -> Single<SearchLocationModel> {
-        let url = APIKey.kakaoURL
-        
-        let header: HTTPHeaders = [
-            "Authorization" : APIKey.kakaoKey
-        ]
-        
-        let param: Parameters = [
-            "query": query
-        ]
-        
-        return Single.create { observer in
-            AF.request(url, method: .get, parameters: param, headers: header)
-                .validate(statusCode: 200..<300)
-                .responseDecodable(of: SearchLocationModel.self) { response in
-                    switch response.result {
-                    case .success(let success):
-                        observer(.success(success))
-                    case .failure(let failure):
-                        observer(.failure(failure))
-                    }
-                }
-            
-            return Disposables.create()
-        }
-    }
-    
     // MARK: 포스트 이미지 업로드
-    func uploadImage(images: [UIImage]) -> Single<Result<UploadImageModel, HTTPStatusCodes>> {
+    func uploadImage(images: [UIImage]) -> Single<Result<UploadImageModel, HTTPError>> {
         return Single.create { observer -> Disposable in
             
             do {
@@ -299,232 +131,8 @@ final class NetworkManager {
         }
     }
     
-    // MARK: 포스트 작성
-    func uploadPost(uploadQuery: UploadPostQuery) -> Single<Result<UploadPostModel, HTTPStatusCodes>> {
-        return Single.create { observer -> Disposable in
-            
-            do {
-                let request = try Router.uploadPost(query: uploadQuery).asURLRequest()
-                
-                AF.request(request)
-                    .validate(statusCode: 200..<300)
-                    .responseDecodable(of: UploadPostModel.self) { response in
-                        switch response.result {
-                        case .success(let success):
-                            observer(.success(.success(success)))
-                        case .failure(_):
-                            let statusCode = response.response?.statusCode
-                            switch statusCode {
-                            case 400:
-                                observer(.success(.failure(.missingRequiredValue)))
-                            case 401:
-                                observer(.success(.failure(.mismatchOrInvalid)))
-                            case 403:
-                                observer(.success(.failure(.forbidden)))
-                            case 410:
-                                observer(.success(.failure(.serverErrorNotSavedOrCannotSearch)))
-                            case 419:
-                                observer(.success(.failure(.accessTokenExpiration)))
-                            default:
-                                break
-                            }
-                        }
-                    }
-            } catch {
-                print("error 발생!! - error:", error)
-            }
-            
-            return Disposables.create()
-        }
-    }
-    
-    // MARK: 포스트 좋아요 & 취소 (관심목록추가 - Like2)
-    func postInterestStatus(interestStatus: Bool, postID: String) -> Single<Result<PostLike, HTTPStatusCodes>> {
-        return Single.create { observer -> Disposable in
-            
-            do {
-                let query = PostLikeQuery(likeStatus: interestStatus)
-                let request = try Router.postInterest(postID: postID, likeStatus: query).asURLRequest()
-                
-                AF.request(request)
-                    .validate(statusCode: 200..<300)
-                    .responseDecodable(of: PostLike.self) { response in
-                        switch response.result {
-                        case .success(let success):
-                            observer(.success(.success(success)))
-                        case .failure(_):
-                            let statusCode = response.response?.statusCode
-                            switch statusCode {
-                            case 400:
-                                observer(.success(.failure(.missingRequiredValue)))
-                            case 401:
-                                observer(.success(.failure(.mismatchOrInvalid)))
-                            case 403:
-                                observer(.success(.failure(.forbidden)))
-                            case 410:
-                                observer(.success(.failure(.serverErrorNotSavedOrCannotSearch)))
-                            case 419:
-                                observer(.success(.failure(.accessTokenExpiration)))
-                            default:
-                                break
-                            }
-                        }
-                    }
-            } catch {
-                print("error 발생!! - error:", error)
-            }
-            
-            return Disposables.create()
-        }
-    }
-    
-    // MARK: 좋아요한 포스트 조회 - (관심목록추가 - Like2)
-    func viewInterestList(next: String = "") -> Single<Result<ViewPost, HTTPStatusCodes>> {
-        return Single.create { observer -> Disposable in
-            
-            do {
-                let request = try Router.viewInterestPost(next: next).asURLRequest()
-                AF.request(request)
-                    .validate(statusCode: 200..<300)
-                    .responseDecodable(of: ViewPost.self) { response in
-                        
-                        switch response.result {
-                        case .success(let success):
-                            observer(.success(.success(success)))
-                        case .failure(_):
-                            let statusCode = response.response?.statusCode
-                            switch statusCode {
-                            case 400:
-                                observer(.success(.failure(.missingRequiredValue)))
-                            case 401:
-                                observer(.success(.failure(.mismatchOrInvalid)))
-                            case 403:
-                                observer(.success(.failure(.forbidden)))
-                            case 419:
-                                observer(.success(.failure(.accessTokenExpiration)))
-                            default:
-                                break
-                            }
-                        }
-                    }
-            } catch {
-                print("error 발생!! - error:", error)
-            }
-            
-            return Disposables.create()
-        }
-    }
-    
-    // MARK: 포스트 좋아요 & 취소 (좋아요 - Like)
-    func postLikeStatus(likeStatus: Bool, postID: String) -> Single<Result<PostLike, HTTPStatusCodes>> {
-        return Single.create { observer -> Disposable in
-            
-            do {
-                let query = PostLikeQuery(likeStatus: likeStatus)
-                let request = try Router.postLike(postID: postID, likeStatus: query).asURLRequest()
-                
-                AF.request(request)
-                    .validate(statusCode: 200..<300)
-                    .responseDecodable(of: PostLike.self) { response in
-                        switch response.result {
-                        case .success(let success):
-                            observer(.success(.success(success)))
-                        case .failure(_):
-                            let statusCode = response.response?.statusCode
-                            switch statusCode {
-                            case 400:
-                                observer(.success(.failure(.missingRequiredValue)))
-                            case 401:
-                                observer(.success(.failure(.mismatchOrInvalid)))
-                            case 403:
-                                observer(.success(.failure(.forbidden)))
-                            case 410:
-                                observer(.success(.failure(.serverErrorNotSavedOrCannotSearch)))
-                            case 419:
-                                observer(.success(.failure(.accessTokenExpiration)))
-                            default:
-                                break
-                            }
-                        }
-                    }
-            } catch {
-                print("error 발생!! - error:", error)
-            }
-            
-            return Disposables.create()
-        }
-    }
-    
-    // MARK: 해시태그 검색
-    func searchHashTag(next: String = "", hashTag: String) -> Single<Result<SearchHashTag, HTTPStatusCodes>> {
-        return Single.create { observer -> Disposable in
-            
-            do {
-                let request = try Router.searchHashTag(next: next, hashTag: hashTag).asURLRequest()
-                
-                AF.request(request)
-                    .responseDecodable(of: SearchHashTag.self) { response in
-                        switch response.result {
-                        case .success(let success):
-                            observer(.success(.success(success)))
-                        case .failure(_):
-                            let statusCode = response.response?.statusCode
-                            switch statusCode {
-                            case 400:
-                                observer(.success(.failure(.missingRequiredValue)))
-                            case 401:
-                                observer(.success(.failure(.mismatchOrInvalid)))
-                            case 403:
-                                observer(.success(.failure(.forbidden)))
-                            case 419:
-                                observer(.success(.failure(.accessTokenExpiration)))
-                            default:
-                                break
-                            }
-                        }
-                    }
-            } catch {
-                print("error 발생!! - error:", error)
-            }
-            
-            return Disposables.create()
-        }
-    }
-    
-    // MARK: 내 프로필 조회
-    func viewMyProfile() -> Single<Result<ProfileModel, HTTPStatusCodes>> {
-        return Single.create { observer -> Disposable in
-            
-            do {
-                let request = try Router.viewMyProfile.asURLRequest()
-                AF.request(request)
-                    .responseDecodable(of: ProfileModel.self) { response in
-                        switch response.result {
-                        case .success(let success):
-                            observer(.success(.success(success)))
-                        case .failure(_):
-                            let statusCode = response.response?.statusCode
-                            switch statusCode {
-                            case 401:
-                                observer(.success(.failure(.mismatchOrInvalid)))
-                            case 403:
-                                observer(.success(.failure(.forbidden)))
-                            case 419:
-                                observer(.success(.failure(.accessTokenExpiration)))
-                            default:
-                                break
-                            }
-                        }
-                    }
-            } catch {
-                print("error 발생!! - error:", error)
-            }
-            
-            return Disposables.create()
-        }
-    }
-    
-    func editProfile(nickname: String, introduce: String, profile: Data) -> Single<Result<EditProfileModel, HTTPStatusCodes>> {
+    // MARK: 프로필 편집
+    func editProfile(nickname: String, introduce: String, profile: Data) -> Single<Result<EditProfileModel, HTTPError>> {
         return Single.create { observer -> Disposable in
             
             do {
@@ -573,76 +181,8 @@ final class NetworkManager {
         }
     }
     
-    // MARK: 탈퇴
-    func withdraw() -> Single<Result<WithdrawModel, HTTPStatusCodes>>{
-        return Single.create { observer -> Disposable in
-            
-            do {
-                let request = try Router.withdraw.asURLRequest()
-                AF.request(request)
-                    .responseDecodable(of: WithdrawModel.self) { response in
-                        switch response.result {
-                        case .success(let success):
-                            observer(.success(.success(success)))
-                        case .failure(_):
-                            let statusCode = response.response?.statusCode
-                            switch statusCode {
-                            case 401:
-                                observer(.success(.failure(.mismatchOrInvalid)))
-                            case 403:
-                                observer(.success(.failure(.forbidden)))
-                            case 419:
-                                observer(.success(.failure(.accessTokenExpiration)))
-                            default:
-                                break
-                            }
-                        }
-                    }
-            } catch {
-                print("error 발생!! - error:", error)
-            }
-            
-            return Disposables.create()
-        }
-    }
-    
-    // MARK: 유저별 작성한 포스터 조회(내 포스터 조회)
-    func viewSpecificUsersPost(userID: String, next: String = "") -> Single<Result<ViewPost, HTTPStatusCodes>> {
-        return Single.create { observer -> Disposable in
-            
-            do {
-                let request = try Router.viewSpecificUsersPost(userID: userID, next: next).asURLRequest()
-                AF.request(request)
-                    .responseDecodable(of: ViewPost.self) { response in
-                        switch response.result {
-                        case .success(let success):
-                            observer(.success(.success(success)))
-                        case .failure(_):
-                            let statusCode = response.response?.statusCode
-                            switch statusCode {
-                            case 400:
-                                observer(.success(.failure(.missingRequiredValue)))
-                            case 401:
-                                observer(.success(.failure(.mismatchOrInvalid)))
-                            case 403:
-                                observer(.success(.failure(.forbidden)))
-                            case 419:
-                                observer(.success(.failure(.accessTokenExpiration)))
-                            default:
-                                break
-                            }
-                        }
-                    }
-            } catch {
-                print("error 발생!! - error:", error)
-            }
-            
-            return Disposables.create()
-        }
-    }
-    
     // MARK: 포스트 삭제
-    func deletePost(postID: String, completion: @escaping (HTTPStatusCodes) -> Void) { // completion: @escaping
+    func deletePost(postID: String, completion: @escaping (HTTPError) -> Void) {
         do {
             let request = try Router.deletePost(postID: postID).asURLRequest()
             AF.request(request)
@@ -651,18 +191,8 @@ final class NetworkManager {
                     switch statusCode {
                     case 200:
                         completion(.success)
-                    case 401:
-                        completion(.mismatchOrInvalid)
-                    case 403:
-                        completion(.mismatchOrInvalid)
-                    case 410:
-                        completion(.mismatchOrInvalid)
-                    case 419:
-                        completion(.mismatchOrInvalid)
-                    case 445:
-                        completion(.mismatchOrInvalid)
                     default:
-                        break
+                        completion(.mismatchOrInvalid)
                     }
                 }
         } catch {
@@ -670,77 +200,89 @@ final class NetworkManager {
         }
     }
     
-    // MARK: 결제 영수증 검증
-    func paymentValidation(postID: String, impUID: String) -> Single<Result<ValidationModel, HTTPStatusCodes>>{
-        return Single.create { observer -> Disposable in
-            
-            do {
-                let query = PaymentValidationQuery(impUID: impUID, postID: postID)
-                let request = try Router.paymentValidation(query: query).asURLRequest()
-                
-                AF.request(request)
-                    .responseDecodable(of: ValidationModel.self) { response in
-                        switch response.result {
-                        case .success(let success):
-                            observer(.success(.success(success)))
-                        case .failure(_):
-                            let statusCode = response.response?.statusCode
-                            switch statusCode {
-                            case 400:
-                                observer(.success(.failure(.missingRequiredValue)))
-                            case 401:
-                                observer(.success(.failure(.mismatchOrInvalid)))
-                            case 403:
-                                observer(.success(.failure(.forbidden)))
-                            case 409:
-                                observer(.success(.failure(.alreadySignedUp)))
-                            case 410:
-                                observer(.success(.failure(.serverErrorNotSavedOrCannotSearch)))
-                            case 419:
-                                observer(.success(.failure(.accessTokenExpiration)))
-                            default:
-                                break
-                            }
-                        }
+    // MARK: 카카오 위치 검색
+    func searchLocation(query: String) -> Single<SearchLocationModel> {
+        let url = APIKey.kakaoURL
+        
+        let header: HTTPHeaders = [
+            "Authorization" : APIKey.kakaoKey
+        ]
+        
+        let param: Parameters = [
+            "query": query
+        ]
+        
+        return Single.create { observer in
+            AF.request(url, method: .get, parameters: param, headers: header)
+                .validate(statusCode: 200..<300)
+                .responseDecodable(of: SearchLocationModel.self) { response in
+                    switch response.result {
+                    case .success(let success):
+                        observer(.success(success))
+                    case .failure(let failure):
+                        observer(.failure(failure))
                     }
-            } catch {
-                print("error 발생!! - error:", error)
-            }
+                }
             
             return Disposables.create()
         }
     }
     
-    // MARK: 결제 내역 리스트 조회
-    func viewPaymentList() -> Single<Result<PaymentListModel, HTTPStatusCodes>> {
-        return Single.create { observer -> Disposable in
+    // MARK: Token 갱신 API
+    func tokenUpdate(completion: @escaping (Result<TokenUpdateModel, HTTPError>) -> Void) {
+        do {
+            let request = try Router.tokenRenewal.asURLRequest()
             
-            do {
-                let request = try Router.paymentList.asURLRequest()
-                AF.request(request)
-                    .responseDecodable(of: PaymentListModel.self) { response in
-                        switch response.result {
-                        case .success(let success):
-                            observer(.success(.success(success)))
-                        case .failure(_):
-                            let statusCode = response.response?.statusCode
-                            switch statusCode {
-                            case 401:
-                                observer(.success(.failure(.mismatchOrInvalid)))
-                            case 403:
-                                observer(.success(.failure(.forbidden)))
-                            case 419:
-                                observer(.success(.failure(.accessTokenExpiration)))
-                            default:
-                                break
-                            }
+            AF.request(request)
+                .validate(statusCode: 200..<300)
+                .responseDecodable(of: TokenUpdateModel.self) { response in
+                    switch response.result {
+                    case .success(let success):
+                        completion(.success(success))
+                    case .failure(_):
+                        let statusCode = response.response?.statusCode
+                        switch statusCode {
+                        case 401:
+                            completion(.failure(.mismatchOrInvalid))
+                        default:
+                            break
                         }
                     }
-            } catch {
-                print("error 발생!! - error:", error)
+                }
+        } catch {
+            print("error 발생!! - error:", error)
+        }
+    }
+    
+    // MARK: 토큰 자동 갱신 시간 계산
+    func updateToken(completion: @escaping (String) -> Void) {
+        // 로그인 시, 저장한 시간
+        let stringSaveTime = UserDefaultsManager.shared.saveTime
+        // 저장한 시간 Date로 변환
+        guard let dateSaveTime = DateFormatter.containTimeDateFormatter.date(from: stringSaveTime) else { return }
+        // 저장 시간 4분 45초 후, Date 정보
+        let justBeforeTokenExpiration = Date(timeInterval: 285, since: dateSaveTime)
+        // 만약, 4분 45초가 지났다면?
+        if justBeforeTokenExpiration < Date() {
+            print("곧 만료됨! 갱신 준비!")
+            NetworkManager.shared.tokenUpdate { result in
+                switch result {
+                case .success(let success):
+                    UserDefaultsManager.shared.token = success.accessToken
+                    completion(success.accessToken)
+                case .failure(let failure):
+                    switch failure {
+                    case .refreshTokenExpiration:
+                        print(">>> refresh만료! 로그인 화면으로 이동")
+                        completion("refresh만료!")
+                    default:
+                        break
+                    }
+                }
             }
-            
-            return Disposables.create()
+        } else {
+            completion("토큰 유효")
+            print("아직 만료 안됨! 굳이 갱신 X")
         }
     }
 }

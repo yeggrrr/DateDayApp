@@ -102,7 +102,7 @@ final class LoginView: BaseView {
             font: .systemFont(ofSize: 17, weight: .semibold),
             borderColor: UIColor.clear.cgColor,
             borderWidth: 2)
-        
+        // 베이킹공방
         signUpButton.basicUI(title: "회원가입", color: .primaryDark)
         signUpButton.titleLabel?.font = .systemFont(ofSize: 17, weight: .semibold)
         
@@ -118,4 +118,6 @@ final class LoginView: BaseView {
          yegryegr@yegr.com / Yegryegr123
          */
     }
+    
+//    멜리아트그림공방
 }

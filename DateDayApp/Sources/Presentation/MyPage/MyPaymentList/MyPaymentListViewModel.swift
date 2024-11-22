@@ -23,8 +23,7 @@ final class MyPaymentListViewModel: BaseViewModel {
     }
     
     func transform(input: Input) -> Output {
-        
-        NetworkManager.shared.viewPaymentList()
+        NetworkManager.shared.callRequest(api: Router.paymentList, type: PaymentListModel.self)
             .subscribe(with: self) { owner, result in
                 switch result {
                 case .success(let success):
@@ -50,7 +49,7 @@ final class MyPaymentListViewModel: BaseViewModel {
     }
     
     func updateData() {
-        NetworkManager.shared.viewPaymentList()
+        NetworkManager.shared.callRequest(api: Router.paymentList, type: PaymentListModel.self)
             .subscribe(with: self) { owner, result in
                 switch result {
                 case .success(let success):

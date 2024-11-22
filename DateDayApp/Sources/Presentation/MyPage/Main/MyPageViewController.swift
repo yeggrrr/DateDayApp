@@ -140,7 +140,7 @@ final class MyPageViewController: UIViewController {
                 if let introduce = introduce {
                     vc.introduceText.onNext(introduce)
                 }
-
+                
                 owner.present(vc, animated: true)
             }
             .disposed(by: disposeBag)
@@ -162,20 +162,17 @@ final class MyPageViewController: UIViewController {
                 image: UIImage(systemName: "minus.circle"),
                 handler: { _ in
                     self.okCanelShowAlert(title: "탈퇴하기", message: "탈퇴를 하면 데이터가 모두 초기화됩니다. 탈퇴 하시겠습니까?") { _ in
-                        NetworkManager.shared.withdraw()
+                        NetworkManager.shared.callRequest(api: Router.withdraw, type: WithdrawModel.self)
                             .subscribe(with: self) { owner, result in
                                 switch result {
                                 case .success(_):
-                                    owner.setRootViewController(LoginViewController())
+                                    let nav = UINavigationController(rootViewController: LoginViewController())
+                                    owner.setRootViewController(nav)
                                 case .failure(let failure):
                                     switch failure {
-                                    case .accessTokenExpiration:
-                                        owner.updateToken { newToken in
-                                            UserDefaultsManager.shared.token = newToken
-                                            owner.viewModel.withdraw { _ in
-                                                owner.setRootViewController(LoginViewController())
-                                            }
-                                        }
+                                    case .refreshTokenExpiration:
+                                        let nav = UINavigationController(rootViewController: LoginViewController())
+                                        owner.setRootViewController(nav)
                                     default:
                                         break
                                     }

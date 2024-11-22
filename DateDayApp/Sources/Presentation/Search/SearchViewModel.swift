@@ -26,33 +26,26 @@ final class SearchViewModel: BaseViewModel {
         let searchResultList: PublishSubject<[SearchHashTag.PostData]>
         let collectionViewItemSelected:  ControlEvent<IndexPath>
         let selectedPostID: PublishSubject<String>
+        let refreshTokenExpiration: PublishSubject<Void>
     }
     
     func transform(input: Input) -> Output {
+        let refreshTokenExpiration = PublishSubject<Void>()
         
         input.searchButtonClicked
             .withLatestFrom(input.searchText)
+            .flatMap { value in
+                return NetworkManager.shared.callRequest(api: Router.searchHashTag(next: "", hashTag: value), type: SearchHashTag.self)
+            }
             .bind(with: self) { owner, value in
-                NetworkManager.shared.searchHashTag(hashTag: value)
-                    .subscribe(with: self) { owner, result in
-                        switch result {
-                        case .success(let success):
-                            print(success.data)
-                            owner.searchResultList.onNext(success.data)
-                        case .failure(let failure):
-                            switch failure {
-                            case .accessTokenExpiration:
-                                print("토큰 만료")
-                            default:
-                                break
-                            }
-                        }
-                    } onFailure: { owner, error in
-                        print("error: \(error)")
-                    } onDisposed: { owner in
-                        print("SearchVC Disposed")
+                switch value {
+                case .success(let success):
+                    owner.searchResultList.onNext(success.data)
+                case .failure(let failure):
+                    if failure == .refreshTokenExpiration {
+                        refreshTokenExpiration.onNext(())
                     }
-                    .disposed(by: owner.disposeBag)
+                }
             }
             .disposed(by: disposeBag)
         
@@ -66,6 +59,7 @@ final class SearchViewModel: BaseViewModel {
         return Output(
             searchResultList: searchResultList,
             collectionViewItemSelected: input.collectionViewItemSelected,
-            selectedPostID: input.selectedPostID)
+            selectedPostID: input.selectedPostID,
+            refreshTokenExpiration: refreshTokenExpiration)
     }
 }

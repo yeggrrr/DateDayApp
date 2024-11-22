@@ -41,9 +41,9 @@ final class FeedViewController: UIViewController {
             self.showLoginAlert = false
         }
         
-        if UserDefaultsManager.shared.isChangedPostData {
-            updateData()
-        }
+        // if UserDefaultsManager.shared.isChangedPostData {
+        //     updateData()
+        // }
     }
     
     // MARK: Functions
@@ -117,44 +117,45 @@ final class FeedViewController: UIViewController {
             }
             .disposed(by: disposeBag)
         
-        output.tokenExpiredMessage
-            .bind(with: self) { owner, value in
-                owner.updateToken { newToken in
-                    UserDefaultsManager.shared.token = newToken
-                    owner.viewModel.updateData()
-                }
-            }
-            .disposed(by: disposeBag)
+        // output.tokenExpiredMessage
+        //     .bind(with: self) { owner, value in
+        //         owner.updateToken { newToken in
+        //             UserDefaultsManager.shared.token = newToken
+        //             owner.viewModel.updateData()
+        //         }
+        //     }
+        //     .disposed(by: disposeBag)
     }
     
-    private func updateData() {
-        NetworkManager.shared.viewPost()
-            .subscribe(with: self) { owner, result in
-                switch result {
-                case .success(let success):
-                    owner.viewModel.feedDataList.removeAll()
-                    owner.viewModel.feedDataList.append(contentsOf: success.data)
-                    owner.viewModel.postData.onNext(success.data)
-                    owner.viewModel.nextCursor.onNext(success.nextCursor)
-                    UserDefaultsManager.shared.isChangedPostData = false
-                case .failure(let failure):
-                    switch failure {
-                    case .accessTokenExpiration:
-                        owner.updateToken { newToken in
-                            UserDefaultsManager.shared.token = newToken
-                            owner.viewModel.updateData()
-                        }
-                    default:
-                        break
-                    }
-                }
-            } onFailure: { owner, error in
-                print("error: \(error)")
-            } onDisposed: { owner in
-                print("FeedVC viewPost - Disposed")
-            }
-            .disposed(by: disposeBag)
-    }
+    // MARK: 애는 필요한가?
+    // private func updateData() {
+    //     NetworkManager.shared.viewPost()
+    //         .subscribe(with: self) { owner, result in
+    //             switch result {
+    //             case .success(let success):
+    //                 owner.viewModel.feedDataList.removeAll()
+    //                 owner.viewModel.feedDataList.append(contentsOf: success.data)
+    //                 owner.viewModel.postData.onNext(success.data)
+    //                 owner.viewModel.nextCursor.onNext(success.nextCursor)
+    //                 UserDefaultsManager.shared.isChangedPostData = false
+    //             case .failure(let failure):
+    //                 switch failure {
+    //                 case .accessTokenExpiration:
+    //                     owner.updateToken { newToken in
+    //                         UserDefaultsManager.shared.token = newToken
+    //                         owner.viewModel.updateData()
+    //                     }
+    //                 default:
+    //                     break
+    //                 }
+    //             }
+    //         } onFailure: { owner, error in
+    //             print("error: \(error)")
+    //         } onDisposed: { owner in
+    //             print("FeedVC viewPost - Disposed")
+    //         }
+    //         .disposed(by: disposeBag)
+    // }
     
     private func rightBarButtonItem() -> UIBarButtonItem {
         let button = UIButton()

@@ -13,6 +13,8 @@ final class LoginViewModel: BaseViewModel {
     struct Input {
         let loginButtonTap: ControlEvent<Void>
         let signUpButtonTap: ControlEvent<Void>
+        let emailText: ControlProperty<String>
+        let passwordText: ControlProperty<String>
     }
     
     struct Output {

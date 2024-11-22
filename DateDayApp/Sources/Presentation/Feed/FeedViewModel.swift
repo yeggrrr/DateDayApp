@@ -38,7 +38,7 @@ final class FeedViewModel: BaseViewModel {
     
     func transform(input: Input) -> Output {
         // 네트워크 통신
-        NetworkManager.shared.viewPost()
+        NetworkManager.shared.callRequest(api: Router.viewPost(next: ""), type: ViewPost.self)
             .subscribe(with: self) { owner, result in
                 switch result {
                 case .success(let success):
@@ -47,18 +47,7 @@ final class FeedViewModel: BaseViewModel {
                     owner.postData.onNext(success.data)
                     owner.nextCursor.onNext(success.nextCursor)
                 case .failure(let failure):
-                    switch failure {
-                    case .missingRequiredValue:
-                        input.toastMessage.onNext("잘못된 요청입니다.")
-                    case .mismatchOrInvalid:
-                        input.toastMessage.onNext("유효하지 않은 토큰입니다.")
-                    case .forbidden:
-                        input.toastMessage.onNext("접근 권한이 없습니다.")
-                    case .accessTokenExpiration:
-                        input.tokenExpiredMessage.onNext("토큰이 만료되었습니다.")
-                    default:
-                        break
-                    }
+                    print(">>> failure!: \(failure)")
                 }
             } onFailure: { owner, error in
                 print("error: \(error)")
@@ -80,7 +69,7 @@ final class FeedViewModel: BaseViewModel {
                 for indexPath in value.0 {
                     if indexPath.item == 3 {
                         if value.1 != "0" {
-                            NetworkManager.shared.viewPost(next: value.1)
+                            NetworkManager.shared.callRequest(api: Router.viewPost(next: value.1), type: ViewPost.self)
                                 .subscribe(with: self) { owner, result in
                                     switch result {
                                     case .success(let success):
@@ -88,12 +77,7 @@ final class FeedViewModel: BaseViewModel {
                                         owner.postData.onNext(owner.feedDataList)
                                         owner.nextCursor.onNext(success.nextCursor)
                                     case .failure(let failure):
-                                        switch failure {
-                                        case .accessTokenExpiration:
-                                            input.tokenExpiredMessage.onNext("토큰이 만료되었습니다.")
-                                        default:
-                                            break
-                                        }
+                                        print(">>>failure: \(failure)")
                                     }
                                 } onFailure: { owner, error in
                                     print("error: \(error)")
@@ -118,7 +102,7 @@ final class FeedViewModel: BaseViewModel {
     }
     
     func updateData() {
-        NetworkManager.shared.viewPost()
+        NetworkManager.shared.callRequest(api: Router.viewPost(next: ""), type: ViewPost.self)
             .subscribe(with: self) { owner, result in
                 switch result {
                 case .success(let success):

@@ -39,7 +39,7 @@ final class MyPostViewModel: BaseViewModel {
     }
     
     func transform(input: Input) -> Output {
-        NetworkManager.shared.viewSpecificUsersPost(userID: UserDefaultsManager.shared.saveLoginUserID, next: "")
+        NetworkManager.shared.callRequest(api: Router.viewSpecificUsersPost(userID: UserDefaultsManager.shared.saveLoginUserID, next: ""), type: ViewPost.self)
             .subscribe(with: self) { owner, result in
                 switch result {
                 case .success(let success):
@@ -64,7 +64,7 @@ final class MyPostViewModel: BaseViewModel {
         
         input.deleteComplete
             .bind(with: self) { owner, _ in
-                NetworkManager.shared.viewSpecificUsersPost(userID: UserDefaultsManager.shared.saveLoginUserID, next: "")
+                NetworkManager.shared.callRequest(api: Router.viewSpecificUsersPost(userID: UserDefaultsManager.shared.saveLoginUserID, next: ""), type: ViewPost.self)
                     .subscribe(with: self) { owner, result in
                         switch result {
                         case .success(let success):
@@ -103,7 +103,7 @@ final class MyPostViewModel: BaseViewModel {
                 for indexPath in value.0 {
                     if indexPath.row == 4 {
                         if value.1 != "0" {
-                            NetworkManager.shared.viewSpecificUsersPost(userID: UserDefaultsManager.shared.saveLoginUserID, next: "")
+                            NetworkManager.shared.callRequest(api: Router.viewSpecificUsersPost(userID: UserDefaultsManager.shared.saveLoginUserID, next: ""), type: ViewPost.self)
                                 .subscribe(with: self) { owner, result in
                                     switch result {
                                     case .success(let success):
@@ -141,7 +141,7 @@ final class MyPostViewModel: BaseViewModel {
     }
     
     func updateData() {
-        NetworkManager.shared.viewSpecificUsersPost(userID: UserDefaultsManager.shared.saveLoginUserID, next: "")
+        NetworkManager.shared.callRequest(api: Router.viewSpecificUsersPost(userID: UserDefaultsManager.shared.saveLoginUserID, next: ""), type: ViewPost.self)
             .subscribe(with: self) { owner, result in
                 switch result {
                 case .success(let success):

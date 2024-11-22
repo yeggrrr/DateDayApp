@@ -35,7 +35,7 @@ final class PickedListViewModel: BaseViewModel {
 
     func transform(input: Input) -> Output {
         // 네트워크 통신
-        NetworkManager.shared.viewInterestList()
+        NetworkManager.shared.callRequest(api: Router.viewInterestPost(next: ""), type: ViewPost.self)
             .subscribe(with: self) { owner, result in
                 switch result {
                 case .success(let success):
@@ -73,7 +73,7 @@ final class PickedListViewModel: BaseViewModel {
                 for indexPath in value.0 {
                     if indexPath.row == 4 {
                         if value.1 != "0" {
-                            NetworkManager.shared.viewPost(next: value.1)
+                            NetworkManager.shared.callRequest(api: Router.viewPost(next: value.1), type: ViewPost.self)
                                 .subscribe(with: self) { owner, result in
                                     switch result {
                                     case .success(let success):
@@ -108,7 +108,7 @@ final class PickedListViewModel: BaseViewModel {
     }
     
     func updateData() {
-        NetworkManager.shared.viewInterestList()
+        NetworkManager.shared.callRequest(api: Router.viewInterestPost(next: ""), type: ViewPost.self)
             .subscribe(with: self) { owner, result in
                 switch result {
                 case .success(let success):

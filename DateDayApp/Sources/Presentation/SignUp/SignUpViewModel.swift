@@ -13,9 +13,9 @@ final class SignUpViewModel: BaseViewModel {
     
     struct Input {
         let signUpButtonTap: ControlEvent<Void>
-        let nicknameText: ControlProperty<String?>
-        let emailText: ControlProperty<String?>
-        let passwordText: ControlProperty<String?>
+        let nicknameText: ControlProperty<String>
+        let emailText: ControlProperty<String>
+        let passwordText: ControlProperty<String>
     }
     
     struct Output {
@@ -26,13 +26,13 @@ final class SignUpViewModel: BaseViewModel {
     }
     
     func transform(input: Input) -> Output {
-        let nicknameValidation = input.nicknameText.orEmpty
+        let nicknameValidation = input.nicknameText
             .map { self.validateNickname($0) }
-        let emailValidation = input.emailText.orEmpty
+        let emailValidation = input.emailText
             .debounce(.milliseconds(500), scheduler: MainScheduler.instance)
             .distinctUntilChanged()
             .map { self.validateEmail($0) }
-        let passwordValidation = input.passwordText.orEmpty
+        let passwordValidation = input.passwordText
             .map { self.validatePassword($0) }
         
         return Output(signUpButtonTap: input.signUpButtonTap,

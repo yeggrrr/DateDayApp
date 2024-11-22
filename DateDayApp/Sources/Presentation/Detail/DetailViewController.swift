@@ -76,7 +76,7 @@ final class DetailViewController: UIViewController {
         postID
             .bind(with: self) { owner, value in
                 owner.viewModel.postID.onNext(value)
-                NetworkManager.shared.viewSpecificPost(postID: value)
+                NetworkManager.shared.callRequest(api: Router.viewSpecificPost(postID: value), type: UploadPostModel.self)
                     .subscribe(with: self) { owner, result in
                         switch result {
                         case .success(let success):
@@ -92,7 +92,7 @@ final class DetailViewController: UIViewController {
                             owner.navigationItem.title = success.title
                             owner.detailView.reviewLabel.text = success.content
                             let createdAt = DateFormatter.dateToContainLetter(dateString: success.createdAt)
-                            owner.detailView.createdAtLabel.text = "\(createdAt) 작성됨"                            
+                            owner.detailView.createdAtLabel.text = "\(createdAt) 작성됨"
                         case .failure(let failure):
                             switch failure {
                             case .accessTokenExpiration:
@@ -145,8 +145,7 @@ final class DetailViewController: UIViewController {
             .bind(with: self) { owner, value in
                 owner.detailView.interestButton.isSelected.toggle()
                 let buttonStatus = owner.detailView.interestButton.isSelected
-                
-                NetworkManager.shared.postInterestStatus(interestStatus: buttonStatus, postID: value.1)
+                NetworkManager.shared.callRequest(api: Router.postInterest(postID: value.1, likeStatus: PostLikeQuery(likeStatus: buttonStatus)), type: PostLike.self)
                     .subscribe(with: self) { owner, result in
                         switch result {
                         case .success(let success):
@@ -154,10 +153,9 @@ final class DetailViewController: UIViewController {
                             input.interestStatus.onNext(success.likeStatus)
                         case .failure(let failure):
                             switch failure {
-                            case .accessTokenExpiration:
-                                owner.updateToken { newToken in
-                                    UserDefaultsManager.shared.token = newToken
-                                }
+                            case.refreshTokenExpiration:
+                                let nav = UINavigationController(rootViewController: LoginViewController())
+                                owner.setRootViewController(nav)
                             default:
                                 break
                             }
@@ -185,7 +183,7 @@ final class DetailViewController: UIViewController {
                 owner.detailView.likeButton.isSelected.toggle()
                 let buttonStatus  = owner.detailView.likeButton.isSelected
                 
-                NetworkManager.shared.postLikeStatus(likeStatus: buttonStatus, postID: value.1)
+                NetworkManager.shared.callRequest(api: Router.postLike(postID: value.1, likeStatus: PostLikeQuery(likeStatus: buttonStatus)), type: PostLike.self)
                     .subscribe(with: self) { owner, result in
                         switch result {
                         case .success(let success):
@@ -193,10 +191,9 @@ final class DetailViewController: UIViewController {
                             input.likeStatus.onNext(success.likeStatus)
                         case .failure(let failure):
                             switch failure {
-                            case .accessTokenExpiration:
-                                owner.updateToken { newToken in
-                                    UserDefaultsManager.shared.token = newToken
-                                }
+                            case .refreshTokenExpiration:
+                                let nav = UINavigationController(rootViewController: LoginViewController())
+                                owner.setRootViewController(nav)
                             default:
                                 break
                             }

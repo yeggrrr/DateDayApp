@@ -77,28 +77,28 @@ final class DetailViewModel: BaseViewModel {
         Observable.combineLatest(postID, impUID)
             .bind(with: self) { owner, value in
                 guard let impUID = value.1 else { return }
-                NetworkManager.shared.paymentValidation(postID: value.0, impUID: impUID)
-                    .subscribe(with: self) { owner, result in
-                        switch result {
-                        case .success(_):
-                            input.paymentSuccessfulMessage.onNext("결제가 완료되었습니다 :)")
-                        case .failure(let failure):
-                            print(failure)
-                            switch failure {
-                            case .accessTokenExpiration:
-                                input.tokenExpiredMessage.onNext("엑세스 토큰이 만료되었습니다.")
-                            case .alreadySignedUp:
-                                input.paymentResultMessage.onNext("이미 검증처리가 완료된 결제건입니다.")
-                            default:
-                                break
-                            }
-                        }
-                    } onFailure: { owner, error in
-                        print("error: \(error)")
-                    } onDisposed: { owner in
-                        print("NW paymentValidation Disposed")
-                    }
-                    .disposed(by: owner.disposeBag)
+                // NetworkManager.shared.paymentValidation(postID: value.0, impUID: impUID)
+                //     .subscribe(with: self) { owner, result in
+                //         switch result {
+                //         case .success(_):
+                //             input.paymentSuccessfulMessage.onNext("결제가 완료되었습니다 :)")
+                //         case .failure(let failure):
+                //             print(failure)
+                //             switch failure {
+                //             case .accessTokenExpiration:
+                //                 input.tokenExpiredMessage.onNext("엑세스 토큰이 만료되었습니다.")
+                //             case .alreadySignedUp:
+                //                 input.paymentResultMessage.onNext("이미 검증처리가 완료된 결제건입니다.")
+                //             default:
+                //                 break
+                //             }
+                //         }
+                //     } onFailure: { owner, error in
+                //         print("error: \(error)")
+                //     } onDisposed: { owner in
+                //         print("NW paymentValidation Disposed")
+                //     }
+                //     .disposed(by: owner.disposeBag)
 
             }
             .disposed(by: disposeBag)

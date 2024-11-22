@@ -108,7 +108,8 @@ final class PickedListViewController: UIViewController {
     }
     
     private func updateData() {
-        NetworkManager.shared.viewInterestList()
+        // viewInterestPost
+        NetworkManager.shared.callRequest(api: Router.viewInterestPost(next: ""), type: ViewPost.self)
             .subscribe(with: self) { owner, result in
                 switch result {
                 case .success(let success):

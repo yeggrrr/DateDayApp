@@ -32,9 +32,9 @@ final class SignUpViewController: UIViewController {
     private func bind() {
         let input = SignUpViewModel.Input(
             signUpButtonTap: signUpView.signUpButton.rx.tap,
-            nicknameText: signUpView.nicknameTextField.rx.text,
-            emailText: signUpView.emailTextField.rx.text,
-            passwordText: signUpView.passwordTextField.rx.text)
+            nicknameText: signUpView.nicknameTextField.rx.text.orEmpty,
+            emailText: signUpView.emailTextField.rx.text.orEmpty,
+            passwordText: signUpView.passwordTextField.rx.text.orEmpty)
         
         let output = viewModel.transform(input: input)
         
@@ -48,7 +48,7 @@ final class SignUpViewController: UIViewController {
             .bind(with: self) { owner, value in
                 guard let emailText = owner.signUpView.emailTextField.text else { return }
                 if value {
-                    NetworkManager.shared.validationEmail(email: emailText)
+                    NetworkManager.shared.requestUserVerification(api: Router.validation(query: validEmailQuery(email: emailText)), type: ValidationEmailModel.self)
                         .subscribe(with: self) { owner, result in
                             switch result {
                             case .success(_):
@@ -117,39 +117,34 @@ final class SignUpViewController: UIViewController {
             .disposed(by: disposeBag)
         
         output.signUpButtonTap
-            .bind(with: self) { owner, _ in
-                guard let nickname = owner.signUpView.nicknameTextField.text,
-                      let email = owner.signUpView.emailTextField.text,
-                      let password = owner.signUpView.passwordTextField.text else { return }
-                NetworkManager.shared.createSignUp(nickname: nickname, email: email, password: password)
-                    .subscribe(with: self) { owner, result in
-                        switch result {
-                        case .success(_):
-                            self.okShowAlert(title: "회원가입이 완료되었습니다.", message: "") { _ in
-                                self.setRootViewController(LoginViewController())
-                            }
-                        case .failure(let failure):
-                            switch failure {
-                            case .missingRequiredValue:
-                                self.showToast(message: "필수값을 채워주세요! :)")
-                            case .noSpacesAllowed:
-                                self.showToast(message: "닉네임에 공백이 포함되어 있습니다! :)")
-                            case .alreadySignedUp:
-                                self.okShowAlert(title: "해당 닉네임을 사용할 수 없습니다.", message: "다른 분이 이미 사용중이에요! :)") { _ in
-                                    owner.signUpView.nicknameTextField.text = ""
-                                }
-                                self.showToast(message: "이미 가입한 유저입니다. :)")
-                            default:
-                                break
-                            }
-                        }
-                    } onFailure: { owner, error in
-                        print("Failed:: \(error)")
-                    } onDisposed: { owner in
-                        print("Disposed")
+            .withLatestFrom(Observable.combineLatest(input.nicknameText, input.emailText, input.passwordText))
+            .flatMap { value in
+                let (nickname, email, password) = value
+                return NetworkManager.shared.requestUserVerification(api: Router.signUp(query: SignUpQuery(nick: nickname, email: email, password: password)), type: SignUpModel.self)
+            }
+            .bind(with: self) { owner, result in
+                switch result {
+                case .success(_):
+                    self.okShowAlert(title: "회원가입이 완료되었습니다.", message: "") { _ in
+                        let vc = LoginViewController()
+                        let nav = UINavigationController(rootViewController: vc)
+                        self.setRootViewController(nav)
                     }
-                    .disposed(by: owner.disposeBag)
-
+                case .failure(let failure):
+                    switch failure {
+                    case .missingRequiredValue:
+                        self.showToast(message: "필수값을 채워주세요! :)")
+                    case .noSpacesAllowed:
+                        self.showToast(message: "닉네임에 공백이 포함되어 있습니다! :)")
+                    case .alreadySignedUp:
+                        self.okShowAlert(title: "해당 닉네임을 사용할 수 없습니다.", message: "다른 분이 이미 사용중이에요! :)") { _ in
+                            owner.signUpView.nicknameTextField.text = ""
+                        }
+                        self.showToast(message: "이미 가입한 유저입니다. :)")
+                    default:
+                        break
+                    }
+                }
             }
             .disposed(by: disposeBag)
     }
