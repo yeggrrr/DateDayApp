@@ -14,12 +14,12 @@ final class MyPaymentListViewModel: BaseViewModel {
     private let disposeBag = DisposeBag()
     
     struct Input {
-        let tokenExpiredMessage = PublishSubject<String>()
+        let refreshTokenExpiration = PublishSubject<Void>()
     }
     
     struct Output {
+        let refreshTokenExpiration: PublishSubject<Void>
         let paymentListData: PublishSubject<[PaymentListModel.PaymentData]>
-        let tokenExpiredMessage: PublishSubject<String>
     }
     
     func transform(input: Input) -> Output {
@@ -30,8 +30,8 @@ final class MyPaymentListViewModel: BaseViewModel {
                     owner.paymentListData.onNext(success.data)
                 case .failure(let failure):
                     switch failure {
-                    case .accessTokenExpiration:
-                        input.tokenExpiredMessage.onNext("엑세스 토큰이 만료되었습니다.")
+                    case .refreshTokenExpiration:
+                        input.refreshTokenExpiration.onNext(())
                     default:
                         break
                     }
@@ -44,8 +44,9 @@ final class MyPaymentListViewModel: BaseViewModel {
             .disposed(by: disposeBag)
         
         return Output(
-            paymentListData: paymentListData,
-            tokenExpiredMessage: input.tokenExpiredMessage)
+            refreshTokenExpiration: input.refreshTokenExpiration,
+            paymentListData: paymentListData
+        )
     }
     
     func updateData() {

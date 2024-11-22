@@ -96,7 +96,7 @@ final class DetailViewController: UIViewController {
                         case .failure(let failure):
                             switch failure {
                             case .accessTokenExpiration:
-                                owner.updateToken { newToken in
+                                NetworkManager.shared.updateToken { newToken in
                                     UserDefaultsManager.shared.token = newToken
                                     owner.postID.onNext(value)
                                 }

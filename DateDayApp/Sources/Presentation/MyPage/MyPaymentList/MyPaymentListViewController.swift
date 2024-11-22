@@ -50,12 +50,10 @@ final class MyPaymentListViewController: UIViewController {
             }
             .disposed(by: disposeBag)
         
-        output.tokenExpiredMessage
+        output.refreshTokenExpiration
             .bind(with: self) { owner, _ in
-                owner.updateToken { newToken in
-                    UserDefaultsManager.shared.token = newToken
-                    owner.viewModel.updateData()
-                }
+                let nav = UINavigationController(rootViewController: LoginViewController())
+                owner.setRootViewController(nav)
             }
             .disposed(by: disposeBag)
     }

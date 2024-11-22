@@ -155,7 +155,7 @@ final class WriteViewController: UIViewController {
                             case .forbidden:
                                 owner.showToast(message: "접근권한이 없습니다.")
                             case .accessTokenExpiration:
-                                owner.updateToken { newToken in
+                                NetworkManager.shared.updateToken { newToken in
                                     UserDefaultsManager.shared.token = newToken
                                 }
                             default:

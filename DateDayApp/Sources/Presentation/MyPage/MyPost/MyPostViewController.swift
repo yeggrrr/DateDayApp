@@ -111,21 +111,19 @@ final class MyPostViewController: UIViewController {
                             owner.showToast(message: "해당 게시물이 삭제되었습니다.")
                             input.deleteComplete.onNext(())
                         case .accessTokenExpiration:
-                            owner.updateToken { newToken in
+                            NetworkManager.shared.updateToken { newToken in
                                 UserDefaultsManager.shared.token = newToken
                                 NetworkManager.shared.deletePost(postID: owner.viewModel.myPostDataList[index].postId) { result in
                                     switch result {
                                     case .success:
                                         owner.showToast(message: "해당 게시물이 삭제되었습니다.")
                                         input.deleteComplete.onNext(())
-                                    default:
-                                        break
+                                    default: break
                                     }
                                 }
-                                
                             }
-                        default:
-                            break
+                            
+                        default: break
                         }
                     }
                 }
@@ -144,7 +142,7 @@ final class MyPostViewController: UIViewController {
         
         output.tokenExpiredMessage
             .bind(with: self) { owner, _ in
-                owner.updateToken { newToken in
+                NetworkManager.shared.updateToken { newToken in
                     UserDefaultsManager.shared.token = newToken
                     owner.viewModel.updateData()
                 }

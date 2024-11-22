@@ -121,7 +121,7 @@ final class EditProfileViewController: UIViewController {
                             case .failure(let failure):
                                 switch failure {
                                 case .accessTokenExpiration:
-                                    owner.updateToken { newToken in
+                                    NetworkManager.shared.updateToken { newToken in
                                         UserDefaultsManager.shared.token = newToken
                                         owner.showToast(message: "문제가 발생했습니다. 다시 시도해주세요.")
                                     }
@@ -153,7 +153,7 @@ final class EditProfileViewController: UIViewController {
                                     case .failure(let failure):
                                         switch failure {
                                         case .accessTokenExpiration:
-                                            owner.updateToken { newToken in
+                                            NetworkManager.shared.updateToken { newToken in
                                                 UserDefaultsManager.shared.token = newToken
                                                 owner.showToast(message: "문제가 발생했습니다. 다시 시도해주세요.")
                                             }

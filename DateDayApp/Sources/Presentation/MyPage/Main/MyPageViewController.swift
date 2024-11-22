@@ -148,7 +148,7 @@ final class MyPageViewController: UIViewController {
         // 토큰 갱신
         output.tokenExpiredMessage
             .bind(with: self) { owner, _ in
-                owner.updateToken { newToken in
+                NetworkManager.shared.updateToken { newToken in
                     UserDefaultsManager.shared.token = newToken
                 }
             }
